@@ -1,0 +1,634 @@
+from copy import deepcopy
+import math
+from typing import TextIO, Optional, Any
+
+from BaseClasses import CollectionState, ItemClassification, Location, MultiWorld, Region, Tutorial
+from Options import Option
+from rule_builder.rules import Has, And
+from Utils import visualize_regions
+from worlds.AutoWorld import WebWorld, World
+
+from .Items import CelesteItem, generate_item_table, generate_item_data_table, generate_item_groups, level_cassette_items,\
+                                interactable_item_data_table, filler_item_data_table, cassette_item_data_table, crystal_heart_item_data_table, trap_item_data_table
+from .Locations import CelesteLocation, location_data_table, generate_location_groups, checkpoint_location_data_table, location_id_offsets
+from .Names import ItemName
+from .Options import CelesteOptions, celeste_option_groups, resolve_options
+from .Levels import Level, LocationType, load_logic_data, goal_area_option_to_name, goal_area_option_to_display_name, goal_area_to_location_name, level_id_to_name
+
+
+class CelesteOpenWebWorld(WebWorld):
+    theme = "ice"
+
+    setup_en = Tutorial(
+        tutorial_name="Start Guide",
+        description="A guide to playing Celeste (Open World) in Archipelago.",
+        language="English",
+        file_name="guide_en.md",
+        link="guide/en",
+        authors=["PoryGone"]
+    )
+
+    tutorials = [setup_en]
+
+    option_groups = celeste_option_groups
+
+
+class CelesteOpenWorld(World):
+    """
+    Celeste (Open World) is a randomizer for the original Celeste. In this acclaimed platformer created by ExOK Games, you control Madeline as she attempts to climb the titular mountain, meeting friends and obstacles along the way.  Progression is found in unlocking the ability to interact with various objects in the areas, such as springs, traffic blocks, feathers, and many more. Please be safe on the climb.
+    """
+
+    # Class Data
+    game = "Celeste (Open World)"
+    web = CelesteOpenWebWorld()
+    options_dataclass = CelesteOptions
+    options: CelesteOptions
+
+    apworld_version = 10103
+
+    level_data: dict[str, Level] = load_logic_data()
+
+    location_name_to_id: dict[str, int] = location_data_table
+    location_name_groups: dict[str, list[str]] = generate_location_groups()
+    item_name_to_id: dict[str, int] = generate_item_table()
+    item_name_groups: dict[str, list[str]] = generate_item_groups()
+
+    ut_can_gen_without_yaml = True
+
+
+    # Instance Data
+    madeline_one_dash_hair_color: int
+    madeline_two_dash_hair_color: int
+    madeline_no_dash_hair_color: int
+    madeline_feather_hair_color: int
+
+    active_levels: set[str]
+    active_items: set[str]
+
+
+    def generate_early(self) -> None:
+        if not self.player_name.isascii():
+            raise RuntimeError(f"Invalid player_name {self.player_name} for game {self.game}. Name must be ascii.")
+
+        resolve_options(self)
+
+        self.handle_re_gen_passthrough()
+
+        self.goal_area: str = goal_area_option_to_name[self.options.goal_area.value]
+
+        self.active_levels = {"0a", "1a", "2a", "3a", "4a", "5a", "6a", "7a", "8a"}
+        if self.options.include_core:
+            self.active_levels.add("9a")
+        if self.options.include_farewell >= 1:
+            self.active_levels.add("10a")
+        if self.options.include_farewell == 2:
+            self.active_levels.add("10b")
+        if self.options.include_b_sides:
+            self.active_levels.update({"1b", "2b", "3b", "4b", "5b", "6b", "7b"})
+            if self.options.include_core:
+                self.active_levels.add("9b")
+        if self.options.include_c_sides:
+            self.active_levels.update({"1c", "2c", "3c", "4c", "5c", "6c", "7c"})
+            if self.options.include_core:
+                self.active_levels.add("9c")
+
+        if self.goal_area != "poetry":
+            self.active_levels.add(self.goal_area)
+        if self.goal_area == "10c":
+            self.active_levels.add("10a")
+            self.active_levels.add("10b")
+        elif self.goal_area == "10b":
+            self.active_levels.add("10a")
+
+        self.active_items = set()
+        for level in self.active_levels:
+            if self.options.split_interactables.value == 0:
+                # None
+                self.active_items.update(self.level_data[level].items)
+            elif self.options.split_interactables.value == 1:
+                # Per-Level
+                for item in self.level_data[level].items:
+                    self.active_items.add(level_id_to_name[level[:-1]] + " - " + item)
+            elif self.options.split_interactables.value == 2:
+                # Per Side
+                for item in self.level_data[level].items:
+                    if level[:-1] != "10":
+                        self.active_items.add(level[-1].upper() + "-Side " + item)
+                    else:
+                        self.active_items.add("A-Side " + item)
+            elif self.options.split_interactables.value == 3:
+                # Per Level and Side
+                for item in self.level_data[level].items:
+                    if level[:-1] != "10":
+                        self.active_items.add(level_id_to_name[level[:-1]] + " " + level[-1].upper() + " - " + item)
+                    else:
+                        self.active_items.add(level_id_to_name[level[:-1]] + " - " + item)
+
+
+    def create_regions(self) -> None:
+        from .Locations import create_regions_and_locations
+
+        create_regions_and_locations(self)
+
+
+    def collect(self, state: CollectionState, item: CelesteItem) -> bool:
+        change = super().collect(state, item)
+        if change:
+            if item.name == ItemName.dash:
+                state.prog_items[self.player][ItemName.u_dash] += 1
+                state.prog_items[self.player][ItemName.ur_dash] += 1
+                state.prog_items[self.player][ItemName.r_dash] += 1
+                state.prog_items[self.player][ItemName.dr_dash] += 1
+                state.prog_items[self.player][ItemName.d_dash] += 1
+                state.prog_items[self.player][ItemName.dl_dash] += 1
+                state.prog_items[self.player][ItemName.l_dash] += 1
+                state.prog_items[self.player][ItemName.ul_dash] += 1
+
+            if self.options.dash_shuffle.value == 2:
+                # Cardinal Loose
+                if item.name == ItemName.u_dash:
+                    state.prog_items[self.player][ItemName.ur_dash] += 1
+                    state.prog_items[self.player][ItemName.ul_dash] += 1
+                elif item.name == ItemName.d_dash:
+                    state.prog_items[self.player][ItemName.dr_dash] += 1
+                    state.prog_items[self.player][ItemName.dl_dash] += 1
+                elif item.name == ItemName.r_dash:
+                    state.prog_items[self.player][ItemName.ur_dash] += 1
+                    state.prog_items[self.player][ItemName.dr_dash] += 1
+                elif item.name == ItemName.l_dash:
+                    state.prog_items[self.player][ItemName.ul_dash] += 1
+                    state.prog_items[self.player][ItemName.dl_dash] += 1
+            elif self.options.dash_shuffle.value == 3:
+                # Cardinal Restrictive
+                if item.name == ItemName.u_dash:
+                    if state.prog_items[self.player][ItemName.r_dash] > 0:
+                        state.prog_items[self.player][ItemName.ur_dash] += 1
+                    if state.prog_items[self.player][ItemName.l_dash] > 0:
+                        state.prog_items[self.player][ItemName.ul_dash] += 1
+                elif item.name == ItemName.d_dash:
+                    if state.prog_items[self.player][ItemName.r_dash] > 0:
+                        state.prog_items[self.player][ItemName.dr_dash] += 1
+                    if state.prog_items[self.player][ItemName.l_dash] > 0:
+                        state.prog_items[self.player][ItemName.dl_dash] += 1
+                elif item.name == ItemName.r_dash:
+                    if state.prog_items[self.player][ItemName.u_dash] > 0:
+                        state.prog_items[self.player][ItemName.ur_dash] += 1
+                    if state.prog_items[self.player][ItemName.d_dash] > 0:
+                        state.prog_items[self.player][ItemName.dr_dash] += 1
+                elif item.name == ItemName.l_dash:
+                    if state.prog_items[self.player][ItemName.u_dash] > 0:
+                        state.prog_items[self.player][ItemName.ul_dash] += 1
+                    if state.prog_items[self.player][ItemName.d_dash] > 0:
+                        state.prog_items[self.player][ItemName.dl_dash] += 1
+
+            if item.name == ItemName.climb:
+                state.prog_items[self.player][ItemName.r_climb] += 1
+                state.prog_items[self.player][ItemName.l_climb] += 1
+
+        return change
+
+    def remove(self, state: CollectionState, item: CelesteItem) -> bool:
+        change = super().remove(state, item)
+        if change:
+            if item.name == ItemName.dash:
+                state.prog_items[self.player][ItemName.u_dash] -= 1
+                state.prog_items[self.player][ItemName.ur_dash] -= 1
+                state.prog_items[self.player][ItemName.r_dash] -= 1
+                state.prog_items[self.player][ItemName.dr_dash] -= 1
+                state.prog_items[self.player][ItemName.d_dash] -= 1
+                state.prog_items[self.player][ItemName.dl_dash] -= 1
+                state.prog_items[self.player][ItemName.l_dash] -= 1
+                state.prog_items[self.player][ItemName.ul_dash] -= 1
+
+            if self.options.dash_shuffle.value == 2:
+                # Cardinal Loose
+                if item.name == ItemName.u_dash:
+                    state.prog_items[self.player][ItemName.ur_dash] -= 1
+                    state.prog_items[self.player][ItemName.ul_dash] -= 1
+                elif item.name == ItemName.d_dash:
+                    state.prog_items[self.player][ItemName.dr_dash] -= 1
+                    state.prog_items[self.player][ItemName.dl_dash] -= 1
+                elif item.name == ItemName.r_dash:
+                    state.prog_items[self.player][ItemName.ur_dash] -= 1
+                    state.prog_items[self.player][ItemName.dr_dash] -= 1
+                elif item.name == ItemName.l_dash:
+                    state.prog_items[self.player][ItemName.ul_dash] += 1
+                    state.prog_items[self.player][ItemName.dl_dash] += 1
+            elif self.options.dash_shuffle.value == 3:
+                # Cardinal Restrictive
+                if item.name == ItemName.u_dash:
+                    if state.prog_items[self.player][ItemName.r_dash] > 0:
+                        state.prog_items[self.player][ItemName.ur_dash] -= 1
+                    if state.prog_items[self.player][ItemName.l_dash] > 0:
+                        state.prog_items[self.player][ItemName.ul_dash] -= 1
+                elif item.name == ItemName.d_dash:
+                    if state.prog_items[self.player][ItemName.r_dash] > 0:
+                        state.prog_items[self.player][ItemName.dr_dash] -= 1
+                    if state.prog_items[self.player][ItemName.l_dash] > 0:
+                        state.prog_items[self.player][ItemName.dl_dash] -= 1
+                elif item.name == ItemName.r_dash:
+                    if state.prog_items[self.player][ItemName.u_dash] > 0:
+                        state.prog_items[self.player][ItemName.ur_dash] -= 1
+                    if state.prog_items[self.player][ItemName.d_dash] > 0:
+                        state.prog_items[self.player][ItemName.dr_dash] -= 1
+                elif item.name == ItemName.l_dash:
+                    if state.prog_items[self.player][ItemName.u_dash] > 0:
+                        state.prog_items[self.player][ItemName.ul_dash] -= 1
+                    if state.prog_items[self.player][ItemName.d_dash] > 0:
+                        state.prog_items[self.player][ItemName.dl_dash] -= 1
+
+            if item.name == ItemName.climb:
+                state.prog_items[self.player][ItemName.r_climb] -= 1
+                state.prog_items[self.player][ItemName.l_climb] -= 1
+
+        return change
+
+
+    def create_item(self, name: str, force_useful: bool = False) -> CelesteItem:
+        item_data_table = generate_item_data_table()
+
+        if self.options.goal_area.value == 9 and "Crystal Heart" in name:
+            return CelesteItem(name, ItemClassification.progression_deprioritized_skip_balancing, item_data_table[name].code, self.player)
+        elif name == ItemName.strawberry and force_useful:
+            return CelesteItem(name, ItemClassification.useful, item_data_table[name].code, self.player)
+        elif name in item_data_table:
+            return CelesteItem(name, item_data_table[name].type, item_data_table[name].code, self.player)
+        else:
+            return CelesteItem(name, ItemClassification.progression, None, self.player)
+
+    def create_items(self) -> None:
+        item_pool: list[CelesteItem] = []
+
+        location_count: int = len(self.get_locations())
+        goal_area_location_count: int = sum(goal_area_option_to_display_name[self.options.goal_area] in loc.name for loc in self.get_locations())
+
+        # Goal Items
+        goal_item_loc: Location = self.get_location(goal_area_to_location_name[self.goal_area])
+        goal_item_loc.place_locked_item(self.create_item(ItemName.house_keys))
+        location_count -= 1
+
+        epilogue_region: Region = self.get_region(self.epilogue_start_region)
+        epilogue_region.add_locations({ItemName.victory: None }, CelesteLocation)
+        victory_loc: Location = self.get_location(ItemName.victory)
+        victory_loc.place_locked_item(self.create_item(ItemName.victory))
+
+        # Crystal Hearts (for Poetry Slam)
+        if self.options.goal_area.value == 9:
+            for name in crystal_heart_item_data_table.keys():
+                if name not in self.multiworld.precollected_items[self.player]:
+                    item_pool.append(self.create_item(name))
+
+        # Checkpoints
+        for item_name in self.active_checkpoint_names:
+            if self.options.checkpointsanity:
+                if not self.options.goal_area_checkpointsanity and goal_area_option_to_display_name[self.options.goal_area] in item_name:
+                    checkpoint_loc: Location = self.get_location(item_name)
+                    checkpoint_loc.place_locked_item(self.create_item(item_name))
+                    location_count -= 1
+                elif item_name not in self.multiworld.precollected_items[self.player]:
+                    item_pool.append(self.create_item(item_name))
+            else:
+                checkpoint_loc: Location = self.get_location(item_name)
+                checkpoint_loc.place_locked_item(self.create_item(item_name))
+                location_count -= 1
+
+        # Keys
+        if self.options.keysanity:
+            item_pool += [self.create_item(item_name) for item_name in self.active_key_names if item_name not in self.multiworld.precollected_items[self.player]]
+        else:
+            for item_name in self.active_key_names:
+                key_loc: Location = self.get_location(item_name)
+                key_loc.place_locked_item(self.create_item(item_name))
+                location_count -= 1
+
+        # Summit Gems
+        if self.options.gemsanity:
+            item_pool += [self.create_item(item_name) for item_name in self.active_gem_names if item_name not in self.multiworld.precollected_items[self.player]]
+        else:
+            for item_name in self.active_gem_names:
+                gem_loc: Location = self.get_location(item_name)
+                gem_loc.place_locked_item(self.create_item(item_name))
+                location_count -= 1
+
+        # Clutter Events
+        for item_name in self.active_clutter_names:
+            clutter_loc: Location = self.get_location(item_name)
+            clutter_loc.place_locked_item(self.create_item(item_name))
+            location_count -= 1
+
+        # Breaker Box Events
+        for item_name in self.active_breaker_names:
+            breaker_loc: Location = self.get_location(item_name)
+            breaker_loc.place_locked_item(self.create_item(item_name))
+            location_count -= 1
+
+        # Interactables
+        if self.options.torch_behavior.value == 3:
+            self.active_items.discard(ItemName.torches)
+            self.active_items.discard(ItemName.yellow_torches)
+            self.active_items.discard("Mirror Temple " + ItemName.torches)
+            self.active_items.discard("Mirror Temple " + ItemName.yellow_torches)
+            self.active_items.discard("Mirror Temple A " + ItemName.torches)
+            self.active_items.discard("Mirror Temple B " + ItemName.torches)
+            self.active_items.discard("Mirror Temple A " + ItemName.yellow_torches)
+            self.active_items.discard("A-Side " + ItemName.torches)
+            self.active_items.discard("B-Side " + ItemName.torches)
+            self.active_items.discard("A-Side " + ItemName.yellow_torches)
+
+        item_pool += [self.create_item(item_name) for item_name in sorted(self.active_items) if item_name not in self.multiworld.precollected_items[self.player]]
+
+        # Movement
+        if self.options.dash_shuffle.value == 0:
+            self.multiworld.push_precollected(self.create_item(ItemName.dash))
+        elif self.options.dash_shuffle.value == 1:
+            if ItemName.dash not in self.multiworld.precollected_items[self.player]:
+                item_pool.append(self.create_item(ItemName.dash))
+        elif self.options.dash_shuffle.value in [2, 3]:
+            dash_item_names: list[str] = [ItemName.u_dash, ItemName.r_dash, ItemName.d_dash, ItemName.l_dash]
+            for name in dash_item_names:
+                if name not in self.multiworld.precollected_items[self.player]:
+                    item_pool.append(self.create_item(name))
+        elif self.options.dash_shuffle.value == 4:
+            dash_item_names: list[str] = [ItemName.u_dash, ItemName.ur_dash, ItemName.r_dash, ItemName.dr_dash, ItemName.d_dash, ItemName.dl_dash, ItemName.l_dash, ItemName.ul_dash]
+            for name in dash_item_names:
+                if name not in self.multiworld.precollected_items[self.player]:
+                    item_pool.append(self.create_item(name))
+
+        if self.options.climb_shuffle.value == 0:
+            self.multiworld.push_precollected(self.create_item(ItemName.climb))
+        elif self.options.climb_shuffle.value == 1:
+            if ItemName.climb not in self.multiworld.precollected_items[self.player]:
+                item_pool.append(self.create_item(ItemName.climb))
+        elif self.options.climb_shuffle.value == 2:
+            climb_item_names: list[str] = [ItemName.r_climb, ItemName.l_climb]
+            for name in climb_item_names:
+                if name not in self.multiworld.precollected_items[self.player]:
+                    item_pool.append(self.create_item(name))
+
+        if self.options.crouch_shuffle:
+            if ItemName.crouch not in self.multiworld.precollected_items[self.player]:
+                item_pool.append(self.create_item(ItemName.crouch))
+        else:
+            self.multiworld.push_precollected(self.create_item(ItemName.crouch))
+
+        if self.options.wall_jump_shuffle:  # CMR
+            item_pool.append(self.create_item(ItemName.wall_jump))
+
+        overfill_amount: int = len(item_pool) - location_count
+        self.random.shuffle(item_pool)
+        for i in range(overfill_amount):
+            self.multiworld.push_precollected(item_pool.pop())
+
+        # Strawberries
+        real_total_strawberries: int = max(0, min(self.options.total_strawberries.value, location_count - goal_area_location_count - len(item_pool)))
+        self.strawberries_required = int(real_total_strawberries * (self.options.strawberries_required_percentage / 100))
+
+        menu_region = self.get_region("Menu")
+        if getattr(self, "goal_start_region", None):
+            menu_region.add_exits([self.goal_start_region], {self.goal_start_region: Has(ItemName.strawberry, count=self.strawberries_required)})
+        if getattr(self, "goal_checkpoint_names", None):
+            for region_name, location_name in self.goal_checkpoint_names.items():
+                checkpoint_rule = And(Has(location_name), Has(ItemName.strawberry, count=self.strawberries_required))
+                menu_region.add_exits([region_name], {region_name: checkpoint_rule})
+
+        menu_region.add_exits([self.epilogue_start_region], {self.epilogue_start_region: And(Has(ItemName.house_keys), Has(ItemName.strawberry, count=self.strawberries_required))})
+
+        item_pool += [self.create_item(ItemName.strawberry) for _ in range(self.strawberries_required)]
+
+        # Filler and Traps
+        non_required_strawberries = (real_total_strawberries - self.strawberries_required)
+        replacement_filler_count = math.floor(non_required_strawberries * (self.options.junk_fill_percentage.value / 100.0))
+        remaining_extra_strawberries = non_required_strawberries - replacement_filler_count
+        item_pool += [self.create_item(ItemName.strawberry, True) for _ in range(remaining_extra_strawberries)]
+
+        trap_weights = []
+        trap_weights += ([ItemName.bald_trap] * self.options.bald_trap_weight.value)
+        trap_weights += ([ItemName.literature_trap] * self.options.literature_trap_weight.value)
+        trap_weights += ([ItemName.stun_trap] * self.options.stun_trap_weight.value)
+        trap_weights += ([ItemName.invisible_trap] * self.options.invisible_trap_weight.value)
+        trap_weights += ([ItemName.fast_trap] * self.options.fast_trap_weight.value)
+        trap_weights += ([ItemName.slow_trap] * self.options.slow_trap_weight.value)
+        trap_weights += ([ItemName.ice_trap] * self.options.ice_trap_weight.value)
+        trap_weights += ([ItemName.reverse_trap] * self.options.reverse_trap_weight.value)
+        trap_weights += ([ItemName.screen_flip_trap] * self.options.screen_flip_trap_weight.value)
+        trap_weights += ([ItemName.laughter_trap] * self.options.laughter_trap_weight.value)
+        trap_weights += ([ItemName.hiccup_trap] * self.options.hiccup_trap_weight.value)
+        trap_weights += ([ItemName.zoom_trap] * self.options.zoom_trap_weight.value)
+        trap_weights += ([ItemName.tiny_trap] * self.options.tiny_trap_weight.value)
+
+        total_filler_count: int = (location_count - len(item_pool))
+
+        # Cassettes
+        if self.options.require_cassettes:
+            shuffled_active_levels = sorted(self.active_levels)
+            self.random.shuffle(shuffled_active_levels)
+            for level_name in shuffled_active_levels:
+                if level_name == "10b" or level_name == "10c":
+                    continue
+                if level_cassette_items[level_name] not in self.multiworld.precollected_items[self.player]:
+                    if total_filler_count > 0:
+                        item_pool.append(self.create_item(level_cassette_items[level_name]))
+                        total_filler_count -= 1
+                    else:
+                        self.multiworld.push_precollected(self.create_item(level_cassette_items[level_name]))
+
+        # Crystal Hearts
+        if self.options.goal_area.value != 9:
+            for name in crystal_heart_item_data_table.keys():
+                if total_filler_count > 0:
+                    if name not in self.multiworld.precollected_items[self.player]:
+                        item_pool.append(self.create_item(name))
+                        total_filler_count -= 1
+
+        trap_count = 0 if (len(trap_weights) == 0) else math.ceil(total_filler_count * (self.options.trap_fill_percentage.value / 100.0))
+        total_filler_count -= trap_count
+
+        if total_filler_count > 0 and ItemName.gold_raspberry not in self.multiworld.precollected_items[self.player]:
+            item_pool.append(self.create_item(ItemName.gold_raspberry))
+            total_filler_count -= 1
+
+        if self.options.reduce_raspberries:
+            item_pool += [self.create_item(self.random.choice(list(filler_item_data_table.keys()))) for _ in range(total_filler_count)]
+        else:
+            item_pool += [self.create_item(ItemName.raspberry) for _ in range(total_filler_count)]
+
+        trap_pool = []
+        for i in range(trap_count):
+            trap_item = self.random.choice(trap_weights)
+            trap_pool.append(self.create_item(trap_item))
+
+        item_pool += trap_pool
+
+        self.multiworld.itempool += item_pool
+
+    def get_filler_item_name(self) -> str:
+        if self.options.reduce_raspberries:
+            return self.random.choice(list(filler_item_data_table.keys()))
+        else:
+            return ItemName.raspberry
+
+
+    def set_rules(self) -> None:
+        self.set_completion_rule(Has(ItemName.victory))
+
+        # CMR: V1 logic for Wall Jump Shuffle. Every way into a chapter goes through Menu,
+        # so gating Menu's exits gates the whole chapter (Prologue and Epilogue excepted).
+        if self.options.wall_jump_shuffle:
+            player = self.player
+            for exit_ in self.get_region("Menu").exits:
+                target = exit_.connected_region
+                if target is None or target.name.startswith(("0a_", "8a_")):
+                    continue
+                old_rule = exit_.access_rule
+                exit_.access_rule = (lambda state, old_rule=old_rule:
+                                     state.has(ItemName.wall_jump, player) and old_rule(state))
+
+
+    @classmethod
+    def stage_fill_hook(cls, multiworld: MultiWorld, progitempool, usefulitempool, filleritempool, fill_locations):
+        if multiworld.get_game_players(CelesteOpenWorld.game):
+            progitempool.sort(
+                key=lambda item: 0 if ("Strawberry" in item.name and item.game == CelesteOpenWorld.game) else 1)
+
+
+    def fill_slot_data(self):
+        return {
+            "apworld_version": self.apworld_version,
+            "min_mod_version": 10101,
+
+            "death_link": self.options.death_link.value,
+            "death_link_amnesty": self.options.death_link_amnesty.value,
+            "death_link_receipt_style": self.options.death_link_receipt_style.value,
+            "trap_link": self.options.trap_link.value,
+            "logic_difficulty": self.options.logic_difficulty.value,
+
+            "active_levels": self.active_levels,
+            "goal_area": self.goal_area,
+            "lock_goal_area": self.options.lock_goal_area.value,
+            "strawberries_required": self.strawberries_required,
+            "strawberries_required_percentage": self.options.strawberries_required_percentage.value,
+
+            "dash_shuffle": self.options.dash_shuffle.value,
+            "climb_shuffle": self.options.climb_shuffle.value,
+            "crouch_shuffle": self.options.crouch_shuffle.value,
+            "wall_jump_shuffle": self.options.wall_jump_shuffle.value,  # CMR
+
+            "split_interactables": self.options.split_interactables.value,
+            "existent_interactables": [data.code for name, data in interactable_item_data_table.items() if name in self.active_items],
+
+            "checkpointsanity": self.options.checkpointsanity.value,
+            "binosanity": self.options.binosanity.value,
+            "keysanity": self.options.keysanity.value,
+            "gemsanity": self.options.gemsanity.value,
+            "carsanity": self.options.carsanity.value,
+            "roomsanity": self.options.roomsanity.value,
+            "include_goldens": self.options.include_goldens.value,
+            "golden_amnesty": self.options.golden_amnesty.value,
+
+            "include_core": self.options.include_core.value,
+            "include_farewell": self.options.include_farewell.value,
+            "include_b_sides": self.options.include_b_sides.value,
+            "include_c_sides": self.options.include_c_sides.value,
+
+            "trap_expiration_action": self.options.trap_expiration_action.value,
+            "trap_expiration_amount": self.options.trap_expiration_amount.value,
+            "active_traps": self.output_active_traps(),
+
+            "madeline_hair_length": self.options.madeline_hair_length.value,
+            "madeline_one_dash_hair_color": self.madeline_one_dash_hair_color,
+            "madeline_two_dash_hair_color": self.madeline_two_dash_hair_color,
+            "madeline_no_dash_hair_color": self.madeline_no_dash_hair_color,
+            "madeline_feather_hair_color": self.madeline_feather_hair_color,
+
+            "music_shuffle": self.options.music_shuffle.value,
+            "music_map": self.generate_music_data(),
+            "require_cassettes": self.options.require_cassettes.value,
+            "torch_behavior": self.options.torch_behavior.value,
+            "chosen_poem": self.random.randint(0, 119),
+        }
+
+    @classmethod
+    def stage_write_spoiler_header(cls, multiworld: MultiWorld, spoiler_handle: TextIO):
+        major: int = cls.apworld_version // 10000
+        minor: int = (cls.apworld_version % 10000) // 100
+        bugfix: int = (cls.apworld_version % 100)
+        spoiler_handle.write(f"\nCeleste (Open World) APWorld v{major}.{minor}.{bugfix}\n")
+
+    def output_active_traps(self) -> dict[int, int]:
+        trap_data = {}
+
+        trap_data[0x20] = self.options.bald_trap_weight.value
+        trap_data[0x21] = self.options.literature_trap_weight.value
+        trap_data[0x22] = self.options.stun_trap_weight.value
+        trap_data[0x23] = self.options.invisible_trap_weight.value
+        trap_data[0x24] = self.options.fast_trap_weight.value
+        trap_data[0x25] = self.options.slow_trap_weight.value
+        trap_data[0x26] = self.options.ice_trap_weight.value
+        trap_data[0x28] = self.options.reverse_trap_weight.value
+        trap_data[0x29] = self.options.screen_flip_trap_weight.value
+        trap_data[0x2A] = self.options.laughter_trap_weight.value
+        trap_data[0x2B] = self.options.hiccup_trap_weight.value
+        trap_data[0x2C] = self.options.zoom_trap_weight.value
+        trap_data[0x2D] = self.options.tiny_trap_weight.value
+
+        return trap_data
+
+    def generate_music_data(self) -> dict[int, int]:
+        if self.options.music_shuffle == "consistent":
+            musiclist_o = list(range(0, 48))
+            musiclist_s = musiclist_o.copy()
+            self.random.shuffle(musiclist_s)
+
+            return dict(zip(musiclist_o, musiclist_s))
+        elif self.options.music_shuffle == "singularity":
+            musiclist_o = list(range(0, 48))
+            musiclist_s = [self.random.choice(musiclist_o)] * len(musiclist_o)
+
+            return dict(zip(musiclist_o, musiclist_s))
+        else:
+            musiclist_o = list(range(0, 48))
+            musiclist_s = musiclist_o.copy()
+
+            return dict(zip(musiclist_o, musiclist_s))
+
+    def handle_re_gen_passthrough(self):
+        from .Levels import goal_area_to_option_name
+
+        re_gen_passthrough = getattr(self.multiworld, "re_gen_passthrough", {})
+
+        if re_gen_passthrough and self.game in re_gen_passthrough:
+            slot_data: dict[str, Any] = re_gen_passthrough[self.game]
+            slot_options: dict[str, Any] = slot_data.get("options", {})
+
+            for key, value in slot_data.items():
+                if key == "goal_area":
+                    setattr(self, key, value)
+                    opt: Optional[Option] = getattr(self.options, key, None)
+                    setattr(self.options, key, opt.from_any(goal_area_to_option_name[value]))
+                    continue
+
+                opt: Optional[Option] = getattr(self.options, key, None)
+                if opt is not None:
+                    setattr(self.options, key, opt.from_any(value))
+
+
+    # Useful Debugging tools, kept around for later.
+    #@classmethod
+    #def stage_assert_generate(cls, _multiworld: MultiWorld) -> None:
+    #    with open("./worlds/celeste_open_world/data/IDs.txt", "w") as f:
+    #        print("Items:", file=f)
+    #        for name in sorted(CelesteOpenWorld.item_name_to_id, key=CelesteOpenWorld.item_name_to_id.get):
+    #            id = CelesteOpenWorld.item_name_to_id[name]
+    #            print(f"{{ 0x{id:X}, \"{name}\" }},", file=f)
+    #        print("\nLocations:", file=f)
+    #        for name in sorted(CelesteOpenWorld.location_name_to_id, key=CelesteOpenWorld.location_name_to_id.get):
+    #            id = CelesteOpenWorld.location_name_to_id[name]
+    #            print(f"{{ 0x{id:X}, \"{name}\" }},", file=f)
+    #        print("\nLocations 2:", file=f)
+    #        for name in sorted(CelesteOpenWorld.location_name_to_id, key=CelesteOpenWorld.location_name_to_id.get):
+    #            id = CelesteOpenWorld.location_name_to_id[name]
+    #            print(f"{{ \"{name}\", 0x{id:X} }},", file=f)
+    #
+    #def generate_output(self, output_directory: str):
+    #    visualize_regions(self.get_region("Menu"), f"Player{self.player}.puml", show_entrance_names=False,
+    #                  regions_to_highlight=self.multiworld.get_all_state(self.player).reachable_regions[self.player])

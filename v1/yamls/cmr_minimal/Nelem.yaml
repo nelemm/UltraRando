@@ -1,0 +1,24 @@
+# Seed de test « journal minimal » : peu de types de checks (pas de salles, pas de clés en objets, rien de mélangé
+# hors fraises/cœurs/cassettes/fins), faces A seulement.
+name: Nelem
+game: UltraRando
+UltraRando:
+  logic_difficulty: vanilla_movement
+  room_shuffle: false
+  dash_shuffle: none
+  climb_shuffle: none
+  crouch_shuffle: false
+  wall_jump_shuffle: false
+  demo_dash_shuffle: false
+  interactable_shuffle: false
+  keysanity: false
+  include_b_sides: false
+  include_c_sides: false
+  include_core: false
+  include_farewell: false
+  goal_area: the_summit_a
+  total_strawberries: 20
+  strawberries_required_percentage: 50
+  roomsanity: false
+  checkpointsanity: false
+  death_link: false

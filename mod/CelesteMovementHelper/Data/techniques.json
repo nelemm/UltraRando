@@ -1,0 +1,2467 @@
+{
+  "version": 1,
+  "notes": "requires = abilities used. Mirrored pairs (dash_dl/dash_dr, dash_ul/dash_ur, dash_l/dash_r, climb_left/climb_right) are listed together when the technique works on either side; one side suffices for the mirrored version. Speeds are in pixels/second, frames at 60 fps.",
+  "techniques": [
+    {
+      "id": "jump",
+      "name": "Jump",
+      "aka": [],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Sur le sol (ou pendant le coyote time), appuyer sur Saut."
+      ],
+      "timing": "Utilisable jusqu'à 5 frames après avoir quitté un rebord (coyote time); un appui un peu avant l'atterrissage est mis en tampon.",
+      "explanation_fr": "Le saut de base. Celeste est tolérant: on peut encore sauter quelques frames après avoir quitté une plateforme, et un appui juste avant l'atterrissage déclenche le saut dès que Madeline touche le sol. Maintenir Saut au sommet du saut réduit la gravité, ce qui donne plus de temps pour ajuster la réception.",
+      "explanation_en": "The basic jump. Celeste is lenient: you can still jump for a few frames after leaving a ledge, and pressing jump just before landing triggers it on the landing frame. Holding jump near the apex halves gravity, giving more time to line up the landing.",
+      "vanilla_where": "Prologue",
+      "sources": [
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "variable_jump_height",
+      "name": "Variable jump height",
+      "aka": [],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Appuyer sur Saut et le relâcher tôt pour un petit saut, ou le maintenir pour un saut complet."
+      ],
+      "timing": "Non documenté précisément dans les sources consultées.",
+      "explanation_fr": "La hauteur du saut dépend de la durée d'appui sur Saut: relâcher tôt donne un saut plus court. Les sources consultées ne détaillent pas ce mécanisme (seul le fait que maintenir Saut divise la gravité par deux au sommet est documenté), d'où le statut non vérifié.",
+      "explanation_en": "Jump height depends on how long jump is held: releasing early gives a shorter hop. The sources consulted do not document this mechanic precisely (only that holding jump halves gravity at the apex), hence unverified.",
+      "vanilla_where": "",
+      "sources": [],
+      "verified": false
+    },
+    {
+      "id": "grab_climb",
+      "name": "Grab / Climbing",
+      "aka": [
+        "climb",
+        "wall grab"
+      ],
+      "category": "basic",
+      "requires": [
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Près d'un mur, maintenir Grab pour s'y accrocher.",
+        "Haut/Bas pour grimper ou descendre."
+      ],
+      "timing": "Endurance (stamina) de 110: rester accroché coûte 10/s, grimper 45,45/s. À 20 Madeline clignote en rouge et ne peut plus attraper un nouveau mur; à 0 elle lâche. L'endurance se recharge au sol ou avec un cristal de dash.",
+      "explanation_fr": "Maintenir Grab colle Madeline au mur; elle peut grimper ou descendre. Cela consomme l'endurance (110 au maximum), qui ne se recharge qu'au sol ou avec un cristal. Quand Madeline clignote en rouge, il faut vite trouver un appui.",
+      "explanation_en": "Holding Grab sticks Madeline to a wall so she can climb up or down. This drains stamina (max 110), which refills only on the ground or from a refill crystal. When Madeline flashes red, find footing fast.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Stamina",
+          "url": "https://celeste.ink/wiki/Stamina"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "climbjump",
+      "name": "Climbjump",
+      "aka": [
+        "climb jump"
+      ],
+      "category": "basic",
+      "requires": [
+        "jump",
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Accroché à un mur (Grab maintenu), appuyer sur Saut en tenant Haut ou aucune direction (ou vers le mur)."
+      ],
+      "timing": "Coûte 27,5 d'endurance (un quart du maximum).",
+      "explanation_fr": "Saut vers le haut depuis un mur auquel on est accroché. Il fait monter vite mais consomme un quart de l'endurance à chaque fois. À ne pas confondre avec le wall jump (saut qui s'éloigne du mur), qui est gratuit.",
+      "explanation_en": "An upward jump from a wall you are holding. It gains height quickly but costs a quarter of your stamina each time. Not to be confused with a wall jump/wallkick (jumping away from the wall), which is free.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Stamina",
+          "url": "https://celeste.ink/wiki/Stamina"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "wall_jump",
+      "name": "Wall Jump",
+      "aka": [
+        "walljump",
+        "wallkick"
+      ],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Contre un mur (ou jusqu'à 2 pixels de lui), sans tenir Grab ou en tenant la direction opposée, appuyer sur Saut."
+      ],
+      "timing": "Fenêtre de détection du mur: 2 pixels (environ 5 pixels pendant un dash vers le haut).",
+      "explanation_fr": "Saut qui repousse Madeline loin du mur. Il ne coûte aucune endurance et marche même à quelques pixels du mur. C'est la base pour remonter un puits en zigzag entre deux murs.",
+      "explanation_en": "A jump that pushes Madeline away from the wall. It costs no stamina and works even a couple of pixels from the wall. It is the basis for zig-zagging up a shaft between two walls.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "wallkick_vs_climbjump",
+      "name": "Wallkick vs climbjump",
+      "aka": [],
+      "category": "basic",
+      "requires": [
+        "jump",
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Wallkick: Saut en s'éloignant du mur (ou sans Grab).",
+        "Climbjump: Saut en tenant Grab et Haut/neutre."
+      ],
+      "timing": "Climbjump = 27,5 d'endurance; wallkick = 0. Si on pousse à l'opposé du mur dans les 11 frames après un climbjump neutre, l'endurance est remboursée (wallboost).",
+      "explanation_fr": "Les deux partent d'un mur mais ne font pas la même chose. Le wallkick (wall jump) projette loin du mur sans endurance; le climbjump monte droit le long du mur et coûte de l'endurance. En pratique, si l'endurance est le facteur limitant, on privilégie wallkicks et neutral jumps.",
+      "explanation_en": "Both start from a wall but behave differently. A wallkick (wall jump) pushes you away and costs nothing; a climbjump goes straight up along the wall and costs stamina. When stamina is the bottleneck, prefer wallkicks and neutral jumps.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Stamina",
+          "url": "https://celeste.ink/wiki/Stamina"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "neutral_jump",
+      "name": "Neutral Jump",
+      "aka": [
+        "Neutral",
+        "neutral climb"
+      ],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Contre un mur, sans Grab et sans direction, appuyer sur Saut.",
+        "Revenir aussitôt vers le mur (tenir la direction du mur).",
+        "Recommencer en rythme pour grimper."
+      ],
+      "timing": "Vitesse horizontale fixée à 130; demande un rythme régulier, aucune fenêtre en frames donnée.",
+      "explanation_fr": "Saut depuis un mur sans tenir de direction: Madeline s'écarte un peu puis on la ramène vers le mur pour resauter. Répété, cela permet de grimper sans aucune endurance. Le jeu ne l'enseigné pas, mais c'est très utile en mods.",
+      "explanation_en": "Jumping off a wall with no direction held: Madeline drifts slightly away, then you steer back to the wall and jump again. Repeated, it climbs walls with zero stamina. The game never teaches it, but it is very common in mods.",
+      "vanilla_where": "Non enseigné; recommandé pour la fraise ailée dorée de Forsaken City (1À); bon mur d'entraînement: première salle de Hollows (6À)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Neutrals",
+          "url": "https://celeste.ink/wiki/Neutrals"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "crouch",
+      "name": "Crouch",
+      "aka": [
+        "duck"
+      ],
+      "category": "basic",
+      "requires": [
+        "crouch"
+      ],
+      "inputs": [
+        "Au sol, maintenir Bas."
+      ],
+      "timing": "Instantané.",
+      "explanation_fr": "Maintenir Bas au sol accroupit Madeline et réduit sa hitbox. Accroupie, elle n'est plus poussée par le vent. C'est aussi la base du crouch dash (demodash) et des crouch jumps.",
+      "explanation_en": "Holding down on the ground crouches Madeline and shrinks her hitbox. While crouched she is not pushed by wind. It is also the basis for crouch dashes (demodashes) and crouch jumps.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dashing",
+          "url": "https://celeste.ink/wiki/Dashing"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "crouch_jump",
+      "name": "Crouch Jumps",
+      "aka": [
+        "crouch jump"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "crouch",
+        "jump"
+      ],
+      "inputs": [
+        "Accroupi (Bas maintenu), appuyer sur Saut."
+      ],
+      "timing": "Pas de fenêtre particulière.",
+      "explanation_fr": "Sauter en restant accroupi garde la petite hitbox pendant le saut. Cela permet de passer des passages étroits ou d'éviter un obstacle qui toucherait la hitbox normale.",
+      "explanation_en": "Jumping while crouched keeps the small hitbox during the jump. It helps fit through tight gaps or avoid hazards that would touch the normal hitbox.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dash",
+      "name": "Dash (8 directions)",
+      "aka": [
+        "air dash"
+      ],
+      "category": "basic",
+      "requires": [
+        "dash_u",
+        "dash_ur",
+        "dash_r",
+        "dash_dr",
+        "dash_d",
+        "dash_dl",
+        "dash_l",
+        "dash_ul"
+      ],
+      "inputs": [
+        "Tenir une des 8 directions (ou aucune: dash vers l'avant) et appuyer sur Dash."
+      ],
+      "timing": "Un dash dure 15 frames, dont 3 frames de gel (freeze frames). Suivi de 6 frames de 'dash attack'.",
+      "explanation_fr": "Madeline fonce dans l'une des huit directions. Le nombre de dashes disponibles est indique par la couleur des cheveux (rouge = 1, rose = 2, bleu = vide). C'est l'outil central de presque toutes les techniques avancées.",
+      "explanation_en": "Madeline bursts in one of eight directions. Available dashes are shown by hair colour (red = 1, pink = 2, blue = empty). It is the core of nearly every advanced technique.",
+      "vanilla_where": "Fin du Prologue (obtention du dash)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dashing",
+          "url": "https://celeste.ink/wiki/Dashing"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dash_refill_ground",
+      "name": "Dash refill on ground",
+      "aka": [],
+      "category": "basic",
+      "requires": [],
+      "inputs": [
+        "Toucher le sol après un dash."
+      ],
+      "timing": "Le dash ne peut être recharge par le sol qu'après un délai de 10 frames depuis le début du dash.",
+      "explanation_fr": "Toucher le sol recharge le dash (et l'endurance). Exceptions: dans Core le sol ne recharge pas, et dans Farewell le sol ne rend qu'un dash. Ce délai de recharge explique les versions 'extended' des supers et hypers.",
+      "explanation_en": "Touching the ground refills your dash (and stamina). Exceptions: in Core the ground does not refill, and in Farewell the ground gives back only one dash. The refill delay is why extended supers/hypers exist.",
+      "vanilla_where": "Tout le jeu; exceptions dans Core et Farewell",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dashing",
+          "url": "https://celeste.ink/wiki/Dashing"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "two_dashes",
+      "name": "Two dashes",
+      "aka": [
+        "double dash"
+      ],
+      "category": "basic",
+      "requires": [
+        "two_dashes"
+      ],
+      "inputs": [
+        "Avec deux dashes (cheveux roses), dasher deux fois avant de retoucher le sol."
+      ],
+      "timing": "Aucune fenêtre; un nouveau dash ne peut pas commencer avant la fin des 15 frames du précédent.",
+      "explanation_fr": "Après la fusion avec Badeline, Madeline a deux dashes. On peut enchaîner deux directions en l'air, ou utiliser le second pour regagner de la vitesse après une technique.",
+      "explanation_en": "After merging with Badeline, Madeline has two dashes. You can chain two directions in the air, or use the second to regain speed after a tech.",
+      "vanilla_where": "Fin de Reflection (6À), Summit, Core; double refill dans Farewell (Singular)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dashing",
+          "url": "https://celeste.ink/wiki/Dashing"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Farewell",
+          "url": "https://celeste.ink/wiki/Farewell"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "coyote_time",
+      "name": "Coyote Time",
+      "aka": [
+        "coyote jump",
+        "coyote frames"
+      ],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Quitter un rebord en marchant, puis appuyer sur Saut très vite."
+      ],
+      "timing": "5 frames après avoir quitté le sol.",
+      "explanation_fr": "Mécanisme de tolérance: on peut encore sauter quelques frames après être tombée d'une plateforme. Il existe aussi des frames de coyote après certains objets (sortie de dream block, blocs de Core qui cassent), ce qui permet des techniques comme le dream jump ou le core hyper.",
+      "explanation_en": "A leniency mechanic: you can still jump a few frames after walking off a platform. Coyote frames also exist after some entities (dream block exits, breaking Core blocks), enabling techs like dream jumps or core hypers.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "input_buffering",
+      "name": "Input Buffering",
+      "aka": [
+        "buffer",
+        "jump buffering"
+      ],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Appuyer sur Saut (ou Dash) un peu avant que l'action soit possible, par ex. juste avant d'atterrir."
+      ],
+      "timing": "Le wiki indique 4 frames, le Celeste Dictionary 5 frames; sortir de la pause tamponné 6 frames.",
+      "explanation_fr": "Le jeu mémorise un appui pendant quelques frames et l'exécute dès que possible. Cela rend les sauts à l'atterrissage plus faciles. Attention: tamponner un saut peut casser certaines techniques (par ex. les ultras enchaînés).",
+      "explanation_en": "The game remembers an input for a few frames and executes it as soon as possible, making landing jumps easier. Beware: buffering a jump can break some techs (e.g. chained ultras).",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dash_cancel",
+      "name": "Dash cancel",
+      "aka": [],
+      "category": "basic",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "(Usage communautaire non confirmé) Interrompre un dash avec un saut ou une autre action avant sa fin."
+      ],
+      "timing": "Inconnu.",
+      "explanation_fr": "Terme générique pour l'interruption d'un dash (le super et l'hyper sont des dashes interrompus par un saut). Aucune source consultée ne définit 'dash cancel' comme technique à part entière; voir plutôt Superdash, Hyperdash, Spring Cancel et Grounded Ultra Cancel.",
+      "explanation_en": "Generic term for interrupting a dash (supers and hypers are dashes cancelled by a jump). No consulted source defines 'dash cancel' as a standalone technique; see Superdash, Hyperdash, Spring Cancel and Grounded Ultra Cancel instead.",
+      "vanilla_where": "",
+      "sources": [],
+      "verified": false
+    },
+    {
+      "id": "fastfall",
+      "name": "Fastfall",
+      "aka": [
+        "Fast Fall"
+      ],
+      "category": "basic",
+      "requires": [],
+      "inputs": [
+        "En chute, maintenir Bas."
+      ],
+      "timing": "Vitesse de chute max passe de 160 à 240.",
+      "explanation_fr": "Maintenir Bas en tombant augmente la vitesse de chute maximale (le sprite de Madeline s'affine). Utile pour gagner du temps ou atteindre une plateforme avant un obstacle.",
+      "explanation_en": "Holding down while falling raises maximum fall speed (Madeline's sprite narrows). Useful to save time or reach a platform before a hazard.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "climbhop",
+      "name": "Climbhop",
+      "aka": [],
+      "category": "basic",
+      "requires": [
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Grimper jusqu'au sommet d'un mur: Madeline fait automatiquement un petit saut sur le rebord."
+      ],
+      "timing": "Automatique; contrôle horizontal désactivé pendant le hop.",
+      "explanation_fr": "Petit saut automatique quand on arrive en haut d'un mur en grimpant. Le contrôle horizontal est bloqué un instant, ce qui peut surprendre près d'obstacles.",
+      "explanation_en": "A small automatic hop when you climb over the top of a wall. Horizontal control is briefly disabled, which can catch you out near hazards.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "corner_correction",
+      "name": "Corner Correction",
+      "aka": [],
+      "category": "basic",
+      "requires": [],
+      "inputs": [
+        "Sauter ou dasher en frôlant un coin."
+      ],
+      "timing": "Jusqu'à 4 pixels de décalage.",
+      "explanation_fr": "Si Madeline touche un coin de très peu (4 pixels max), le jeu la décale pour qu'elle passe. En saut elle glisse sur le côté du plafond; en dash horizontal elle est remontée sur le rebord.",
+      "explanation_en": "If Madeline clips a corner by a small margin (up to 4 pixels), the game nudges her past it. Jumping, she slides around a ceiling corner; dashing sideways, she is popped up onto the ledge.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "superdash",
+      "name": "Superdash",
+      "aka": [
+        "Super",
+        "Dashjump"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "dash_l",
+        "dash_r"
+      ],
+      "inputs": [
+        "Au sol, dash horizontal (Gauche ou Droite).",
+        "Appuyer sur Saut pendant le dash, avant qu'il se termine."
+      ],
+      "timing": "Jump avant la fin du dash (15 frames). Vitesse initiale 260.",
+      "explanation_fr": "Un dash horizontal au sol interrompu par un saut: Madeline part loin et vite avec une hauteur de saut normale. C'est l'une des techniques les plus faciles et la porte d'entrée vers hyper et wavedash.",
+      "explanation_en": "A horizontal ground dash cancelled into a jump: Madeline flies far and fast with normal jump height. One of the easiest techs and the gateway to hypers and wavedashes.",
+      "vanilla_where": "Pas requis en vanilla sauf une variante avec poisson-globe dans Farewell",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Superdashes",
+          "url": "https://celeste.ink/wiki/Superdashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "hyperdash",
+      "name": "Hyperdash",
+      "aka": [
+        "Hyper"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Au sol (ou juste avant de toucher le sol), dash en diagonale bas (Bas-Gauche ou Bas-Droite).",
+        "Appuyer sur Saut pendant le dash."
+      ],
+      "timing": "Saut avant la fin du dash. Vitesse horizontale 325, hauteur de saut divisée par deux (52,5 au lieu de 105).",
+      "explanation_fr": "Comme le super, mais avec un dash diagonal vers le bas: Madeline va encore plus vite mais saute deux fois moins haut. Idéal pour franchir de longues distances à plat.",
+      "explanation_en": "Like a super but with a down-diagonal dash: even faster, but with half jump height. Great for covering long flat distances.",
+      "vanilla_where": "Introduit et requis dans Core C-Side",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "extended_super_hyper",
+      "name": "Extended Super/Hyper",
+      "aka": [
+        "Extended",
+        "extended dash",
+        "extended hyper",
+        "extended super"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "dash_l",
+        "dash_r",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Faire un super ou un hyper.",
+        "Attendre au moins 10 frames après le début du dash (en restant au sol) avant d'appuyer sur Saut, mais avant la fin du dash."
+      ],
+      "timing": "Saut entre la 10e frame et la fin du dash (15 frames).",
+      "explanation_fr": "En retardant le saut d'un super/hyper, le sol à le temps de recharger le dash. On garde la vitesse ET on récupère son dash pour la suite. Cela demande un peu plus de place au sol (souvent 2-3 tuiles).",
+      "explanation_en": "By delaying the jump of a super/hyper, the ground has time to refill the dash. You keep the speed AND get the dash back. It needs a bit more runway (often 2-3 tiles).",
+      "vanilla_where": "Utilisé partout dans Farewell (appelé 'wavedash' en jeu)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Superdashes",
+          "url": "https://celeste.ink/wiki/Superdashes"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "reverse_dashes",
+      "name": "Reverse Dashes",
+      "aka": [
+        "reverse hyper",
+        "reverse super",
+        "reverse wavedash"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "dash_l",
+        "dash_r",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Dasher dans une direction (super, hyper ou wavedash).",
+        "Avant de sauter, tenir la direction opposée.",
+        "Appuyer sur Saut."
+      ],
+      "timing": "Même fenêtre que le super/hyper; toucher le sol à la frame 10 ou après rend le dash (version extended).",
+      "explanation_fr": "On saute dans le sens opposé au dash: la vitesse du dash est renvoyée dans l'autre direction. Pratique quand un mur ou des pics bloquent un côté, et un reverse extended super peut se faire sans aucune piste en dashant contre un mur.",
+      "explanation_en": "You jump opposite to the dash direction, sending the dash speed the other way. Handy when a wall or spikes block one side; a reverse extended super can even be done with no runway by dashing into a wall.",
+      "vanilla_where": "Exemple: Search Skip dans 5À",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Superdashes",
+          "url": "https://celeste.ink/wiki/Superdashes"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "wavedash",
+      "name": "Wavedash",
+      "aka": [
+        "midair hyper",
+        "wave"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "En l'air, un peu au-dessus du sol, dash diagonal bas.",
+        "Appuyer sur Saut juste quand Madeline touche le sol (pendant le dash)."
+      ],
+      "timing": "Le dash doit toucher le sol avant de finir; un saut à partir de la frame 10 du dash rend le dash.",
+      "explanation_fr": "Un hyperdash lance depuis les airs: on dash en diagonale vers le sol et on saute à l'impact. Madeline repart à grande vitesse et récupère son dash. C'est LA technique de Farewell.",
+      "explanation_en": "A hyperdash started in midair: dash diagonally down at the ground and jump on contact. Madeline shoots forward at high speed and regains her dash. It is THE Farewell technique.",
+      "vanilla_where": "Farewell - Event Horizon, 'Internet Café' (présentation wavedash.ppt) + zone d'entraînement",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Farewell",
+          "url": "https://celeste.ink/wiki/Farewell"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "midair_super",
+      "name": "Midair Super",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "jump",
+        "dash_l",
+        "dash_r"
+      ],
+      "inputs": [
+        "Dash horizontal en l'air juste au-dessus d'une plateforme.",
+        "Sauter au moment où le dash touche le sol."
+      ],
+      "timing": "Le dash doit toucher le sol avant sa fin.",
+      "explanation_fr": "Version aérienne du superdash, l'équivalent 'horizontal' du wavedash. Donne plus de hauteur qu'un wavedash mais moins de vitesse.",
+      "explanation_en": "The midair version of the superdash, the horizontal counterpart of the wavedash. More height than a wavedash but less speed.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "wallbounce",
+      "name": "Wallbounce",
+      "aka": [
+        "Super Walljump",
+        "wounce",
+        "wb"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "dash_u"
+      ],
+      "inputs": [
+        "À côté d'un mur, dash vers le Haut.",
+        "Pendant le dash, appuyer sur Saut (en s'éloignant du mur ou neutre)."
+      ],
+      "timing": "Saut pendant le dash (ou ses 6 frames de dash attack); détection du mur jusqu'à environ 5 pixels. Vitesse 170 horizontal / 160 vertical.",
+      "explanation_fr": "Un saut mural pendant un dash vers le haut propulse Madeline très haut. Il monte plus vite qu'un dash ou un wallkick seul. Variante: depuis une bulle (pas besoin de son propre dash).",
+      "explanation_en": "A wall jump during an upward dash launches Madeline very high, gaining height faster than a dash or a wallkick alone. Variant: out of a bubble (no own dash needed).",
+      "vanilla_where": "Première apparition dans The Summit B-Side (7B); entraîné dans Farewell (Internet Café)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Wallbounces",
+          "url": "https://celeste.ink/wiki/Wallbounces"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Farewell",
+          "url": "https://celeste.ink/wiki/Farewell"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dash_attack",
+      "name": "Dash Attack",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [],
+      "inputs": [
+        "Après la fin d'un dash, les 6 frames suivantes comptent encore comme 'dash' pour certaines interactions."
+      ],
+      "timing": "6 frames après le dash de 15 frames.",
+      "explanation_fr": "Pendant ces quelques frames, Madeline peut encore faire un wallbounce ou casser/activer des objets comme si elle dashait. Sauter ou attraper un bloc l'annule.",
+      "explanation_en": "During these few frames Madeline can still wallbounce or interact with entities as if dashing. Jumping or grabbing a block ends it.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dashing",
+          "url": "https://celeste.ink/wiki/Dashing"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "bunnyhop",
+      "name": "Bunnyhop",
+      "aka": [
+        "Bhop",
+        "Bunny Hop"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Après une technique rapide, resauter dès l'atterrissage."
+      ],
+      "timing": "Saut dès la première frame au sol (ou presque) pour limiter la friction.",
+      "explanation_fr": "Resauter immédiatement à l'atterrissage pour ne pas perdre la vitesse au sol. Chaque saut ajoute aussi un petit bonus de vitesse. Indispensable pour garder l'élan d'un hyper ou d'un wavedash.",
+      "explanation_en": "Jumping again right on landing so ground friction does not eat your speed; each jump also adds a small speed bonus. Essential to keep momentum from a hyper or wavedash.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "demodash",
+      "name": "Demodash",
+      "aka": [
+        "Demo",
+        "crouch dash",
+        "Demo Dash"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "crouch",
+        "dash_l",
+        "dash_r"
+      ],
+      "inputs": [
+        "Tenir Bas (ou utiliser la touche Crouch Dash depuis la v1.4) et appuyer sur Dash.",
+        "Avant la 5e frame du dash, tenir la direction voulue (gauche/droite)."
+      ],
+      "timing": "Le jeu vérifie l'accroupissement à la 1re frame du dash et fixe la direction vers la 5e. Hitbox de 4 px au lieu de 9.",
+      "explanation_fr": "Un dash horizontal fait en restant accroupi: la hitbox est beaucoup plus petite, ce qui permet de passer entre des spinners ou dans des tunnels très bas. Le jeu propose une touche dédiée 'Crouch Dash' depuis la version 1.4.",
+      "explanation_en": "A horizontal dash performed crouched: the hitbox is much smaller, letting you slip between spinners or through very low tunnels. Since v1.4 the game has a dedicated 'Crouch Dash' bind.",
+      "vanilla_where": "Farewell - Event Horizon (3 demos voulus) et Remembered (1)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Demodash",
+          "url": "https://celeste.ink/wiki/Demodash"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dashing",
+          "url": "https://celeste.ink/wiki/Dashing"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "demohyper",
+      "name": "Demohyper",
+      "aka": [
+        "Demo Hyper"
+      ],
+      "category": "advanced",
+      "requires": [
+        "crouch",
+        "jump",
+        "dash_l",
+        "dash_r"
+      ],
+      "inputs": [
+        "Faire un demodash (dash horizontal accroupi) au sol ou en touchant le sol.",
+        "Appuyer sur Saut pendant le dash."
+      ],
+      "timing": "Même fenêtre qu'un hyper.",
+      "explanation_fr": "Un hyper peut être obtenu à partir d'un dash horizontal accroupi. Il peut se lancer en l'air à côté d'une plateforme sans faire de wavedash, et selon le wiki couvre plus de distance qu'un hyper normal à basse vitesse.",
+      "explanation_en": "A hyper can be produced from a crouched horizontal dash. It can be started midair next to a platform without a wavedash and, per the wiki, covers more distance than a regular hyper at low speed.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Demodash",
+          "url": "https://celeste.ink/wiki/Demodash"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "wallboost",
+      "name": "Wallboost",
+      "aka": [
+        "wall-boost"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Accroché à un mur, faire un climbjump neutre (sans direction).",
+        "Dans les 11 frames, tenir la direction opposée au mur."
+      ],
+      "timing": "11 frames après le climbjump neutre. Rembourse l'endurance et fixe la vitesse à 130 à l'opposé du mur.",
+      "explanation_fr": "En poussant loin du mur juste après un climbjump neutre, le jeu rembourse l'endurance du climbjump et transforme le saut en saut mural. Cela permet de gagner de la hauteur sans vider l'endurance.",
+      "explanation_en": "Pushing away right after a neutral climbjump refunds its stamina and turns it into a wall jump, so you gain height without draining stamina.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cornerkick",
+      "name": "Cornerkick",
+      "aka": [
+        "Corner Kick"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Sauter vers le coin d'un bloc par-dessous.",
+        "Une fois juste à côté du coin, appuyer de nouveau sur Saut pour faire un wallkick sur ce coin."
+      ],
+      "timing": "Saut quand on est juste à côté du coin; neutre si aucune direction n'est tenue.",
+      "explanation_fr": "Un wall jump fait sur le coin d'un bloc qu'on vient de dépasser. Utile pour remonter sur un rebord sans grab ni dash. Un demodash diagonal haut peut le rendre plus facile.",
+      "explanation_en": "A wall jump off the corner of a block you are passing. Useful to get up a ledge without grab or dash; an up-diagonal demo can make it easier.",
+      "vanilla_where": "Ex.: First Blockless dans 4À (facilité par un demo)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Demodash",
+          "url": "https://celeste.ink/wiki/Demodash"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cornerjump",
+      "name": "Cornerjump",
+      "aka": [
+        "Corner Jump"
+      ],
+      "category": "advanced",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Faire un wall jump depuis tout le haut d'un mur (hitbox au niveau du sommet du mur, à 3 px près)."
+      ],
+      "timing": "Le haut de la hitbox doit être au niveau ou en dessous du sommet du mur, à 3 px près.",
+      "explanation_fr": "Un wall jump fait tout en haut d'un mur pour gagner un maximum de hauteur et de distance. Les variantes '5jump', '6jump' etc. désignent le nombre de tuiles franchies sans dash.",
+      "explanation_en": "A wall jump from the very top of a wall to maximise height and distance. Variants like '5jump', '6jump' etc. name how many tiles are cleared dashless.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cornerboost",
+      "name": "Cornerboost",
+      "aka": [
+        "cb"
+      ],
+      "category": "advanced",
+      "requires": [
+        "jump",
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Arriver avec de la vitesse horizontale vers le haut d'un mur.",
+        "Faire un climbjump avant de toucher le mur (sinon 'bad cb')."
+      ],
+      "timing": "La vitesse conservée est rendue si on dépasse le sommet du mur dans les 5 frames.",
+      "explanation_fr": "En faisant un climbjump juste avant de percuter le coin supérieur d'un mur, Madeline récupère la vitesse horizontale qu'elle avait et passe par-dessus le mur avec élan. Très utilisé en speedrun et en mods.",
+      "explanation_en": "By climbjumping just before hitting the top corner of a wall, Madeline gets back the horizontal speed she had and vaults over with momentum. Widely used in speedruns and mods.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "reverse_cornerboost",
+      "name": "Reverse Cornerboost",
+      "aka": [
+        "rcb"
+      ],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Faire un climbjump sur un coin situé derrière Madeline."
+      ],
+      "timing": "Applique -40 de vitesse; variante neutre (nrcb) permettant un wallboost dans les 11 frames.",
+      "explanation_fr": "Cornerboost fait sur un coin dans le dos de Madeline, ce qui la renvoie dans l'autre sens avec un petit bonus de vitesse. Technique pointue, surtout en speedrun.",
+      "explanation_en": "A cornerboost on a corner behind Madeline, sending her the other way with a small speed bonus. A niche, mostly speedrun tech.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cornerslip",
+      "name": "Cornerslip",
+      "aka": [],
+      "category": "advanced",
+      "requires": [],
+      "inputs": [
+        "Frôler le sol ou un rebord (à 1 pixel) sans vraiment atterrir."
+      ],
+      "timing": "À 1 pixel verticalement du sol.",
+      "explanation_fr": "En passant tout près d'une plateforme sans atterrir, Madeline récupère son dash sans perdre sa vitesse verticale. Cela donne aussi des frames de coyote (le 'jasig jump').",
+      "explanation_en": "Grazing a platform within a pixel without landing refills the dash without resetting vertical speed. It also grants coyote frames (the 'jasig jump').",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "liftboost",
+      "name": "Liftboost",
+      "aka": [
+        "Block Boost",
+        "lift momentum storage"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "jump",
+        "moving_block"
+      ],
+      "inputs": [
+        "Se tenir sur (ou accroché à) un bloc en mouvement (zip mover, etc.).",
+        "Sauter pendant qu'il bouge ou juste après son arrêt."
+      ],
+      "timing": "Le wiki indique un minuteur de 10 frames, le Celeste Dictionary 9 frames. Plafonds: 250 horizontal, 130 vers le haut.",
+      "explanation_fr": "Sauter depuis un bloc qui bouge ajoute sa vitesse à celle de Madeline, et ce bonus reste disponible quelques frames après l'arrêt du bloc. C'est ce qui donne les grands sauts depuis les zip movers.",
+      "explanation_en": "Jumping off a moving block adds its speed to Madeline's, and the bonus stays available for a few frames after the block stops. This is what gives the big jumps off zip movers.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste & Forgiveness (Maddy Thorson)",
+          "url": "https://maddymakesgames.com/articles/celeste_and_forgiveness/index.html"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "delayed_blockboost",
+      "name": "Delayed Blockboost",
+      "aka": [
+        "Delayed Block Boost"
+      ],
+      "category": "advanced",
+      "requires": [
+        "jump",
+        "moving_block"
+      ],
+      "inputs": [
+        "Quitter un bloc en mouvement.",
+        "Faire un wall jump dans les 9 frames qui suivent."
+      ],
+      "timing": "9 frames.",
+      "explanation_fr": "On conserve la vitesse d'un bloc mobile après l'avoir quitté, à condition de sauter (wall jump) dans une courte fenêtre. Utile quand on ne peut pas sauter directement depuis le bloc.",
+      "explanation_en": "You keep a moving block's speed after leaving it, as long as you wall jump within a short window. Useful when you cannot jump directly off the block.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "multiboost",
+      "name": "Multiboost",
+      "aka": [
+        "double block boost"
+      ],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "moving_block"
+      ],
+      "inputs": [
+        "Obtenir plusieurs boosts successifs d'un même bloc en mouvement."
+      ],
+      "timing": "Non précisé.",
+      "explanation_fr": "Technique avancée pour récupérer plusieurs fois l'élan d'un même bloc mobile. Rare et exigeante.",
+      "explanation_en": "An advanced trick to take a single moving block's momentum more than once. Rare and demanding.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "spring_cancel",
+      "name": "Spring Cancel",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [],
+      "inputs": [
+        "Dasher juste après avoir touche un ressort."
+      ],
+      "timing": "Juste après le ressort.",
+      "explanation_fr": "Un dash juste après un ressort annule l'élan donné par celui-ci. Utile quand le ressort envoie dans une mauvaise direction.",
+      "explanation_en": "Dashing right after a spring cancels its momentum. Useful when the spring sends you the wrong way.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "directional_spikes",
+      "name": "Directional Spikes",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [],
+      "inputs": [
+        "Se déplacer (ou dasher) dans le sens où pointent les pics."
+      ],
+      "timing": "Aucune.",
+      "explanation_fr": "Les pics ne tuent pas Madeline si elle se déplace dans le même sens que leur pointe. On peut ainsi traverser ou longer certains pics en dashant dans le bon sens.",
+      "explanation_en": "Spikes do not kill Madeline when she moves in the direction they point, so you can pass along some spikes by dashing the right way.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "spike_jump",
+      "name": "Spike Jumps",
+      "aka": [
+        "Spike Jump"
+      ],
+      "category": "advanced",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Quand un bloc mobile (ou le vent) pousse Madeline dans des pics, sauter du mur derrière eux pendant la courte fenêtre."
+      ],
+      "timing": "Fenêtre brève, non chiffrée.",
+      "explanation_fr": "Lorsque quelque chose pousse Madeline dans des pics, il existe un court instant ou elle peut encore sauter depuis la surface derrière. Exige un timing précis.",
+      "explanation_en": "When something pushes Madeline into spikes, there is a brief moment where she can still jump off the surface behind them. Requires precise timing.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "spiked_wallbounce",
+      "name": "Spiked Wallbounce",
+      "aka": [],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "dash_u"
+      ],
+      "inputs": [
+        "Wallbounce sur un mur couvert de pics, pendant les frames de dash attack."
+      ],
+      "timing": "Pendant la dash attack.",
+      "explanation_fr": "Un wallbounce reste possible sur un mur à pics si on le fait au bon moment. Rare, mais présent dans certains mods difficiles.",
+      "explanation_en": "A wallbounce is still possible on a spiked wall if timed right. Rare but present in some hard mods.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "spike_clip",
+      "name": "Spike Clip",
+      "aka": [],
+      "category": "expert",
+      "requires": [],
+      "inputs": [
+        "Traverser à grande vitesse des pics sans tuile en dessous."
+      ],
+      "timing": "Non précisé.",
+      "explanation_fr": "À grande vitesse, on peut traverser des pics qui n'ont pas de bloc sous eux. Technique de speedrun.",
+      "explanation_en": "At high speed you can pass through spikes that have no tile below them. A speedrun technique.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ultra",
+      "name": "Ultradash",
+      "aka": [
+        "Ultra"
+      ],
+      "category": "advanced",
+      "requires": [
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Avec de la vitesse horizontale, dash diagonal bas en l'air.",
+        "Atterrir (pendant ou après le dash) puis repartir sans tamponner le saut."
+      ],
+      "timing": "Multiplicateur x1,2 de la vitesse horizontale à l'atterrissage; pas de plafond.",
+      "explanation_fr": "Atterrir depuis un dash diagonal bas multiplie la vitesse horizontale par 1,2. On le fait en général après un wavedash ou un saut depuis un bloc mobile, et cela peut s'enchaîner sans limite.",
+      "explanation_en": "Landing out of a down-diagonal dash multiplies horizontal speed by 1.2. Usually done after a wavedash or a moving-block jump, and it can be chained with no hard cap.",
+      "vanilla_where": "Non enseigné (bug conservé volontairement)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Ultradashes",
+          "url": "https://celeste.ink/wiki/Ultradashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "grounded_ultra",
+      "name": "Grounded Ultra",
+      "aka": [
+        "Gultra"
+      ],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Au sol avec de la vitesse, dash diagonal bas dans le sol.",
+        "Sauter (wavedash) pendant le dash."
+      ],
+      "timing": "Saut optimal à la 14e frame; vitesse optimale 390.",
+      "explanation_fr": "Variante au sol de l'ultra: on dash en diagonale dans le sol puis on saute en fin de dash pour combiner bonus ultra et hyper. Le 'Grounded Ultra Cancel' interrompt le dash (souvent avec un objet) pour garder la vitesse.",
+      "explanation_en": "Ground version of the ultra: dash diagonally into the floor then jump late in the dash to combine the ultra bonus with a hyper. A 'Grounded Ultra Cancel' interrupts the dash (often with a holdable) to keep speed.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Ultradashes",
+          "url": "https://celeste.ink/wiki/Ultradashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "delayed_ultra",
+      "name": "Delayed Ultra",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Dash diagonal bas.",
+        "Atterrir plus tard (par ex. après un cornerboost), sans dash horizontal ou diagonal haut entre-temps."
+      ],
+      "timing": "Aucune; casse si un autre dash non diagonal-bas intervient.",
+      "explanation_fr": "Le bonus de l'ultra reste actif même si on atterrit longtemps après le dash diagonal bas. Souvent combiné à un cornerboost.",
+      "explanation_en": "The ultra bonus still applies even if you land long after the down-diagonal dash. Often combined with a cornerboost.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Ultradashes",
+          "url": "https://celeste.ink/wiki/Ultradashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "chained_ultras",
+      "name": "Chained Ultras",
+      "aka": [
+        "Chained Ultra"
+      ],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Faire un ultra.",
+        "Resauter très vite après l'atterrissage et re-dasher en diagonale bas immédiatement.",
+        "Répéter."
+      ],
+      "timing": "Sauter vite sans tamponner le saut (le tampon à ~3/8 de chances de casser la chaîne).",
+      "explanation_fr": "Enchaîner plusieurs ultras pour accumuler une vitesse énorme. Il faut passer le moins de temps possible au sol et éviter de tamponner le saut.",
+      "explanation_en": "Chaining several ultras to build huge speed. Spend as little time on the ground as possible and avoid buffering the jump.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Ultradashes",
+          "url": "https://celeste.ink/wiki/Ultradashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "superwave",
+      "name": "Superwave",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "jump",
+        "dash_l",
+        "dash_r",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Faire un extended super.",
+        "Enchaîner avec un reverse wavedash."
+      ],
+      "timing": "Fenêtres du super étendu puis du wavedash.",
+      "explanation_fr": "Combinaison d'un super étendu suivi d'un wavedash inverse. Sert à gagner de la hauteur puis repartir vite dans l'autre sens.",
+      "explanation_en": "An extended superdash followed by a reverse wavedash, gaining height then heading back fast the other way.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "hyper_bunnyhop",
+      "name": "Hyper Bunnyhop",
+      "aka": [],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Faire un hyper court.",
+        "Enchaîner un saut complet (bunnyhop) dès l'atterrissage."
+      ],
+      "timing": "Dépend des sous-pixels pour les versions optimales.",
+      "explanation_fr": "Un hyper bref suivi d'un saut complet: on garde la vitesse de l'hyper tout en obtenant une hauteur de saut normale.",
+      "explanation_en": "A short hyper followed by a full jump: you keep hyper speed while getting full jump height.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "stamina_cancel",
+      "name": "Stamina Cancel",
+      "aka": [
+        "Stamina Canceling"
+      ],
+      "category": "advanced",
+      "requires": [
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Accroché au mur en tenant Haut, tapoter Grab."
+      ],
+      "timing": "Non précisé.",
+      "explanation_fr": "En relâchant et reprenant Grab rapidement pendant qu'on grimpe, on monte en consommant moins d'endurance.",
+      "explanation_en": "Tapping grab while holding up on a wall lets you climb using less stamina.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "ceiling_pop",
+      "name": "Ceiling Pop",
+      "aka": [
+        "cpop"
+      ],
+      "category": "expert",
+      "requires": [
+        "jump",
+        "grab",
+        "climb_left",
+        "climb_right"
+      ],
+      "inputs": [
+        "Faire un climbjump depuis le pixel du bas d'un mur, sous un rebord."
+      ],
+      "timing": "Précision sous-pixel, quasi frame-perfect.",
+      "explanation_fr": "Technique de très haut niveau qui exploite les sous-pixels pour passer sous un rebord. Réservée aux joueurs experts et aux TAS.",
+      "explanation_en": "A very high-level tech exploiting subpixels to get under a ledge. Expert / TAS territory.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "overhangs",
+      "name": "Overhangs",
+      "aka": [
+        "4tile",
+        "5tile",
+        "6tile"
+      ],
+      "category": "expert",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Faire un wallkick ou wallboost sous le bord d'un plafond, puis remonter par-dessus."
+      ],
+      "timing": "Fenêtres de l'ordre du dixième de pixel pour 5tile/6tile.",
+      "explanation_fr": "Franchir un surplomb (plafond qui déborde) sans dash. Les versions longues sont extrêmement précises.",
+      "explanation_en": "Clearing an overhanging ceiling without a dash. Long versions are extremely precise.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "bubsdrop",
+      "name": "Bubsdrop",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "En entrant dans un écran par le bas, faire un wallkick ou climbjump (ou un petit saut) pour casser l'élan vers le haut.",
+        "Retomber pour déclencher la transition vers le bas."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "Après une transition d'écran verticale vers le haut, on annule l'élan pour ne pas atterrir sur une plateforme à sens unique et revenir à l'écran du dessous. Utilisé dans Mirror Temple B-Side.",
+      "explanation_en": "After an upward screen transition, you cancel the upward momentum so you do not land on a one-way platform and can drop back to the screen below. Used in Mirror Temple B-Side.",
+      "vanilla_where": "Mirror Temple B-Side (5B)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "waterboost",
+      "name": "Waterboost",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "À la surface de l'eau, sauter de façon répétée."
+      ],
+      "timing": "Chaque saut donne 40 de vitesse horizontale.",
+      "explanation_fr": "Sauter à la surface de l'eau ajoute de la vitesse horizontale à chaque saut. Un humain en enchaîne en général deux ou trois.",
+      "explanation_en": "Jumping on the water surface adds horizontal speed each time; humans usually manage two or three in a row.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "pause_buffering",
+      "name": "Pause Buffering",
+      "aka": [],
+      "category": "expert",
+      "requires": [],
+      "inputs": [
+        "Mettre pause, maintenir les entrées voulues, puis reprendre."
+      ],
+      "timing": "Entrées maintenues jusqu'à 6 frames avant la reprise exécutées à la 1re frame.",
+      "explanation_fr": "Mettre le jeu en pause pour préparer des entrées difficiles. Utile pour s'entraîner frame par frame, généralement mal vu en run normal.",
+      "explanation_en": "Pausing to prepare hard inputs. Useful for frame-by-frame practice; generally frowned upon in normal runs.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "fastbubbling",
+      "name": "Fastbubbling",
+      "aka": [
+        "Fastbubble",
+        "fast bubble"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "bubble"
+      ],
+      "inputs": [
+        "Dans une bulle (verte ou rouge) immobile, appuyer sur Dash (avec la direction voulue)."
+      ],
+      "timing": "Dès l'entrée dans la bulle; ne consomme pas de dash.",
+      "explanation_fr": "Normalement la bulle attend un instant avant de partir. En appuyant sur Dash à l'intérieur, elle part immédiatement dans la direction choisie, ce qui fait gagner du temps sans utiliser de dash.",
+      "explanation_en": "Normally a bubble waits a moment before launching. Pressing dash inside makes it leave immediately in the chosen direction, saving time without spending a dash.",
+      "vanilla_where": "Golden Ridge (4À) - bulles",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Boosters",
+          "url": "https://celeste.ink/wiki/Bubble"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "bubble_super_hyper",
+      "name": "Bubble Super/Hyper",
+      "aka": [
+        "bubble hyper",
+        "bubble super"
+      ],
+      "category": "advanced",
+      "requires": [
+        "bubble",
+        "jump"
+      ],
+      "inputs": [
+        "Entrer dans une bulle depuis le sol en tamponnant les entrées du super/hyper.",
+        "À la sortie (moins de 5 frames après avoir quitté le sol), exécuter le saut."
+      ],
+      "timing": "Dans les 5 frames après avoir quitté le sol.",
+      "explanation_fr": "La bulle remplace le dash: en entrant dans une bulle depuis le sol et en enchaînant un saut, on obtient un super ou un hyper. Cela permet ces techniques sans dépenser son propre dash.",
+      "explanation_en": "The bubble stands in for the dash: entering a bubble from the ground and jumping out yields a super or hyper, without spending your own dash.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Boosters",
+          "url": "https://celeste.ink/wiki/Bubble"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "bubble_wallbounce",
+      "name": "Bubble wallbounce",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "bubble",
+        "jump"
+      ],
+      "inputs": [
+        "Sortir d'une bulle vers le haut le long d'un mur.",
+        "Appuyer sur Saut pour un wallbounce utilisant l'élan de la bulle."
+      ],
+      "timing": "Comme un wallbounce.",
+      "explanation_fr": "Variante du wallbounce où l'élan vient de la bulle au lieu d'un dash. Introduite dans Golden Ridge C-Side.",
+      "explanation_en": "A wallbounce variant where the momentum comes from a bubble instead of a dash. Introduced in Golden Ridge C-Side.",
+      "vanilla_where": "Golden Ridge C-Side (4C)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Wallbounces",
+          "url": "https://celeste.ink/wiki/Wallbounces"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "archie",
+      "name": "Archie",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "bubble",
+        "crouch"
+      ],
+      "inputs": [
+        "Entrer dans une bulle en étant accroupi (par ex. via un demodash)."
+      ],
+      "timing": "Aucune.",
+      "explanation_fr": "Entrer accroupi dans une bulle remonte la hitbox de Madeline de 2 pixels, ce qui peut permettre de passer un obstacle. Utilisé dans 4À et 5À.",
+      "explanation_en": "Entering a bubble crouched raises Madeline's hitbox by 2 pixels, which can clear an obstacle. Used in 4A and 5A.",
+      "vanilla_where": "Golden Ridge (4À), Mirror Temple (5À)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Boosters",
+          "url": "https://celeste.ink/wiki/Bubble"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Demodash",
+          "url": "https://celeste.ink/wiki/Demodash"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dream_jump",
+      "name": "Dream Jump",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [
+        "dream_block",
+        "jump"
+      ],
+      "inputs": [
+        "Traverser un dream block en dashant.",
+        "Appuyer sur Saut à la sortie (tampon avant ou coyote après)."
+      ],
+      "timing": "Fenêtre de 13 frames: 5 de tampon, la frame de sortie, 3 de gel, 5 de coyote. Sortie 240 de vitesse, +40 avec le saut.",
+      "explanation_fr": "Sauter en sortant d'un dream block garde l'élan et ajoute de la hauteur. La fenêtre est généreuse grâce au tampon et au coyote time.",
+      "explanation_en": "Jumping as you exit a dream block keeps the momentum and adds height. The window is generous thanks to buffering and coyote time.",
+      "vanilla_where": "Old Site (2À) - dream blocks",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dream tech",
+          "url": "https://celeste.ink/wiki/Dream_tech"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dream_double_jump",
+      "name": "Dream Double Jump",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "dream_block",
+        "jump"
+      ],
+      "inputs": [
+        "Tamponner un premier saut à la sortie du dream block.",
+        "Faire un second saut pendant les frames de coyote."
+      ],
+      "timing": "Second saut dans les 5 frames de coyote. Vitesse 320.",
+      "explanation_fr": "Deux sauts rapides à la sortie d'un dream block: grande vitesse et hauteur de saut normale, sans consommer de dash.",
+      "explanation_en": "Two quick jumps out of a dream block: high speed and normal jump height without using a dash.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dream tech",
+          "url": "https://celeste.ink/wiki/Dream_tech"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dream_hyper",
+      "name": "Dream Hyper",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "dream_block",
+        "jump",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Sortir d'un dream block.",
+        "Pendant les frames de coyote, faire un hyper (dash diagonal bas + saut)."
+      ],
+      "timing": "Le wiki donne une fenêtre de 4 à 8 frames après la sortie (8 pour un demohyper); le Celeste Dictionary parle de 5 frames de coyote. Vitesse 325.",
+      "explanation_fr": "Un hyperdash enchaîné juste à la sortie d'un dream block. Il donne la vitesse d'un hyper mais consomme le dash. Impossible si on est entre accroupi ou verticalement.",
+      "explanation_en": "A hyperdash right after leaving a dream block. It gives hyper speed but uses up the dash; not possible if you entered crouched or vertically.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dream tech",
+          "url": "https://celeste.ink/wiki/Dream_tech"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "dream_grab",
+      "name": "Dream Grab",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "dream_block",
+        "grab"
+      ],
+      "inputs": [
+        "En sortant d'un dream block, tenir Grab et la direction opposée (tamponnable)."
+      ],
+      "timing": "Peut être tamponné avant la sortie.",
+      "explanation_fr": "Au lieu d'être éjectée, Madeline s'accroche au côté du dream block par lequel elle sort. Impossible si ce côté a des pics ou un mur de glace.",
+      "explanation_en": "Instead of being launched, Madeline grabs the side of the dream block she exits. Not possible if that side has spikes or an ice wall.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Dream tech",
+          "url": "https://celeste.ink/wiki/Dream_tech"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "jelly_regrab",
+      "name": "Theo/Jelly Regrabs",
+      "aka": [
+        "Jelly Regrab",
+        "Theo regrab",
+        "regrab"
+      ],
+      "category": "advanced",
+      "requires": [
+        "holdable",
+        "grab"
+      ],
+      "inputs": [
+        "Lancer la méduse (ou le cristal de Theo) en l'air.",
+        "Dasher immédiatement dans l'objet (souvent en diagonale) en tenant Grab pour le rattraper."
+      ],
+      "timing": "Non chiffré; plus difficile avec Theo (objet plus lourd).",
+      "explanation_fr": "On lance l'objet puis on dash dedans pour le rattraper: le dash est annulé mais sa vitesse est conservée. Cela donne hauteur et distance avec la méduse ou le cristal.",
+      "explanation_en": "Throw the item then dash into it to catch it again: the dash is cancelled but its speed is kept, giving height and distance with the jellyfish or crystal.",
+      "vanilla_where": "Jellyfish: Farewell - Power Source",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Farewell",
+          "url": "https://celeste.ink/wiki/Farewell"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "neutral_drop",
+      "name": "Neutral Drop",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [
+        "holdable",
+        "grab"
+      ],
+      "inputs": [
+        "En portant un objet, tenir Bas et relâcher Grab."
+      ],
+      "timing": "Aucune.",
+      "explanation_fr": "Lâche l'objet sur place, sans vitesse horizontale, au lieu de le lancer. Base des techniques de jellyvator, stall et neutral jump avec objet.",
+      "explanation_en": "Drops the item in place with no horizontal speed instead of throwing it. The basis of vators, stalls and holdable neutral jumps.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "holdable_stall",
+      "name": "Holdable Stall",
+      "aka": [
+        "Theo Stall",
+        "Jelly Ladder",
+        "jelly laddering"
+      ],
+      "category": "advanced",
+      "requires": [
+        "holdable",
+        "grab"
+      ],
+      "inputs": [
+        "Faire un neutral drop.",
+        "Rattraper l'objet très vite.",
+        "Avec deux méduses, alterner (jelly laddering)."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "Lâcher puis reprendre rapidement l'objet pour rester plus longtemps en l'air. Avec deux méduses, on peut s'en servir comme une échelle.",
+      "explanation_en": "Dropping and quickly regrabbing the item to stay airborne longer; with two jellyfish you can use them like a ladder.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "jellyvator",
+      "name": "Jellyvator / Theovator",
+      "aka": [
+        "Theovator",
+        "Vator"
+      ],
+      "category": "advanced",
+      "requires": [
+        "holdable",
+        "grab",
+        "dash_u"
+      ],
+      "inputs": [
+        "Tenir Bas et relâcher Grab (neutral drop).",
+        "Dasher vers le haut dans l'objet en tenant Grab pour le rattraper."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "On lâche l'objet puis on dash vers le haut dedans pour le reprendre: le dash est annulé mais la vitesse est conservée, ce qui fait monter.",
+      "explanation_en": "Drop the item, then dash up into it to regrab it: the dash cancels but the momentum is kept, so you rise.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "throwable_backboost",
+      "name": "Throwable Backboost",
+      "aka": [
+        "Backboost"
+      ],
+      "category": "intermediate",
+      "requires": [
+        "holdable"
+      ],
+      "inputs": [
+        "Se retourner brièvement.",
+        "Lancer l'objet vers l'arrière."
+      ],
+      "timing": "Donne 80 de vitesse à l'opposé du lancer.",
+      "explanation_fr": "Lancer un objet pousse Madeline dans la direction opposée. En lançant vers l'arrière, on gagne de la vitesse vers l'avant.",
+      "explanation_en": "Throwing an item pushes Madeline the opposite way, so throwing backward gains forward speed.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "holdable_slash",
+      "name": "Holdable Slash",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "holdable",
+        "grab"
+      ],
+      "inputs": [
+        "Lancer l'objet puis le rattraper avec un dash vers l'avant."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "Reprendre un objet en dashant vers l'avant pour garder la vitesse du dash.",
+      "explanation_en": "Regrabbing a holdable with a forward dash to keep the dash speed.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "holdable_neutral_jump",
+      "name": "Holdable Neutral Jump",
+      "aka": [
+        "Jelly Neutrals"
+      ],
+      "category": "advanced",
+      "requires": [
+        "holdable",
+        "grab",
+        "jump"
+      ],
+      "inputs": [
+        "Theo: neutral jump normal en portant le cristal.",
+        "Méduse: neutral drop, aller au mur, neutral jump, reprendre la méduse."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "Grimper un mur en neutral jumps tout en gardant un objet. Avec la méduse il faut la lâcher et la reprendre à chaque cycle.",
+      "explanation_en": "Climbing a wall with neutral jumps while keeping an item; with a jellyfish you drop and regrab it each cycle.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "theo_jelly_ultras",
+      "name": "Theo/Jelly Ultras",
+      "aka": [],
+      "category": "expert",
+      "requires": [
+        "holdable",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Faire un grounded ultra.",
+        "L'annuler en reprenant un objet (regrab)."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "Utiliser le regrab d'un objet pour annuler un grounded ultra et conserver beaucoup plus de vitesse.",
+      "explanation_en": "Using an item regrab to cancel a grounded ultra and keep much more speed.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "featherboost",
+      "name": "Featherboost",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "feather"
+      ],
+      "inputs": [
+        "Tenir une diagonale à la toute première frame de vol avec la plume."
+      ],
+      "timing": "1re frame de l'état plume.",
+      "explanation_fr": "Entrer dans l'état plume en tenant une diagonale donne un supplément de vitesse.",
+      "explanation_en": "Holding a diagonal on the first frame of feather flight gives extra speed.",
+      "vanilla_where": "Plumes: Reflection (6À)",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Feather",
+          "url": "https://celeste.ink/wiki/Feather"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "feather_super",
+      "name": "Feather Super",
+      "aka": [
+        "Fuper"
+      ],
+      "category": "advanced",
+      "requires": [
+        "feather",
+        "jump"
+      ],
+      "inputs": [
+        "En vol avec la plume, en se déplaçant horizontalement le long d'une surface, appuyer sur Saut."
+      ],
+      "timing": "Non chiffré.",
+      "explanation_fr": "Un saut fait pendant le vol avec la plume, le long d'un sol, donne un saut long et rapide.",
+      "explanation_en": "A jump performed during feather flight along a surface gives a long, fast jump.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "feather_clip",
+      "name": "Feather Clip",
+      "aka": [],
+      "category": "expert",
+      "requires": [
+        "feather"
+      ],
+      "inputs": [
+        "Toucher une plateforme traversable (jumpthrough) en mode plume, vers la fin de la plume."
+      ],
+      "timing": "Vers la fin de la durée de la plume.",
+      "explanation_fr": "Technique de clip qui permet de traverser une plateforme en exploitant la hitbox de la plume. Surtout du speedrun.",
+      "explanation_en": "A clip that passes through a jumpthrough platform by exploiting the feather hitbox. Mostly speedrun.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cassette_boost",
+      "name": "Reform Boost (Cassette Boost)",
+      "aka": [
+        "Cassette Boost",
+        "Reform Boost"
+      ],
+      "category": "advanced",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Se placer là où un bloc cassette va réapparaître.",
+        "Sauter à la frame où le bloc se reforme."
+      ],
+      "timing": "Première frame active du bloc; ne peut pas être tamponné.",
+      "explanation_fr": "Sauter au moment exact ou un bloc cassette réapparaît projette Madeline plus haut que la normale.",
+      "explanation_en": "Jumping exactly as a cassette block reforms snaps Madeline upward for extra height.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cassette_raise",
+      "name": "Cassette Raise",
+      "aka": [],
+      "category": "expert",
+      "requires": [],
+      "inputs": [
+        "Rester à l'intérieur d'un bloc cassette pendant qu'il s'active puis se désactive."
+      ],
+      "timing": "Répétable à chaque cycle.",
+      "explanation_fr": "Chaque cycle fait monter le bloc cassette de 2 pixels. Technique de niche.",
+      "explanation_en": "Each cycle moves the cassette block up 2 pixels. A niche technique.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "core_hyper_super",
+      "name": "Core Hyper/Super",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "jump",
+        "dash_l",
+        "dash_r",
+        "dash_dl",
+        "dash_dr"
+      ],
+      "inputs": [
+        "Se tenir sur un bloc de Core (qui casse).",
+        "Pendant les frames de coyote après sa destruction, faire un hyper ou un super."
+      ],
+      "timing": "Frames de coyote du bloc de Core.",
+      "explanation_fr": "Un hyper ou super fait juste après la casse d'un bloc de Core cumule l'élan du bloc et celui de la technique, pour aller très loin.",
+      "explanation_en": "A hyper or super right after a Core block breaks stacks the block's boost with the tech, for a very long jump.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        },
+        {
+          "title": "Celeste Wiki (celeste.ink) - Hyperdashes",
+          "url": "https://celeste.ink/wiki/Hyperdashes"
+        },
+        {
+          "title": "The Celeste Dictionary (Google Doc, community)",
+          "url": "https://docs.google.com/document/d/13K5XuV2u54lLdKR_oWLNxE6on4GerDJ4GjHy1sQJfDk/"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "cloud_jump",
+      "name": "Cloud Jump",
+      "aka": [],
+      "category": "intermediate",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "Sauter depuis un nuage au point le plus haut de son rebond."
+      ],
+      "timing": "Au sommet du mouvement du nuage.",
+      "explanation_fr": "Sauter au bon moment sur un nuage ajoute son élan vertical au saut. On peut aussi faire un hyper ou un super depuis un nuage.",
+      "explanation_en": "Jumping at the right moment on a cloud adds its vertical boost to the jump; hypers and supers off clouds are also possible.",
+      "vanilla_where": "",
+      "sources": [
+        {
+          "title": "Celeste Wiki (celeste.ink) - Techniques",
+          "url": "https://celeste.ink/wiki/Techniques"
+        }
+      ],
+      "verified": true
+    },
+    {
+      "id": "grabless",
+      "name": "Grabless",
+      "aka": [],
+      "category": "advanced",
+      "requires": [
+        "jump"
+      ],
+      "inputs": [
+        "(Non documenté) Progresser sans utiliser Grab: wallkicks, neutral jumps, cornerkicks, wallbounces."
+      ],
+      "timing": "Inconnu.",
+      "explanation_fr": "Terme communautaire pour jouer sans attraper les murs. Les sources consultées ne le décrivent pas comme une technique; seuls la variante d'assistance 'No Grabbing' et le 'Holdable Grabless Dream Hyper' y apparaissent.",
+      "explanation_en": "Community term for playing without grabbing walls. The consulted sources do not describe it as a technique; only the 'No Grabbing' variant and the 'Holdable Grabless Dream Hyper' appear.",
+      "vanilla_where": "",
+      "sources": [],
+      "verified": false
+    }
+  ]
+}

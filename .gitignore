@@ -1,0 +1,19 @@
+# Code of other projects, downloads, local backups
+upstream/
+downloads/
+backup_saves/
+# Build outputs and generated archives (published as GitHub releases, not in git)
+bin/
+obj/
+*.zip
+*.apworld
+__pycache__/
+*.pyc
+# Generated seeds and test runs
+v1/output/
+tools/venv/
+tools/out/
+tools/mass_gen_failures/
+tools/last_gen.log
+# Screenshots of the Open World mod (its art is "All rights reserved"): local reference only
+docs/ref_openworld_ui/*.webp

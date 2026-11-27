@@ -1,0 +1,51 @@
+{
+ "_doc": "French texts of the options, for the YAML generators (web page and in-game menu). Keys = option ids of Options.py; tools/export_options_schema.py merges them into the shared schema.",
+ "groups": {
+  "Goal": "Objectif",
+  "Chapters": "Chapitres et salles",
+  "Logic": "Difficulté",
+  "Movement": "Mouvements et objets",
+  "Locations": "Checks",
+  "Other": "Divers"
+ },
+ "presets": {
+  "Beginner": "Débutant",
+  "Normal": "Normal",
+  "Advanced": "Avancé",
+  "Expert": "Expert",
+  "Maximum Variety": "Variété maximale"
+ },
+ "options": {
+  "logic_difficulty": ["Logique (mouvements attendus)", "Ce que la logique suppose que tu sais faire. Intention des développeurs : ce que le jeu apprend au premier passage. Mouvements du jeu de base : toute technique enseignée quelque part dans le jeu. Mode assistance : invincibilité, dashs et endurance infinis."],
+  "room_shuffle": ["Salles mélangées", "Les salles de chaque chapitre sont placées dans un ordre aléatoire (toujours finissable)."],
+  "room_difficulty": ["Difficulté des salles", "Niveaux de rhelmot : quelles salles et quels passages les cartes mélangées peuvent utiliser. Plus haut = plus de salles possibles, des passages plus exigeants."],
+  "room_coverage": ["Couverture des salles (%)", "Part des salles d'un chapitre que le générateur essaie de placer. Plus haut = plus de variété (génération un peu plus longue). Les culs-de-sac à une seule ouverture peuvent rester hors de la carte."],
+  "dash_shuffle": ["Dash mélangé", "Aucun : dash normal. Unifié : un objet Dash donne les 8 directions. Cardinal souple : 4 objets, chaque direction donne aussi ses diagonales voisines. Cardinal strict : 4 objets, une diagonale demande ses deux directions. Octal : un objet par direction."],
+  "climb_shuffle": ["Grimper mélangé", "Aucun : normal. Unifié : un objet Climb. Séparé : grimper à gauche et à droite sont deux objets."],
+  "crouch_shuffle": ["S'accroupir mélangé", "S'accroupir est un objet."],
+  "wall_jump_shuffle": ["Saut mural mélangé", "Le saut contre un mur est un objet."],
+  "demo_dash_shuffle": ["Demo Dash mélangé", "Le dash accroupi (demodash) est un objet."],
+  "keysanity": ["Clés en objets", "Chaque clé de porte est un objet, trouvable dans n'importe quel monde ; l'endroit de la clé reste un check."],
+  "interactable_shuffle": ["Objets du décor mélangés", "Les 36 objets interactifs (ressorts, plumes, bulles, blocs...) sont absents tant que leur objet n'est pas reçu."],
+  "include_b_sides": ["Faces B", "Ajoute les faces B."],
+  "include_c_sides": ["Faces C", "Ajoute les faces C."],
+  "include_core": ["Cœur (chapitre 8)", "Ajoute le chapitre Cœur."],
+  "include_farewell": ["Adieu (chapitre 9)", "Ajoute Adieu (Farewell)."],
+  "goal_area": ["Chapitre objectif", "Le chapitre à finir pour gagner. Il s'ouvre quand tu as reçu assez de fraises."],
+  "total_strawberries": ["Fraises au total", "Nombre d'objets Fraise dans la partie."],
+  "strawberries_required_percentage": ["Fraises requises (%)", "Part des fraises qui ouvre le chapitre objectif."],
+  "roomsanity": ["Checks des salles", "Entrer dans une salle pour la première fois est un check."],
+  "checkpointsanity": ["Checkpoints en objets", "Chaque checkpoint est un objet : il débloque le départ depuis ce checkpoint."],
+  "death_link": ["Death Link", "Quand un joueur meurt, les autres aussi."]
+ },
+ "choices": {
+  "developer_intended": "Intention des développeurs",
+  "vanilla_movement": "Mouvements du jeu de base",
+  "assist_mode": "Mode assistance",
+  "easy": "Facile", "normal": "Normal", "hard": "Difficile", "expert": "Expert", "master": "Maître", "perfect": "Parfait",
+  "none": "Aucun", "unified": "Unifié", "cardinal_loose": "Cardinal souple", "cardinal_restrictive": "Cardinal strict", "octal": "Octal (8 objets)",
+  "split": "Séparé (gauche / droite)",
+  "the_summit_a": "Le Sommet A", "the_summit_b": "Le Sommet B", "the_summit_c": "Le Sommet C",
+  "core_a": "Cœur A", "core_b": "Cœur B", "core_c": "Cœur C", "farewell": "Adieu"
+ }
+}

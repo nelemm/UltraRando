@@ -1,0 +1,599 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.IO;
+using System.Text.RegularExpressions;
+using Monocle;
+using YamlDotNet.Core;
+using YamlDotNet.Serialization;
+using Microsoft.Xna.Framework;
+using MonoMod.Utils;
+using Microsoft.Xna.Framework.Graphics;
+using YamlDotNet.Core.Tokens;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable CollectionNeverUpdated.Global
+// ReSharper disable UnassignedField.Global
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedMember.Global
+// ReSharper disable AutoPropertyCanBeMadeGetOnly.Global
+
+namespace Celeste.Mod.UltraRando {
+    public class RandoConfigFile {
+        // null means the side does not exist. zero rooms means the side needs to be lazy-loaded
+        public List<RandoConfigRoom> ASide { get; set; }
+        public List<RandoConfigRoom> BSide { get; set; }
+        public List<RandoConfigRoom> CSide { get; set; }
+
+        public Dictionary<char, char> RedirectFGTiles = new Dictionary<char, char>();
+
+        public string ConfigPath;
+        public string ModName;
+
+        public static RandoConfigFile LoadAll(AreaData area, bool lazy = true) {
+            var result = LoadSingle($"CMRConfig/{area.SID}.rando", false);
+            if (result != null) {
+                return result;
+            }
+
+            result = new RandoConfigFile();
+            var partialResult = LoadSingle($"CMRConfig/{area.SID}.A.rando", lazy);
+            if (partialResult?.ASide != null) {
+                result.ASide = partialResult.ASide;
+            }
+            partialResult = LoadSingle($"CMRConfig/{area.SID}.B.rando", lazy);
+            if (partialResult?.BSide != null) {
+                result.BSide = partialResult.BSide;
+            }
+            partialResult = LoadSingle($"CMRConfig/{area.SID}.C.rando", lazy);
+            if (partialResult?.CSide != null) {
+                result.CSide = partialResult.CSide;
+            }
+
+            if (result.ASide == null && result.BSide == null && result.CSide == null) {
+                // is this necessary? not sure
+                return null;
+            }
+            return result;
+        }
+
+        public static RandoConfigFile LoadSingle(string fullPath, bool lazy = true) {
+            Logger.Log("randomizer", $"Loading config from {fullPath}");
+            if (!Everest.Content.TryGet(fullPath, out ModAsset asset)) {
+                Logger.Log("randomizer", "...not found");
+                return null;
+            } else if (lazy) {
+                return new RandoConfigFile {
+                    ConfigPath = asset.PathVirtual,
+                    ModName = asset.Source.Name,
+                    ASide = new List<RandoConfigRoom>(),
+                    BSide = new List<RandoConfigRoom>(),
+                    CSide = new List<RandoConfigRoom>(),
+                };
+            } else {
+                using (StreamReader reader = new StreamReader(asset.Stream)) {
+                    try {
+                        var result = YamlHelper.Deserializer.Deserialize<RandoConfigFile>(reader);
+                        result.ConfigPath = asset.PathVirtual;
+                        result.ModName = asset.Source.Name;
+                        return result;
+                    } catch (YamlException e) {
+                        throw new Exception($"Error parsing {fullPath}", e);
+                    }
+                }
+            }
+        }
+
+        public static RandoConfigFile LazyReload(AreaKey key) {
+            char side;
+            switch (key.Mode) {
+                case AreaMode.Normal:
+                    side = 'A';
+                    break;
+                case AreaMode.BSide:
+                    side = 'B';
+                    break;
+                case AreaMode.CSide:
+                    side = 'C';
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            var path = $"CMRConfig/{key.GetSID()}.{side}.rando";
+            return LoadSingle(path, false);
+        }
+
+        public static void YamlSkeleton(MapData map, bool doUnknown = true) {
+            foreach (LevelData lvl in map.Levels) {
+                if (lvl.Dummy) {
+                    continue;
+                }
+                List<Hole> holes = RandoLogic.FindHoles(lvl);
+                if (holes.Count > 0) {
+                    SkeletonOutput += $"  - Room: \"{lvl.Name}\"\n";
+                    SkeletonOutput += $"    HoldsOfSide:\n";
+                }
+
+                ScreenDirection lastDirection = (ScreenDirection)(-1);
+                int holeIdx = -1;
+                foreach (Hole hole in holes) {
+                    if (hole.Side == lastDirection) {
+                        holeIdx++;
+                    } else {
+                        holeIdx = 0;
+                        lastDirection = hole.Side;
+                        SkeletonOutput += $"    - Side: {lastDirection}\n";
+                        SkeletonOutput += $"      Holes:\n";
+                    }
+
+                    LevelData targetLvl = map.GetAt(hole.LowCoord(lvl.Bounds)) ?? map.GetAt(hole.HighCoord(lvl.Bounds));
+                    var unknown = targetLvl == null || targetLvl.Dummy;
+                    if (unknown && !doUnknown) {
+                        continue;
+                    }
+                    SkeletonOutput += $"      - Idx: {holeIdx}\n";
+                    SkeletonOutput += $"        Kind: {(unknown ? "unknown" : "inout")}\n";
+                }
+            }
+        }
+
+        public static void YamlSkeleton(AreaData area, bool doUnknown = true) {
+            if (area.Mode[0] != null) {
+                SkeletonOutput += "ASide:\n";
+                YamlSkeleton(area.Mode[0].MapData, doUnknown);
+            }
+            if (area.Mode.Length > 1 && area.Mode[1] != null) {
+                SkeletonOutput += "BSide:\n";
+                YamlSkeleton(area.Mode[1].MapData, doUnknown);
+            }
+            if (area.Mode.Length > 2 && area.Mode[2] != null) {
+                SkeletonOutput += "CSide:\n";
+                YamlSkeleton(area.Mode[2].MapData, doUnknown);
+            }
+        }
+
+        [Command("cmr_rando_skeleton", "Dumps a starting point for a rando.yaml configuration for a given map to log.txt")]
+        public static void YamlSkeletonCommand(string sid, bool doUnknown = true) {
+
+            sid = (sid == "*" || string.IsNullOrEmpty(sid)) && Engine.Scene is Level level ? level.Session.Area.GetSID() : sid;
+            var area = AreaData.Get(sid);
+            if (area == null) {
+                Logger.Log("randomizer", $"Does {sid} not exist");
+            }
+
+            SkeletonOutput = "\n";
+            YamlSkeleton(area, doUnknown);
+            Logger.Log("randomizer", $"{sid}.rando.yaml skeleton: {SkeletonOutput}");
+        }
+        public static string SkeletonOutput;
+
+        public List<RandoConfigRoom> GetRooms(AreaMode mode) {
+            switch (mode) {
+                case AreaMode.Normal:
+                default:
+                    return this.ASide;
+                case AreaMode.BSide:
+                    return this.BSide;
+                case AreaMode.CSide:
+                    return this.CSide;
+            }
+        }
+    }
+
+    public class RandoConfigRoom {
+
+        public string Room;
+        public List<RandoConfigCollectable> Collectables {
+            get => _Collectables;
+            set {
+                foreach (RandoConfigCollectable col in value) {
+                    if (col.ReqIn != null || col.ReqOut != null) {
+                        InternalEdges.Add(new RandoConfigInternalEdge() {
+                            Collectable = col.Idx,
+                            MustFly = col.MustFly,
+                            ReqIn = col.ReqIn,
+                            ReqOut = col.ReqOut,
+                        });
+                    } else {
+                        _Collectables.Add(col);
+                    }
+                }
+            }
+        }
+        private List<RandoConfigCollectable> _Collectables = new List<RandoConfigCollectable>();
+
+
+        public List<RandoConfigHole> Holes { get; set; } = new List<RandoConfigHole>();
+        public List<RandoConfigHolesOfSide> HoldsOfSide {
+            get => null; set {
+                foreach (RandoConfigHolesOfSide side in value) {
+                    foreach (var hold in side.Holes) {
+                        hold.Side = side.Side;
+                        Holes.Add(hold);
+                    }
+                }
+            }
+        }
+
+
+        public List<RandoConfigRoom> Subrooms { get; set; }
+        public List<RandoConfigInternalEdge> InternalEdges { get; set; } = new List<RandoConfigInternalEdge>();
+
+        public bool End {
+            get => this.ReqEnd != null;
+            set => this.ReqEnd = value ? new RandoConfigReq() : null;
+        }
+
+        public RandoConfigReq ReqEnd { get; set; }
+        public bool Hub { get; set; }
+        public List<RandoConfigEdit> Tweaks { get; set; }
+        public RandoConfigCoreMode Core { get; set; }
+        public List<RandoConfigRectangle> ExtraSpace { get; set; }
+        public float? Worth;
+        public bool SpinnersShatter;
+        public bool ForceMovingSpinnerToDust;
+
+        public List<string> Flags;
+    }
+
+    public class RandoConfigRectangle {
+        public int X, Y;
+        public int Width, Height;
+    }
+
+    public class RandoConfigHole {
+
+        public ScreenDirection Side { get; set; }
+        public int Idx { get; set; }
+
+        public int? LowBound { get; set; }
+        public int? HighBound { get; set; }
+        public string Bound {
+            get => null; set {
+                if (value.Split(new char[] { ',' }, 2, StringSplitOptions.None) is string[] array && array.Length == 2 && int.TryParse(array[0], out int lowBound) && int.TryParse(array[1], out int highBound)) {
+                    LowBound = lowBound;
+                    HighBound = highBound;
+                }
+            }
+        }
+
+
+        public bool? HighOpen { get; set; }
+
+        public RandoConfigReq ReqIn { get; set; }
+        public RandoConfigReq ReqOut { get; set; }
+        public RandoConfigReq ReqBoth {
+            get => null; set {
+                this.ReqIn = value;
+                this.ReqOut = value;
+            }
+        }
+        public HoleKind Kind { get; set; }
+        public int? Launch;
+        public bool New;
+        public RandoConfigHole Split;
+    }
+
+    public class RandoConfigCollectable {
+        public int? Idx;
+        public int? X;
+        public int? Y;
+        public bool MustFly;
+
+        public RandoConfigReq ReqIn { get; set; }
+        public RandoConfigReq ReqOut { get; set; }
+        public RandoConfigReq ReqBoth {
+            get => null; set {
+                this.ReqIn = value;
+                this.ReqOut = value;
+            }
+        }
+    }
+
+    public class RandoConfigInternalEdge {
+        public String To { get; set; }
+        public String Warp { get; set; }
+        public RandoConfigReq ReqIn { get; set; }
+        public RandoConfigReq ReqOut { get; set; }
+        public RandoConfigReq ReqBoth {
+            get => null;
+
+            set {
+                this.ReqIn = value;
+                this.ReqOut = value;
+            }
+        }
+
+        public enum SplitKind {
+            TopToBottom,
+            BottomToTop,
+            LeftToRight,
+            RightToLeft,
+        }
+
+        public SplitKind? Split;
+
+        public int? Collectable;
+        public bool MustFly;
+        public bool CustomWarp;
+    }
+
+    public class RandoConfigReq {
+        public List<RandoConfigReq> And;
+        public List<RandoConfigReq> Or;
+
+        public Difficulty Difficulty = Difficulty.Normal;
+        public NumDashes? Dashes;
+        public bool Key;
+        public int? KeyholeID;
+        public string Flag;
+    }
+
+    public class RandoConfigEdit {
+        public String Name { get; set; }
+        public int? ID { get; set; }
+        public float? X { get; set; }
+        public float? Y { get; set; }
+        public RandoConfigDecalType Decal { get; set; }
+        public RandoConfigUpdate Update { get; set; }
+
+        [YamlIgnore]
+        public bool Done;
+
+        public override string ToString() {
+            string o = $"{Name ?? "*"}:{(ID == null ? "*" : ID.ToString())}, X:{(X == null ? "*" : X.ToString())}, Y:{(Y == null ? "*" : Y.ToString())}";
+            if (Decal != RandoConfigDecalType.None) {
+                o += $" {Decal}";
+            }
+
+            return o;
+        }
+    }
+
+    public class RandoConfigUpdate {
+        public bool Remove { get; set; }
+        public bool Add { get; set; }
+        public bool Default { get; set; }
+
+        public string Name { get; set; }
+        public float? X { get; set; }
+        public float? Y { get; set; }
+        public int? Width { get; set; }
+        public int? Height { get; set; }
+        public float? ScaleX { get; set; }
+        public float? ScaleY { get; set; }
+        public List<RandoConfigNode> Nodes { get; set; }
+        public Dictionary<string, string> Values { get; set; }
+        public string Tile;
+    }
+
+    public enum RandoConfigDecalType {
+        None, FG, BG,
+    }
+
+    public class RandoConfigNode {
+        public int Idx { get; set; }
+        public float? X { get; set; }
+        public float? Y { get; set; }
+    }
+
+    public class RandoConfigCoreMode {
+        private Session.CoreModes? left, right, up, down;
+        public Session.CoreModes All = Session.CoreModes.None;
+
+        public Session.CoreModes Left {
+            get => left ?? All;
+            set => left = value;
+        }
+
+        public Session.CoreModes Right {
+            get => right ?? All;
+            set => right = value;
+        }
+
+        public Session.CoreModes Up {
+            get => up ?? All;
+            set => up = value;
+        }
+
+        public Session.CoreModes Down {
+            get => down ?? All;
+            set => down = value;
+        }
+    }
+
+    public class RandoMetadataFile {
+        public string ConfigPath;
+        public string ModName;
+        public List<string> CollectableNames = new List<string>();
+        public List<RandoMetadataMusic> Music = new List<RandoMetadataMusic>();
+        public List<RandoMetadataCampaign> Campaigns = new List<RandoMetadataCampaign>();
+        public List<RandoMetadataBackground>
+            Backgrounds = new List<RandoMetadataBackground>(),
+            BgEffects = new List<RandoMetadataBackground>(),
+            FgEffects = new List<RandoMetadataBackground>();
+
+        public Dictionary<char, string> FGTiles = new Dictionary<char, string>();
+
+        [YamlIgnore] public Dictionary<string, RandoMetadataRuleset> RulesetsDict = new Dictionary<string, RandoMetadataRuleset>();
+
+        public List<RandoMetadataRuleset> Rulesets {
+            get => new List<RandoMetadataRuleset>(this.RulesetsDict.Values);
+            set {
+                foreach (var r in value) {
+                    if (String.IsNullOrEmpty(r.Name)) {
+                        throw new Exception("Rulesets must have Name specified");
+                    }
+                    if (this.RulesetsDict.ContainsKey(r.Name)) {
+                        throw new Exception($"Ruleset name '{r.Name}' is duplicated");
+                    }
+                    this.RulesetsDict[r.Name] = r;
+                }
+            }
+        }
+
+        public void Add(RandoMetadataFile other) {
+            this.CollectableNames.AddRange(other.CollectableNames);
+            this.Music.AddRange(other.Music.Where(t => t.IsLoaded()));
+            this.Campaigns.AddRange(other.Campaigns);
+            this.Backgrounds.AddRange(other.Backgrounds);
+            this.BgEffects.AddRange(other.BgEffects);
+            this.FgEffects.AddRange(other.FgEffects);
+            this.Rulesets = other.Rulesets; // rely on setter behavior to use this as an updater
+
+            if (other.FGTiles is var tiles) {
+                foreach (var t in tiles.Keys) {
+                    if (this.FGTiles.TryGetValue(t, out var t2)) {
+                        Logger.Log(LogLevel.Debug, "randomizer", $"Registering the rando tiles '{t}' from {other.ModName} but it already registered by other mod!");
+                    } else {
+                        this.FGTiles[t] = other.FGTiles[t];
+                        Logger.Log(LogLevel.Debug, "randomizer", $"registered the rando tiles '{t}' from {other.ModName}");
+                    }
+                }
+            }
+        }
+
+        public static RandoMetadataFile LoadAll() {
+            var result = new RandoMetadataFile();
+
+            Regex r = new Regex("^[^\\\\/]+:(/|\\\\).*$");
+            foreach (var kv in Everest.Content.Map.Where(kv => !r.IsMatch(kv.Key) && Path.GetFileName(kv.Value.PathVirtual) == "cmr_rando" && kv.Value.Type == typeof(AssetTypeYaml))) {
+                Logger.Log("randomizer", $"Found metadata {kv.Value.PathVirtual} in {kv.Value.Source.Name}");
+                result.Add(Load(kv.Value));
+            }
+            return result;
+        }
+
+        private static RandoMetadataFile Load(ModAsset asset) {
+            // do not catch errors, they should crash on load
+            using (StreamReader reader = new StreamReader(asset.Stream)) {
+                var result = YamlHelper.Deserializer.Deserialize<RandoMetadataFile>(reader);
+                result.ConfigPath = asset.PathVirtual;
+                result.ModName = asset.Source.Name;
+                return result;
+            }
+        }
+    }
+
+    public class RandoMetadataMusic {
+        public string Name;
+        private float weight = 1;
+        public Dictionary<string, int> Parameters = new Dictionary<string, int>();
+
+        public float Weight {
+            get => this.weight;
+            set => this.weight = (value >= 0 && value <= 3) ? value : 1f;
+        }
+
+        public bool IsLoaded() => Audio.GetEventDescription(this.Name) != null;
+    }
+
+    public class RandoMetadataCampaign {
+        public string Name;
+        public List<RandoMetadataLevelSet> LevelSets;
+    }
+
+    public class RandoMetadataLevelSet {
+        public string Name;
+        public string ID;
+    }
+
+    public class RandoMetadataRuleset {
+        public string Name;
+        private string longName;
+
+        public string LongName {
+            get => this.longName ?? "Ruleset " + this.Name;
+            set => this.longName = value;
+        }
+
+        public List<RandoSettings.AreaKeyNotStupid> EnabledMaps = null;
+        public bool RepeatRooms = false;
+        public bool EnterUnknown = false;
+        public bool Variants = false;
+        public ShineLights Lights = ShineLights.Hubs;
+        public Darkness Darkness = Darkness.Never;
+
+        public LogicType Algorithm = LogicType.Pathway;
+        public MapLength Length = MapLength.Short;
+        public NumDashes Dashes = NumDashes.One;
+        public Difficulty Difficulty = Difficulty.Normal;
+        public DifficultyEagerness DifficultyEagerness = DifficultyEagerness.Medium;
+        public StrawberryDensity Strawberries = StrawberryDensity.None;
+        public int Lives = 0;
+    }
+
+    public class RandoMetadataBackground {
+        public string Texture;
+        public string Effect;
+
+        public int? CoverTop;
+        public int? CoverBottom;
+        public bool? Opaque;
+        public bool? LoopX, LoopY;
+        public bool? FlipX, FlipY;
+        public bool? NeedsColor;
+        public float? ScrollFactorX, ScrollFactorY;
+        public bool? ProvidesWind;
+        public float? Alpha;
+        public float? SpeedX, SpeedY;
+        public int? OffX, OffY;
+        public string BlendMode;
+
+        public RandoMetadataBackground AndThen;
+        public List<RandoMetadataBackground> Or;
+
+        public void Initialize() {
+            //Texture = Texture ?? null
+            //Effect = Effect ?? null
+            CoverTop = CoverTop ?? 0;
+            CoverBottom = CoverBottom ?? 0;
+            Opaque = Opaque ?? false;
+            LoopX = LoopX ?? true;
+            LoopY = LoopY ?? false;
+            FlipX = FlipX ?? false;
+            FlipY = FlipY ?? false;
+            Opaque = Opaque ?? false;
+            ScrollFactorX = ScrollFactorX ?? 1f;
+            ScrollFactorY = ScrollFactorY ?? 1f;
+            NeedsColor = NeedsColor ?? false;
+            ProvidesWind = ProvidesWind ?? false;
+            Alpha = Alpha ?? 1f;
+            SpeedX = SpeedX ?? 0;
+            SpeedY = SpeedY ?? 0;
+            OffX = OffX ?? 0;
+            OffY = OffY ?? 0;
+            BlendMode = BlendMode ?? "alphablend";
+        }
+        public void Initialize(RandoMetadataBackground bg) {
+            bg.Initialize();
+            Texture = Texture ?? bg.Texture;
+            Effect = Effect ?? bg.Effect;
+            CoverTop = CoverTop ?? bg.CoverTop;
+            CoverBottom = CoverBottom ?? bg.CoverBottom;
+            Opaque = Opaque ?? bg.Opaque;
+            LoopX = LoopX ?? bg.LoopX;
+            LoopY = LoopY ?? bg.LoopY;
+            FlipX = FlipX ?? bg.FlipX;
+            FlipY = FlipY ?? bg.FlipY;
+            Opaque = Opaque ?? bg.Opaque;
+            ScrollFactorX = ScrollFactorX ?? bg.ScrollFactorX;
+            ScrollFactorY = ScrollFactorY ?? bg.ScrollFactorY;
+            NeedsColor = NeedsColor ?? bg.NeedsColor;
+            ProvidesWind = ProvidesWind ?? bg.ProvidesWind;
+            Alpha = Alpha ?? bg.Alpha;
+            SpeedX = SpeedX ?? bg.SpeedX;
+            SpeedY = SpeedY ?? bg.SpeedY;
+            OffX = OffX ?? bg.OffX;
+            OffY = OffY ?? bg.OffY;
+            BlendMode = BlendMode ?? bg.BlendMode;
+        }
+    }
+
+    public class RandoConfigHolesOfSide {
+        public ScreenDirection Side { get; set; }
+        public List<RandoConfigHole> Holes { get; set; } = new List<RandoConfigHole>();
+    }
+}

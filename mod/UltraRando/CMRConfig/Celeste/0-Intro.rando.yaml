@@ -1,0 +1,89 @@
+ASide:
+  - Room: "-1"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 16
+        Y: 152
+  - Room: "0"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Up
+      Idx: 1
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 416
+        Y: 0
+        Width: 24
+        Height: 96
+        Values:
+          cameraX: -1
+          cameraY: 0
+    - Name: "fgTiles"
+      X: 44
+      Y: 20
+      Update:
+        Tile: 0
+  - Room: "0b"
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 1
+      Kind: inout
+  - Room: "1"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 432
+        Y: 0
+        Width: 24
+        Height: 96
+        Values:
+          cameraX: -1
+          cameraY: 0
+  - Room: "2"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+  - Room: "3"
+    ReqEnd:
+      Difficulty: easy
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: None

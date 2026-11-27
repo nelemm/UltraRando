@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Générateur de YAML</title>
+<style>
+:root {
+  --bg: #f6f4fb; --panel: #ffffff; --ink: #1f1b2e; --muted: #6b6580; --line: #e3dff0;
+  --accent: #7b4fd6; --accent-ink: #ffffff; --chip: #efe9fb; --err: #b3261e; --ok: #2e7d32;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #14121c; --panel: #1d1a28; --ink: #ece8f7; --muted: #a39cb8; --line: #2f2a40;
+    --accent: #a88bff; --accent-ink: #14121c; --chip: #2a2540; --err: #ff8a80; --ok: #81c784; }
+}
+:root[data-theme="dark"] { --bg: #14121c; --panel: #1d1a28; --ink: #ece8f7; --muted: #a39cb8; --line: #2f2a40;
+  --accent: #a88bff; --accent-ink: #14121c; --chip: #2a2540; --err: #ff8a80; --ok: #81c784; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 20px 16px 8px; max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between; }
+h1 { margin: 0; font-size: 22px; }
+.sub { color: var(--muted); font-size: 13px; }
+main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 16px; }
+@media (max-width: 820px) { main { grid-template-columns: minmax(0, 1fr); } }
+section, aside { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+h2 { font-size: 15px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 6px 14px; padding: 10px 0; border-top: 1px solid var(--line); }
+.row:first-of-type { border-top: 0; }
+@media (max-width: 520px) { .row { grid-template-columns: minmax(0, 1fr); } }
+.row label { font-weight: 600; }
+.row .doc { grid-column: 1 / -1; color: var(--muted); font-size: 13px; }
+select, input[type=text], input[type=number] { width: 100%; padding: 7px 9px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.range { display: flex; gap: 8px; align-items: center; }
+.range input[type=number] { width: 76px; }
+.switch { justify-self: start; width: 22px; height: 22px; accent-color: var(--accent); }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+button { font: inherit; border-radius: 999px; border: 1px solid var(--line); background: var(--chip); color: var(--ink); padding: 6px 12px; cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+button[aria-pressed=true] { outline: 2px solid var(--accent); }
+pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow: auto; max-height: 420px; font-size: 12.5px; white-space: pre; }
+.errors { color: var(--err); font-size: 13px; margin: 8px 0; }
+.okmsg { color: var(--ok); font-size: 13px; margin: 8px 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.top { display: flex; gap: 8px; align-items: center; }
+aside { align-self: start; position: sticky; top: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1 id="title">Générateur de YAML</h1>
+    <div class="sub" id="subtitle"></div>
+  </div>
+  <div class="top">
+    <button id="lang" type="button">English</button>
+  </div>
+</header>
+<main>
+  <div>
+    <section>
+      <h2 id="h-player">Joueur</h2>
+      <div class="row">
+        <label for="name" id="l-name">Nom du slot</label>
+        <input id="name" type="text" maxlength="16" autocomplete="off" spellcheck="false">
+        <div class="doc" id="d-name">16 caractères au plus. C'est le nom que tu donneras au client pour te connecter.</div>
+      </div>
+      <h2 id="h-presets" style="margin-top:12px">Presets</h2>
+      <div class="presets" id="presets"></div>
+      <div class="sub" id="d-presets">Un preset règle plusieurs options d'un coup ; tu peux ensuite tout modifier.</div>
+    </section>
+    <div id="groups"></div>
+  </div>
+  <aside>
+    <h2 id="h-yaml">YAML</h2>
+    <div id="msg"></div>
+    <pre id="yaml"></pre>
+    <div class="actions">
+      <button class="primary" id="download" type="button">Télécharger</button>
+      <button id="copy" type="button">Copier</button>
+      <button id="reset" type="button">Valeurs par défaut</button>
+    </div>
+  </aside>
+</main>
+<script>
+const SCHEMA = /*SCHEMA*/null;
+const T = {
+  fr: { title: "Générateur de YAML", sub: "UltraRando — même schéma que le menu du jeu", player: "Joueur", name: "Nom du slot",
+        dname: "16 caractères au plus. C'est le nom que tu donneras au client pour te connecter.", presets: "Presets",
+        dpresets: "Un preset règle plusieurs options d'un coup ; tu peux ensuite tout modifier.", yaml: "YAML",
+        download: "Télécharger", copy: "Copier", copied: "Copié.", reset: "Valeurs par défaut", other: "English",
+        errName: "Donne un nom de slot (1 à 16 caractères).", errChars: "Le nom ne peut pas contenir { } : ou de retour à la ligne.",
+        errRange: (n, a, b) => `${n} doit être entre ${a} et ${b}.`, ok: "Configuration valide." },
+  en: { title: "YAML generator", sub: "UltraRando — same schema as the in-game menu", player: "Player", name: "Slot name",
+        dname: "16 characters at most. The name you give the client to connect.", presets: "Presets",
+        dpresets: "A preset sets several options at once; you can still change everything afterwards.", yaml: "YAML",
+        download: "Download", copy: "Copy", copied: "Copied.", reset: "Defaults", other: "Français",
+        errName: "Enter a slot name (1 to 16 characters).", errChars: "The name cannot contain { } : or a line break.",
+        errRange: (n, a, b) => `${n} must be between ${a} and ${b}.`, ok: "Valid configuration." },
+};
+let lang = "fr";
+try { lang = localStorage.getItem("cmr-lang") || "fr"; } catch (e) {}
+const values = {};
+let currentPreset = null;
+const $ = id => document.getElementById(id);
+const optName = o => lang === "fr" && o.fr && o.fr[0] ? o.fr[0] : o.name;
+const optDoc = o => lang === "fr" && o.fr && o.fr[1] ? o.fr[1] : o.doc;
+const choiceName = c => lang === "fr" && c.fr ? c.fr : c.name;
+
+function defaults() { for (const o of SCHEMA.options) values[o.key] = o.default; currentPreset = null; }
+
+function render() {
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  $("title").textContent = t.title; $("subtitle").textContent = t.sub; $("h-player").textContent = t.player;
+  $("l-name").textContent = t.name; $("d-name").textContent = t.dname; $("h-presets").textContent = t.presets;
+  $("d-presets").textContent = t.dpresets; $("h-yaml").textContent = t.yaml; $("download").textContent = t.download;
+  $("copy").textContent = t.copy; $("reset").textContent = t.reset; $("lang").textContent = t.other;
+  const pr = $("presets"); pr.innerHTML = "";
+  for (const p of SCHEMA.presets) {
+    const b = document.createElement("button"); b.type = "button";
+    b.textContent = lang === "fr" ? p.fr : p.name; b.setAttribute("aria-pressed", String(currentPreset === p.name));
+    b.onclick = () => { defaults(); Object.assign(values, p.values); currentPreset = p.name; render(); };
+    pr.appendChild(b);
+  }
+  const root = $("groups"); root.innerHTML = "";
+  for (const g of SCHEMA.groups) {
+    const sec = document.createElement("section"); sec.style.marginTop = "16px";
+    const h = document.createElement("h2"); h.textContent = lang === "fr" ? g.fr : g.name; sec.appendChild(h);
+    for (const o of SCHEMA.options.filter(o => o.group === g.name)) sec.appendChild(row(o));
+    root.appendChild(sec);
+  }
+  update();
+}
+
+function row(o) {
+  const r = document.createElement("div"); r.className = "row";
+  const id = "opt-" + o.key;
+  const l = document.createElement("label"); l.htmlFor = id; l.textContent = optName(o); r.appendChild(l);
+  let input;
+  if (o.type === "toggle") {
+    input = document.createElement("input"); input.type = "checkbox"; input.className = "switch"; input.id = id;
+    input.checked = !!values[o.key];
+    input.onchange = () => { values[o.key] = input.checked; currentPreset = null; update(); };
+    r.appendChild(input);
+  } else if (o.type === "choice") {
+    input = document.createElement("select"); input.id = id;
+    for (const c of o.choices) { const op = document.createElement("option"); op.value = c.value; op.textContent = choiceName(c); input.appendChild(op); }
+    input.value = values[o.key];
+    input.onchange = () => { values[o.key] = input.value; currentPreset = null; update(); };
+    r.appendChild(input);
+  } else {
+    const wrap = document.createElement("div"); wrap.className = "range";
+    const sl = document.createElement("input"); sl.type = "range"; sl.min = o.min; sl.max = o.max; sl.value = values[o.key]; sl.id = id;
+    const num = document.createElement("input"); num.type = "number"; num.min = o.min; num.max = o.max; num.value = values[o.key];
+    num.setAttribute("aria-label", optName(o));
+    sl.oninput = () => { num.value = sl.value; values[o.key] = Number(sl.value); currentPreset = null; update(); };
+    num.oninput = () => { values[o.key] = num.value === "" ? NaN : Number(num.value); if (!isNaN(values[o.key])) sl.value = num.value; currentPreset = null; update(); };
+    wrap.append(sl, num); r.appendChild(wrap);
+  }
+  const d = document.createElement("div"); d.className = "doc"; d.textContent = optDoc(o); r.appendChild(d);
+  return r;
+}
+
+function validate() {
+  const t = T[lang], errs = [];
+  const name = $("name").value.trim();
+  if (!name || name.length > 16) errs.push(t.errName);
+  if (/[{}:\n\r]/.test(name)) errs.push(t.errChars);
+  for (const o of SCHEMA.options) if (o.type === "range") {
+    const v = values[o.key];
+    if (!Number.isInteger(v) || v < o.min || v > o.max) errs.push(t.errRange(optName(o), o.min, o.max));
+  }
+  return errs;
+}
+
+function yamlText() {
+  const name = $("name").value.trim() || "Player";
+  const lines = [`# ${SCHEMA.game} — ${currentPreset ? "preset " + currentPreset : "custom"}`, `name: ${JSON.stringify(name)}`,
+                 `game: ${SCHEMA.game}`, `${SCHEMA.game}:`];
+  for (const o of SCHEMA.options) {
+    const v = values[o.key];
+    lines.push(`  ${o.key}: ${o.type === "toggle" ? (v ? "true" : "false") : v}`);
+  }
+  return lines.join("\n") + "\n";
+}
+
+function update() {
+  const errs = validate(), t = T[lang];
+  $("msg").innerHTML = errs.length ? `<div class="errors">${errs.map(e => "• " + e.replace(/</g, "&lt;")).join("<br>")}</div>` : `<div class="okmsg">${t.ok}</div>`;
+  $("yaml").textContent = yamlText();
+  $("download").disabled = errs.length > 0;
+  document.querySelectorAll("#presets button").forEach((b, i) => b.setAttribute("aria-pressed", String(SCHEMA.presets[i].name === currentPreset)));
+}
+
+$("name").oninput = update;
+$("lang").onclick = () => { lang = lang === "fr" ? "en" : "fr"; try { localStorage.setItem("cmr-lang", lang); } catch (e) {} render(); };
+$("reset").onclick = () => { defaults(); render(); };
+$("copy").onclick = async () => { try { await navigator.clipboard.writeText(yamlText()); $("msg").innerHTML = `<div class="okmsg">${T[lang].copied}</div>`; } catch (e) {} };
+$("download").onclick = () => {
+  if (validate().length) return;
+  const blob = new Blob([yamlText()], { type: "text/yaml" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = ($("name").value.trim().replace(/[^A-Za-z0-9_-]/g, "_") || "player") + ".yaml"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+};
+defaults(); render();
+</script>
+</body>
+</html>

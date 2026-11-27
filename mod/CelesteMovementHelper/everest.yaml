@@ -1,0 +1,9 @@
+- Name: CelesteMovementHelper
+  Version: 0.2.0
+  DLL: bin/CelesteMovementHelper.dll
+  Dependencies:
+    - Name: EverestCore
+      Version: 1.5752.0
+  OptionalDependencies:
+    - Name: Archipelago Open World
+      Version: 1.1.3

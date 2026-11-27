@@ -1,0 +1,101 @@
+# NOTES:
+# The # Symbol at the start of a line counts as a Comment. To include in dialog, use a \#
+# The . Symbol will cause a pause unless escaped with \. (ex: Mr. Oshiro has a pause, Mr\. Oshiro does not)
+# Newlines automatically create a Page Break, unless there is an {n} command on the previous line
+# Commands: Anything inside of curly braces {...} is a command and should not be translated.
+
+# Inline Text Commands:
+# {~}wavy text{/~}
+# {!}impact text{/!}
+# {>> x}changes speed at which characters are displayed{>>}
+# {# 000000}this text is black{#} (uses HEX color values)
+# {+MENU_BEGIN} inserts the dialog from the MENU_BEGIN value (in English, "CLIMB")
+# {n} creates a newline, without a page break
+# {0.5} creates a 0.5 second pause
+# {big}this text is large{/big}
+
+# Gameplay Control Commands (should never change)
+# {trigger x} this triggers an in-game event
+# {anchor} controls the visual position of the textbox in-game
+
+# Randomizer menus
+    MODOPTIONS_CMRANDO_TOPMENU=Zufallsgenerator
+    MODOPTIONS_CMRANDO_HEADER=Zufallsgenerator Optionen
+    MODOPTIONS_CMRANDO_SEEDTYPE=Seed Art
+    MODOPTIONS_CMRANDO_SEEDTYPE_RANDOM=Zufällig
+    MODOPTIONS_CMRANDO_SEEDTYPE_CUSTOM=Benutzerdefiniert
+    MODOPTIONS_CMRANDO_SEED=Benutzerdefinierter Seed
+    MODOPTIONS_CMRANDO_RULES=Regeln
+    MODOPTIONS_CMRANDO_RULES_CUSTOM=Benutzerdefiniert
+    MODOPTIONS_CMRANDO_RULES_A=Regelsatz A
+    MODOPTIONS_CMRANDO_RULES_B=Regelsatz B
+    MODOPTIONS_CMRANDO_RULES_C=Regelsatz C
+    MODOPTIONS_CMRANDO_RULES_D=Regelsatz D
+    MODOPTIONS_CMRANDO_RULES_E=Regelsatz E
+    MODOPTIONS_CMRANDO_RULES_F=Regelsatz F
+    MODOPTIONS_CMRANDO_MAPPICKER=Kartenauswahl
+    MODOPTIONS_CMRANDO_MAPPICKER_LEVELS=Räume verfügbar
+    MODOPTIONS_CMRANDO_MAPPICKER_HEADER=Karten für den Generator
+    MODOPTIONS_CMRANDO_MAPPICKER_TOGGLEALL=Alle Umschalten
+    MODOPTIONS_CMRANDO_MAPPICKER_RESET=Standard wiederherstellen
+    MODOPTIONS_CMRANDO_REPEATROOMS=Räume wiederholen
+    MODOPTIONS_CMRANDO_ENTERUNKNOWN=Seltsame Durchgänge
+    MODOPTIONS_CMRANDO_ENTERUNKNOWN_EXPLAIN=
+Mit dieser Option wirst du Räume an Stellen
+betreten können die keinen Sinn ergeben
+    MODOPTIONS_CMRANDO_LOGIC=Generator Logik
+    MODOPTIONS_CMRANDO_LOGIC_PATHWAY=Pfad
+    MODOPTIONS_CMRANDO_LOGIC_LABYRINTH=Labyrinth
+    MODOPTIONS_CMRANDO_LENGTH=Länge
+    MODOPTIONS_CMRANDO_LENGTH_SHORT=Kurz
+    MODOPTIONS_CMRANDO_LENGTH_MEDIUM=Mittel
+    MODOPTIONS_CMRANDO_LENGTH_LONG=Lang
+    MODOPTIONS_CMRANDO_LENGTH_ENORMOUS=Enorm
+    MODOPTIONS_CMRANDO_NUMDASHES=Dash Anzahl
+    MODOPTIONS_CMRANDO_NUMDASHES_ZERO=Keine
+    MODOPTIONS_CMRANDO_NUMDASHES_ONE=1
+    MODOPTIONS_CMRANDO_NUMDASHES_TWO=2
+    MODOPTIONS_CMRANDO_DIFFICULTY=Schwierigkeit
+    MODOPTIONS_CMRANDO_DIFFICULTY_NORMAL=Normal
+    MODOPTIONS_CMRANDO_DIFFICULTY_HARD=Schwer
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPERT=Experte
+    MODOPTIONS_CMRANDO_DIFFICULTY_PERFECT=Perfekt
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_NORMAL=
+Kommt mit den A-Seiten klar,
+und gelegentlich mit B-Seiten
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_HARD=
+Geübt in Abschied und den C-Seiten;
+Kennt die eine oder andere Speedrun-Technik
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_EXPERT=
+Kann mit Spikejumps, Cornerkicks, Cornerboosts
+und einfachen Demodashes umgehen
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_PERFECT=
+Bereit zu leiden unter extremer Präzision und
+unfairem Gameplay
+    MODOPTIONS_CMRANDO_GOLDENBERRY=Goldene Erdbeere
+    MODOPTIONS_CMRANDO_SHINE=Pfad Beleuchtung
+    MODOPTIONS_CMRANDO_SHINE_OFF=Aus
+    MODOPTIONS_CMRANDO_SHINE_HUBS=Nur Hub Räume
+    MODOPTIONS_CMRANDO_SHINE_ON=An
+    MODOPTIONS_CMRANDO_DARK=Dunkelheit
+    MODOPTIONS_CMRANDO_DARK_NEVER=Nie
+    MODOPTIONS_CMRANDO_DARK_VANILLA=Vanilla Räume
+    MODOPTIONS_CMRANDO_DARK_ALWAYS=Immer
+    MODOPTIONS_CMRANDO_VARIANTS=Varianten
+    MODOPTIONS_CMRANDO_MOREOPTIONS=Mehr Optionen
+    MODOPTIONS_CMRANDO_FEWEROPTIONS=Weniger Optionen
+    MODOPTIONS_CMRANDO_RECORDS_HEADER=Bestzeiten
+    MODOPTIONS_CMRANDO_RECORDS_SET=Bestimmter Seed
+    MODOPTIONS_CMRANDO_RECORDS_RANDOM=Zufälliger Seed
+    MODOPTIONS_CMRANDO_START=Starten!
+    MODOPTIONS_CMRANDO_HASH=Hash
+    MODOPTIONS_CMRANDO_CANCEL=Abbrechen
+    MODOPTIONS_CMRANDO_GENERATING=Generiere...
+
+# Level menu
+    MENU_PAUSE_RESTARTRANDO=Randomizer Neu Starten
+    MENU_PAUSE_QUITRANDO=Randomizer Beenden
+
+    MENU_QUITRANDO_TITLE=ZURÜCK ZUM HAUPTMENÜ?
+    MENU_QUITRANDO_CONFIRM=Ja
+    MENU_QUITRANDO_CANCEL=Abbrechen

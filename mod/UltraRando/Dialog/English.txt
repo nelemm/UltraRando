@@ -1,0 +1,1063 @@
+﻿# NOTES:
+# The # Symbol at the start of a line counts as a Comment. To include in dialog, use a \#
+# The . Symbol will cause a pause unless escaped with \. (ex: Mr. Oshiro has a pause, Mr\. Oshiro does not)
+# Newlines automatically create a Page Break, unless there is an {n} command on the previous line
+# Commands: Anything inside of curly braces {...} is a command and should not be translated.
+
+# Inline Text Commands:
+# {~}wavy text{/~}
+# {!}impact text{/!}
+# {>> x}changes speed at which characters are displayed{>>}
+# {# 000000}this text is black{#} (uses HEX color values)
+# {+MENU_BEGIN} inserts the dialog from the MENU_BEGIN value (in English, "CLIMB")
+# {n} creates a newline, without a page break
+# {0.5} creates a 0.5 second pause
+# {big}this text is large{/big}
+
+# Gameplay Control Commands (should never change)
+# {trigger x} this triggers an in-game event
+# {anchor} controls the visual position of the textbox in-game
+
+# CMR: Archipelago connection screen, randomizer saves, journal (@0, @1... are filled in by the code; [..] and {..} are dialog commands)
+    MODOPTIONS_CMR_CLIMBAP=Climb opens Archipelago
+    MODOPTIONS_CMR_SKIPCUTSCENES=Skip cutscenes automatically
+    MODOPTIONS_CMR_STAYAFTERCLEAR=Keep playing after a chapter clear
+    CMR_AP_MODOPTIONS_HINT=Connect from the title screen: Climb
+    CMR_AP_CONNECT_TITLE=Archipelago
+    CMR_AP_CONTINUE=Saves of @0 (connected)
+    CMR_AP_SERVER_HEADER=Server
+    CMR_AP_SERVER=Address
+    CMR_AP_SLOT=Slot Name
+    CMR_AP_PASSWORD=Password
+    CMR_AP_NONE=(none)
+    CMR_AP_CONNECT=Connect
+    CMR_AP_STATUS=Status:
+    CMR_AP_OTHER_HEADER=Other
+    CMR_AP_OFFLINE=Randomizer saves (offline)
+    CMR_AP_OFFLINE_DESC=Play a randomizer save without the server (its seed must be cached).
+    CMR_AP_VANILLA=Play without Archipelago
+    CMR_AP_VANILLA_DESC=Normal Celeste saves. Randomizer saves are never listed there.
+    CMR_SAVES_TITLE=Randomizer saves
+    CMR_SAVES_FOR=Slot @0 - seed @1
+    CMR_SAVES_OFFLINE=Offline: saves with a cached seed
+    CMR_SAVES_NEW=New save
+    CMR_SAVES_IMPORT=Copy old save (file @0.celeste, bound to this seed)
+    CMR_SAVES_IMPORT_DESC=Copies a normal save bound by an older version. The original is not modified.
+    CMR_SAVES_LIST=Saves
+    CMR_SAVES_LIST_DELETE=Choose a save to DELETE
+    CMR_SAVES_EMPTY=No randomizer save yet
+    CMR_SAVES_CONFIRM_DELETE=Delete save #@0? Press again to confirm
+    CMR_SAVES_DELETE_MODE=Delete mode
+    CMR_SAVES_PROGRESS=@0 strawberries, @1 checks, @2
+    CMR_SAVES_OTHER_SEED=(other seed)
+    CMR_SAVES_UNBOUND=(not bound)
+    CMR_SAVES_CORRUPT=(unreadable save)
+    CMR_SAVES_FULL=No free randomizer save slot
+    CMR_SAVES_FAILED=Could not create the save
+    CMR_JOURNAL_LOCATIONS=LOCATIONS
+    CMR_JOURNAL_ROOMS=Rooms
+    CMR_JOURNAL_TOTALS=TOTALS
+    CMR_JOURNAL_DEATHS=DEATHS
+    CMR_JOURNAL_KEYS_TITLE=KEYS
+    CMR_JOURNAL_NO_KEYS=No key in this seed
+    CMR_JOURNAL_KEY=Key
+    CMR_JOURNAL_GEMS=Gems
+    CMR_JOURNAL_MOVEMENT_TITLE=MOVEMENT
+    CMR_JOURNAL_NO_MOVEMENT=No movement shuffled
+    CMR_JOURNAL_ITEMS_TITLE=ITEMS
+    CMR_JOURNAL_ITEMS_NOT_SHUFFLED=Objects are not shuffled in this seed: all are available
+    CMR_MENU_CONNECT=Connect
+    CMR_MENU_VANILLA=Celeste (no Archipelago)
+
+# Randomizer menus
+    MODOPTIONS_RANDOMODULE_FASTMENU=Fast Menu
+
+    MODOPTIONS_CMRANDO_TOPMENU=Movement Rando
+    MODOPTIONS_CMRANDO_HEADER=Randomizer Settings
+    MODOPTIONS_CMRANDO_SEEDTYPE=Seed Type
+    MODOPTIONS_CMRANDO_SEEDTYPE_RANDOM=Random
+    MODOPTIONS_CMRANDO_SEEDTYPE_CUSTOM=Custom
+    MODOPTIONS_CMRANDO_SEED=Custom Seed
+    MODOPTIONS_CMRANDO_RULES_CUSTOM=Custom
+    MODOPTIONS_CMRANDO_MAPPICKER=Select Maps To Randomize
+    MODOPTIONS_CMRANDO_MAPPICKER_LEVELS=Rooms Available
+    MODOPTIONS_CMRANDO_MAPPICKER_HEADER=Maps To Randomize
+    MODOPTIONS_CMRANDO_MAPPICKER_TOGGLEALL=Toggle All
+    MODOPTIONS_CMRANDO_MAPPICKER_RESET=Reset To Default
+    MODOPTIONS_CMRANDO_REPEATROOMS=Repeat Rooms
+    MODOPTIONS_CMRANDO_ENTERUNKNOWN=Enter Strange Holes
+    MODOPTIONS_CMRANDO_LOGIC=Gameplay
+    MODOPTIONS_CMRANDO_LOGIC_PATHWAY=Pathway
+    MODOPTIONS_CMRANDO_LOGIC_LABYRINTH=Labyrinth
+    MODOPTIONS_CMRANDO_LOGIC_ENDLESS=Endless
+    MODOPTIONS_CMRANDO_LIVES=Lives
+    MODOPTIONS_CMRANDO_LIVES_INFINITE=Infinite
+    MODOPTIONS_CMRANDO_LENGTH=Length
+    MODOPTIONS_CMRANDO_LENGTH_SHORT=Short
+    MODOPTIONS_CMRANDO_LENGTH_MEDIUM=Medium
+    MODOPTIONS_CMRANDO_LENGTH_LONG=Long
+    MODOPTIONS_CMRANDO_LENGTH_ENORMOUS=Enormous
+    MODOPTIONS_CMRANDO_NUMDASHES=Dashes
+    MODOPTIONS_CMRANDO_NUMDASHES_ZERO=Zero
+    MODOPTIONS_CMRANDO_NUMDASHES_ONE=One
+    MODOPTIONS_CMRANDO_NUMDASHES_TWO=Two
+    MODOPTIONS_CMRANDO_DIFFICULTY=Difficulty
+    MODOPTIONS_CMRANDO_DIFFICULTY_EASY=Easy
+    MODOPTIONS_CMRANDO_DIFFICULTY_NORMAL=Normal
+    MODOPTIONS_CMRANDO_DIFFICULTY_HARD=Hard
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPERT=Expert
+    MODOPTIONS_CMRANDO_DIFFICULTY_MASTER=Master
+    MODOPTIONS_CMRANDO_DIFFICULTY_PERFECT=Perfect
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_EASY=Not extremely familiar with Celeste
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_NORMAL=Can handle the A-sides and the occasional B-side
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_HARD=Comfortable with Farewell and the C-sides; knows some speedrun tech
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_EXPERT=Familiar with all advanced techniques
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_MASTER=Willing to sit down and grind out difficult rooms for a few minutes
+    MODOPTIONS_CMRANDO_DIFFICULTY_EXPLAIN_PERFECT=Willing to suffer for extremely precise and unfair gameplay
+    MODOPTIONS_CMRANDO_DIFFICULTYCURVE=Difficulty Eagerness
+    MODOPTIONS_CMRANDO_DIFFICULTYCURVE_NONE=None
+    MODOPTIONS_CMRANDO_DIFFICULTYCURVE_LOW=Low
+    MODOPTIONS_CMRANDO_DIFFICULTYCURVE_MEDIUM=Medium
+    MODOPTIONS_CMRANDO_DIFFICULTYCURVE_HIGH=High
+    MODOPTIONS_CMRANDO_GOLDENBERRY=Golden Strawberry
+    MODOPTIONS_CMRANDO_SHINE=Illuminate Path
+    MODOPTIONS_CMRANDO_SHINE_OFF=Off
+    MODOPTIONS_CMRANDO_SHINE_HUBS=Hub Rooms Only
+    MODOPTIONS_CMRANDO_SHINE_ON=On
+    MODOPTIONS_CMRANDO_DARK=Dark Rooms
+    MODOPTIONS_CMRANDO_DARK_NEVER=Never
+    MODOPTIONS_CMRANDO_DARK_VANILLA=Vanilla Rooms
+    MODOPTIONS_CMRANDO_DARK_ALWAYS=Always
+    MODOPTIONS_CMRANDO_VARIANTS=Variants
+    MODOPTIONS_CMRANDO_DECORATIONS=Randomize Decorations
+    MODOPTIONS_CMRANDO_COLORS=Randomize Ambient Color
+    MODOPTIONS_CMRANDO_BACKGROUNDS=Randomize FG/BG Effects
+    MODOPTIONS_CMRANDO_STRAWBERRIES=Strawberry Density
+    MODOPTIONS_CMRANDO_STRAWBERRIES_NONE=None
+    MODOPTIONS_CMRANDO_STRAWBERRIES_LOW=Low
+    MODOPTIONS_CMRANDO_STRAWBERRIES_HIGH=High
+    MODOPTIONS_CMRANDO_OPTIONS=Options
+    MODOPTIONS_CMRANDO_OPTIONS_RULESET=Competitive Play
+    MODOPTIONS_CMRANDO_OPTIONS_BASIC=Basic Gameplay
+    MODOPTIONS_CMRANDO_OPTIONS_LEVELS=Level Select
+    MODOPTIONS_CMRANDO_OPTIONS_ADVANCED=Advanced Gameplay
+    MODOPTIONS_CMRANDO_OPTIONS_COSMETIC=Cosmetic Options
+    MODOPTIONS_CMRANDO_RECORDS_HEADER=Randomizer Records
+    MODOPTIONS_CMRANDO_RECORDS_SET=Set Seed
+    MODOPTIONS_CMRANDO_RECORDS_RANDOM=Random Seed
+    MODOPTIONS_CMRANDO_RECORDS_LEVEL_SINGULAR={0} Level
+    MODOPTIONS_CMRANDO_RECORDS_LEVEL_PLURAL={0} Levels
+    MODOPTIONS_CMRANDO_START=Start!
+    MODOPTIONS_CMRANDO_HASH=Hash
+    MODOPTIONS_CMRANDO_CANCEL=Cancel
+    MODOPTIONS_CMRANDO_GENERATING=Generating...
+
+# Level menu
+    MENU_PAUSE_RESTARTRANDO=Restart Randomizer
+    MENU_PAUSE_QUITRANDO=Quit Randomizer
+
+    MENU_QUITRANDO_TITLE=RETURN TO MENU?
+    MENU_QUITRANDO_CONFIRM=Yes
+    MENU_QUITRANDO_CANCEL=Cancel
+
+    MENU_CANTRESTART_HEADER=NO TURNING BACK NOW!
+
+# Endless
+    RANDOENDLESS_HEADER=Level {0} Complete!
+    RANDOENDLESS_SCORE=Score:
+
+# Postcards
+    RANDOCARD_0=
+        Randomizer tip!{n}{n}Sometimes, the generator will make small puzzles for you to solve. If it looks like the way forward is blocked, see if there's another path elsewhere!
+    RANDOCARD_1=
+        Randomizer tip!{n}{n}The {# F94A4A}Enter Strange Holes{#} setting will allow you to enter rooms through gaps in the terrain that aren't normally used for traversal.
+    RANDOCARD_2=
+        Randomizer tip!{n}{n}The {# F94A4A}Difficulty{#} setting only controls whether rooms are allowed to appear in game. The {# F94A4A}Difficulty Eagerness{#} setting controls how biased the generator is toward difficult rooms.
+    RANDOCARD_3=
+        Randomizer tip!{n}{n}The {# F94A4A}Illuminate Path{#} setting will shine lights to show you where you can go. On the {# F94A4A}Hub Rooms Only{#} setting, it will only work in rooms with {# F94A4A}4 exits{#} or {# F94A4A}2 downward exits{#}.
+    RANDOCARD_4=
+        Randomizer tip!{n}{n}Need some help? Want to show off something cool you've done? Drop by the {# F94A4A}#randomizer{#} channel of {# 1515F0}https://discord.gg/celeste{#}!
+    RANDOCARD_5=
+        Randomizer tip!{n}{n}It is possible to clip downwards through one-way platforms using a {# DBB33F}feather{#} or {# 1515F0}crusher block{#}.
+    RANDOCARD_6=
+        Randomizer tip!{n}{n}Do not play on {# 9B3FB5}Perfect{#} difficulty.
+    RANDOCARD_7=
+        Randomizer tip!{n}{n}To easily share a seed and its settings, look in {# F94A4A}log.txt{#}. The full settings are written there when you generate a map!
+
+# Word bank
+    RANDOHEART_FIXED_0=Trans Rights!
+    RANDOHEART_FIXED_1=First Try
+    RANDOHEART_FIXED_2=Big Yeet
+    RANDOHEART_FIXED_3=Got Em!
+    RANDOHEART_FIXED_4=Sorry About That
+    RANDOHEART_FIXED_COUNT=5
+
+    RANDOHEART_ADJ_NOUN={0} {1}
+
+    RANDOHEART_ADJ_0=Huge
+    RANDOHEART_ADJ_1=Confusing
+    RANDOHEART_ADJ_2=Rainbow
+    RANDOHEART_ADJ_3=Lovely
+    RANDOHEART_ADJ_4=Stylin'
+    RANDOHEART_ADJ_5=Luscious
+    RANDOHEART_ADJ_6=Deep
+    RANDOHEART_ADJ_7=Suffering
+    RANDOHEART_ADJ_8=Twisted
+    RANDOHEART_ADJ_9=Salty
+    RANDOHEART_ADJ_10=Sweet
+    RANDOHEART_ADJ_11=Mashed
+    RANDOHEART_ADJ_12=Wild
+    RANDOHEART_ADJ_13=Accurate
+    RANDOHEART_ADJ_14=Ancient
+    RANDOHEART_ADJ_15=Atmospheric
+    RANDOHEART_ADJ_16=Careful
+    RANDOHEART_ADJ_17=Casual
+    RANDOHEART_ADJ_18=Chaotic
+    RANDOHEART_ADJ_19=Cliffhanging
+    RANDOHEART_ADJ_20=Crafty
+    RANDOHEART_ADJ_21=Disconnected
+    RANDOHEART_ADJ_22=Dreamy
+    RANDOHEART_ADJ_23=Fickle
+    RANDOHEART_ADJ_24=Flightless
+    RANDOHEART_ADJ_25=Fresh
+    RANDOHEART_ADJ_26=Handmade
+    RANDOHEART_ADJ_27=Hospitable
+    RANDOHEART_ADJ_28=Internet
+    RANDOHEART_ADJ_29=Photogenic
+    RANDOHEART_ADJ_30=Pointy
+    RANDOHEART_ADJ_31=Pro
+    RANDOHEART_ADJ_32=Reliable
+    RANDOHEART_ADJ_33=Shady
+    RANDOHEART_ADJ_34=Sleepless
+    RANDOHEART_ADJ_35=Spirited
+    RANDOHEART_ADJ_36=Super-Popular
+    RANDOHEART_ADJ_37=Thorny
+    RANDOHEART_ADJ_38=Ultimate
+    RANDOHEART_ADJ_39=Lost
+    RANDOHEART_ADJ_40=Anxious
+    RANDOHEART_ADJ_41=Easy
+    RANDOHEART_ADJ_42=Hard
+    RANDOHEART_ADJ_43=Tempting
+    RANDOHEART_ADJ_44=Practical
+    RANDOHEART_ADJ_COUNT=45
+
+    RANDOHEART_NOUN_0=Mess
+    RANDOHEART_NOUN_1=Carpet
+    RANDOHEART_NOUN_2=Potato
+    RANDOHEART_NOUN_3=Video Game
+    RANDOHEART_NOUN_4=Human
+    RANDOHEART_NOUN_5=Fruit
+    RANDOHEART_NOUN_6=Blessing
+    RANDOHEART_NOUN_7=Mountain
+    RANDOHEART_NOUN_8=Rest
+    RANDOHEART_NOUN_9=Tumble
+    RANDOHEART_NOUN_10=Ceiling
+    RANDOHEART_NOUN_11=Swag
+    RANDOHEART_NOUN_12=Internet
+    RANDOHEART_NOUN_13=Beast
+    RANDOHEART_NOUN_14=Blossom
+    RANDOHEART_NOUN_15=Character
+    RANDOHEART_NOUN_16=Coconut
+    RANDOHEART_NOUN_17=Egg
+    RANDOHEART_NOUN_18=Eventuality
+    RANDOHEART_NOUN_19=Fish
+    RANDOHEART_NOUN_20=Flower
+    RANDOHEART_NOUN_21=Fossil
+    RANDOHEART_NOUN_22=Bird
+    RANDOHEART_NOUN_23=Gamer
+    RANDOHEART_NOUN_24=Ghost
+    RANDOHEART_NOUN_25=Legend
+    RANDOHEART_NOUN_26=Master
+    RANDOHEART_NOUN_27=Other Half
+    RANDOHEART_NOUN_28=Pear
+    RANDOHEART_NOUN_29=Month
+    RANDOHEART_NOUN_30=Something-Or-Other
+    RANDOHEART_NOUN_31=Star
+    RANDOHEART_NOUN_32=Trash
+    RANDOHEART_NOUN_33=Truth
+    RANDOHEART_NOUN_34=Berry
+    RANDOHEART_NOUN_35=Dash
+    RANDOHEART_NOUN_36=Fall
+    RANDOHEART_NOUN_37=Question
+    RANDOHEART_NOUN_38=Spike
+    RANDOHEART_NOUN_39=Destiny
+    RANDOHEART_NOUN_40=Puppy
+    RANDOHEART_NOUN_COUNT=41
+
+    RANDOHEART_PLURALNOUN_0=Messes
+    RANDOHEART_PLURALNOUN_1=Carpets
+    RANDOHEART_PLURALNOUN_2=Potatoes
+    RANDOHEART_PLURALNOUN_3=Video Games
+    RANDOHEART_PLURALNOUN_4=Humans
+    RANDOHEART_PLURALNOUN_5=Fruits
+    RANDOHEART_PLURALNOUN_6=Blessings
+    RANDOHEART_PLURALNOUN_7=Mountains
+    RANDOHEART_PLURALNOUN_8=Rests
+    RANDOHEART_PLURALNOUN_9=Tumbles
+    RANDOHEART_PLURALNOUN_10=Ceilings
+    RANDOHEART_PLURALNOUN_11=Toys
+    RANDOHEART_PLURALNOUN_12=Internets
+    RANDOHEART_PLURALNOUN_13=Beasts
+    RANDOHEART_PLURALNOUN_14=Blossoms
+    RANDOHEART_PLURALNOUN_15=Characters
+    RANDOHEART_PLURALNOUN_16=Coconuts
+    RANDOHEART_PLURALNOUN_17=Eggs
+    RANDOHEART_PLURALNOUN_18=Eventualities
+    RANDOHEART_PLURALNOUN_19=Fish
+    RANDOHEART_PLURALNOUN_20=Flowers
+    RANDOHEART_PLURALNOUN_21=Fossils
+    RANDOHEART_PLURALNOUN_22=Birds
+    RANDOHEART_PLURALNOUN_23=Gamers
+    RANDOHEART_PLURALNOUN_24=Ghosts
+    RANDOHEART_PLURALNOUN_25=Legends
+    RANDOHEART_PLURALNOUN_26=Masters
+    RANDOHEART_PLURALNOUN_27=Other Halves
+    RANDOHEART_PLURALNOUN_28=Pears
+    RANDOHEART_PLURALNOUN_29=Seasons
+    RANDOHEART_PLURALNOUN_30=Somethings-Or-Others
+    RANDOHEART_PLURALNOUN_31=Stars
+    RANDOHEART_PLURALNOUN_32=Candies
+    RANDOHEART_PLURALNOUN_33=Truths
+    RANDOHEART_PLURALNOUN_34=Berries
+    RANDOHEART_PLURALNOUN_35=Dashes
+    RANDOHEART_PLURALNOUN_36=Falls
+    RANDOHEART_PLURALNOUN_37=Questions
+    RANDOHEART_PLURALNOUN_38=Spikes
+    RANDOHEART_PLURALNOUN_39=Destinies
+    RANDOHEART_PLURALNOUN_40=Puppies
+    RANDOHEART_PLURALNOUN_COUNT=41
+
+    RANDOHEART_VERB_0=Catch
+    RANDOHEART_VERB_1=Fly
+    RANDOHEART_VERB_2=Get
+    RANDOHEART_VERB_3=Be
+    RANDOHEART_VERB_4=Have
+    RANDOHEART_VERB_5=Cry
+    RANDOHEART_VERB_6=Jump
+    RANDOHEART_VERB_7=Dash
+    RANDOHEART_VERB_8=Think
+    RANDOHEART_VERB_9=Smack
+    RANDOHEART_VERB_10=Press
+    RANDOHEART_VERB_11=Lift
+    RANDOHEART_VERB_12=See
+    RANDOHEART_VERB_13=Fry
+    RANDOHEART_VERB_14=Love
+    RANDOHEART_VERB_15=Absorb
+    RANDOHEART_VERB_16=Understand
+    RANDOHEART_VERB_17=Speak
+    RANDOHEART_VERB_18=Steal
+    RANDOHEART_VERB_19=Switch
+    RANDOHEART_VERB_20=Eat
+    RANDOHEART_VERB_21=Entertain
+    RANDOHEART_VERB_22=Dump
+    RANDOHEART_VERB_23=Tweet
+    RANDOHEART_VERB_24=Harass
+    RANDOHEART_VERB_25=Fight
+    RANDOHEART_VERB_26=Critique
+    RANDOHEART_VERB_27=Dispute
+    RANDOHEART_VERB_COUNT=28
+
+    RANDOHEART_VERBED_0=Caught
+    RANDOHEART_VERBED_1=Flew
+    RANDOHEART_VERBED_2=Got
+    RANDOHEART_VERBED_3=Were
+    RANDOHEART_VERBED_4=Had
+    RANDOHEART_VERBED_5=Cried
+    RANDOHEART_VERBED_6=Jumped
+    RANDOHEART_VERBED_7=Dashed
+    RANDOHEART_VERBED_8=Thought
+    RANDOHEART_VERBED_9=Smacked
+    RANDOHEART_VERBED_10=Pressed
+    RANDOHEART_VERBED_11=Lifted
+    RANDOHEART_VERBED_12=Saw
+    RANDOHEART_VERBED_13=Fried
+    RANDOHEART_VERBED_14=Loved
+    RANDOHEART_VERBED_15=Absorbed
+    RANDOHEART_VERBED_16=Understood
+    RANDOHEART_VERBED_17=Spoke
+    RANDOHEART_VERBED_18=Stole
+    RANDOHEART_VERBED_19=Switched
+    RANDOHEART_VERBED_20=Ate
+    RANDOHEART_VERBED_21=Entertained
+    RANDOHEART_VERBED_22=Dumped
+    RANDOHEART_VERBED_23=Tweeted
+    RANDOHEART_VERBED_24=Harassed
+    RANDOHEART_VERBED_25=Fought
+    RANDOHEART_VERBED_26=Critiqued
+    RANDOHEART_VERBED_27=Disputed
+    RANDOHEART_VERBED_COUNT=28
+
+    RANDOHEART_ADVERB_0=Far
+    RANDOHEART_ADVERB_1=Quickly
+    RANDOHEART_ADVERB_2=Slowly
+    RANDOHEART_ADVERB_3=Gracefully
+    RANDOHEART_ADVERB_4=Innocently
+    RANDOHEART_ADVERB_5=Perfectly
+    RANDOHEART_ADVERB_6=Foolishly
+    RANDOHEART_ADVERB_7=Selfishly
+    RANDOHEART_ADVERB_8=Never
+    RANDOHEART_ADVERB_9=Rarely
+    RANDOHEART_ADVERB_10=Tediously
+    RANDOHEART_ADVERB_11=Promptly
+    RANDOHEART_ADVERB_12=Accidentally
+    RANDOHEART_ADVERB_13=Blindly
+    RANDOHEART_ADVERB_14=Dramatically
+    RANDOHEART_ADVERB_15=Coyly
+    RANDOHEART_ADVERB_16=Only
+    RANDOHEART_ADVERB_17=Solemnly
+    RANDOHEART_ADVERB_18=Silently
+    RANDOHEART_ADVERB_COUNT=19
+
+    RANDOHEART_PREPOSITION_0=To
+    RANDOHEART_PREPOSITION_1=From
+    RANDOHEART_PREPOSITION_2=On
+    RANDOHEART_PREPOSITION_3=In
+    RANDOHEART_PREPOSITION_4=Around
+    RANDOHEART_PREPOSITION_5=Through
+    RANDOHEART_PREPOSITION_6=Between
+    RANDOHEART_PREPOSITION_7=Into
+    RANDOHEART_PREPOSITION_8=Sans
+    RANDOHEART_PREPOSITION_9=Unto
+    RANDOHEART_PREPOSITION_10=Upon
+    RANDOHEART_PREPOSITION_11=Toward
+    RANDOHEART_PREPOSITION_12=Above
+    RANDOHEART_PREPOSITION_COUNT=13
+
+    RANDOHEART_INTERJECTION_0=Wow
+    RANDOHEART_INTERJECTION_1=Nice
+    RANDOHEART_INTERJECTION_2=Ugh
+    RANDOHEART_INTERJECTION_3=Think
+    RANDOHEART_INTERJECTION_4=Fact
+    RANDOHEART_INTERJECTION_5=Also
+    RANDOHEART_INTERJECTION_6=Cool
+    RANDOHEART_INTERJECTION_7=Yikes
+    RANDOHEART_INTERJECTION_8=Shoot
+    RANDOHEART_INTERJECTION_9=Ouch
+    RANDOHEART_INTERJECTION_10=Duh
+    RANDOHEART_INTERJECTION_11=Oof
+    RANDOHEART_INTERJECTION_12=YEET
+    RANDOHEART_INTERJECTION_13=Bruh
+    RANDOHEART_INTERJECTION_COUNT=14
+
+    RANDOHEART_FILENAME_0=wavedash
+    RANDOHEART_FILENAME_1=Celeste
+    RANDOHEART_FILENAME_2=iloveyou
+    RANDOHEART_FILENAME_3=problems
+    RANDOHEART_FILENAME_4=what_the_heck
+    RANDOHEART_FILENAME_5=EXOK-3
+    RANDOHEART_FILENAME_6=virus
+    RANDOHEART_FILENAME_7=secrets
+    RANDOHEART_FILENAME_8=lies
+    RANDOHEART_FILENAME_COUNT=9
+
+    RANDOHEART_FILEEXTENSION_0=ppt
+    RANDOHEART_FILEEXTENSION_1=exe
+    RANDOHEART_FILEEXTENSION_2=vbs
+    RANDOHEART_FILEEXTENSION_3=cs
+    RANDOHEART_FILEEXTENSION_4=py
+    RANDOHEART_FILEEXTENSION_5=xls
+    RANDOHEART_FILEEXTENSION_6=com
+    RANDOHEART_FILEEXTENSION_7=gov
+    RANDOHEART_FILEEXTENSION_8=jar
+    RANDOHEART_FILEEXTENSION_COUNT=9
+
+    RANDOHEART_FRUIT_0=Berry
+    RANDOHEART_FRUIT_1=Cherry
+    RANDOHEART_FRUIT_2=Melon
+    RANDOHEART_FRUIT_3=Mango
+    RANDOHEART_FRUIT_4=Peach
+    RANDOHEART_FRUIT_5=Apple
+    RANDOHEART_FRUIT_6=Orange
+    RANDOHEART_FRUIT_7=Lemon
+    RANDOHEART_FRUIT_8=Lime
+    RANDOHEART_FRUIT_COUNT=9
+
+    RANDOHEART_WAVEDASHING_0=Wavedashing
+    RANDOHEART_WAVEDASHING_1=Oedipus Complex
+    RANDOHEART_WAVEDASHING_2=Trepanning
+    RANDOHEART_WAVEDASHING_3=Demohypering
+    RANDOHEART_WAVEDASHING_4=Baking
+    RANDOHEART_WAVEDASHING_5=Living
+    RANDOHEART_WAVEDASHING_6=Crying Alone In Bed
+    RANDOHEART_WAVEDASHING_7=Ignoring Problems
+    RANDOHEART_WAVEDASHING_8=Gitting Gud
+    RANDOHEART_WAVEDASHING_9=Recreational Drugs
+    RANDOHEART_WAVEDASHING_10=Online Dating
+    RANDOHEART_WAVEDASHING_11=Microsoft Office
+    RANDOHEART_WAVEDASHING_12=Essential Oils
+    RANDOHEART_WAVEDASHING_13=Trans Rights
+    RANDOHEART_WAVEDASHING_14=Birthdays
+    RANDOHEART_WAVEDASHING_15=Communism
+    RANDOHEART_WAVEDASHING_16=Agriculture
+    RANDOHEART_WAVEDASHING_17=Making Friends
+    RANDOHEART_WAVEDASHING_18=Motion Controls
+    RANDOHEART_WAVEDASHING_19=Tinfoil Hats
+    RANDOHEART_WAVEDASHING_20=Security Through Obscurity
+    RANDOHEART_WAVEDASHING_21=Pixel Art
+    RANDOHEART_WAVEDASHING_22=50lb Dry Pinto Beans
+    RANDOHEART_WAVEDASHING_23=Grandmaster Heartside
+    RANDOHEART_WAVEDASHING_24=Universal Windows Platform
+    RANDOHEART_WAVEDASHING_25=Fried Challah
+    RANDOHEART_WAVEDASHING_26=The Wachowski Sisters
+    RANDOHEART_WAVEDASHING_27=Texting Your Ex
+    RANDOHEART_WAVEDASHING_28=Homophobia
+    RANDOHEART_WAVEDASHING_29=Troubleshooting Drivers
+    RANDOHEART_WAVEDASHING_30=Academia
+    RANDOHEART_WAVEDASHING_31=Maddy Thorson
+    RANDOHEART_WAVEDASHING_32=Noel Berry
+    RANDOHEART_WAVEDASHING_33=Kevin Regamey
+    RANDOHEART_WAVEDASHING_34=Lena Raine
+    RANDOHEART_WAVEDASHING_35=Pedro Medeiros
+    RANDOHEART_WAVEDASHING_36=Amora Bettany
+    RANDOHEART_WAVEDASHING_37=Homemade Kimchi
+    RANDOHEART_WAVEDASHING_38=Learning Rust
+    RANDOHEART_WAVEDASHING_39=Spironolactone
+    RANDOHEART_WAVEDASHING_40=Guillotines
+    RANDOHEART_WAVEDASHING_41=Pleasant Shades of Cyan
+    RANDOHEART_WAVEDASHING_COUNT=42
+
+    RANDOHEART_CATCHINGBIRDSINSPACE_0=catching birds in space
+    RANDOHEART_CATCHINGBIRDSINSPACE_1=brushing your teeth on time
+    RANDOHEART_CATCHINGBIRDSINSPACE_2=playing cool video games
+    RANDOHEART_CATCHINGBIRDSINSPACE_3=making friends
+    RANDOHEART_CATCHINGBIRDSINSPACE_4=throwing a little hot sauce on that bad boy
+    RANDOHEART_CATCHINGBIRDSINSPACE_5=living life to the fullest
+    RANDOHEART_CATCHINGBIRDSINSPACE_6=running away to the forest
+    RANDOHEART_CATCHINGBIRDSINSPACE_7=getting out of the stone age
+    RANDOHEART_CATCHINGBIRDSINSPACE_8=boosting swag levels to the maximum
+    RANDOHEART_CATCHINGBIRDSINSPACE_9=making all your problems worse
+    RANDOHEART_CATCHINGBIRDSINSPACE_10=restoring indigenous sovereignty
+    RANDOHEART_CATCHINGBIRDSINSPACE_11=fixing ingrown toenails
+    RANDOHEART_CATCHINGBIRDSINSPACE_12=making friends with your local cryptid
+    RANDOHEART_CATCHINGBIRDSINSPACE_13=discovering your inner worth
+    RANDOHEART_CATCHINGBIRDSINSPACE_14=being genuinely happy for once
+    RANDOHEART_CATCHINGBIRDSINSPACE_15=emulating the Nintendo 64
+    RANDOHEART_CATCHINGBIRDSINSPACE_16=cultivating online clout
+    RANDOHEART_CATCHINGBIRDSINSPACE_17=turning out different from your parents
+    RANDOHEART_CATCHINGBIRDSINSPACE_18=making really good falafel
+    RANDOHEART_CATCHINGBIRDSINSPACE_19=amassing a single ounce of executive function
+    RANDOHEART_CATCHINGBIRDSINSPACE_20=planning a surprise party for your landlord
+    RANDOHEART_CATCHINGBIRDSINSPACE_21=convincing yourself the nightmares aren't real
+    RANDOHEART_CATCHINGBIRDSINSPACE_22=tolerating the taste of alcohol
+    RANDOHEART_CATCHINGBIRDSINSPACE_23=buffering an ultra dash (1.3.3.6 exclusive)
+    RANDOHEART_CATCHINGBIRDSINSPACE_24=snoozing your alarm for the fifth time
+    RANDOHEART_CATCHINGBIRDSINSPACE_25=taking care of your hardwood floors
+    RANDOHEART_CATCHINGBIRDSINSPACE_26=practicing mindfulness. HAHA who are we kidding
+    RANDOHEART_CATCHINGBIRDSINSPACE_27=learning to swim the hard way
+    RANDOHEART_CATCHINGBIRDSINSPACE_28=the Undertale pacifist route
+    RANDOHEART_CATCHINGBIRDSINSPACE_29=installing NixOS
+    RANDOHEART_CATCHINGBIRDSINSPACE_30=installing Arch Linux
+    RANDOHEART_CATCHINGBIRDSINSPACE_31=putting on a happy face
+    RANDOHEART_CATCHINGBIRDSINSPACE_32=trying on some new pronouns
+    RANDOHEART_CATCHINGBIRDSINSPACE_33=shifting the overton window
+    RANDOHEART_CATCHINGBIRDSINSPACE_34=escaping cults
+    RANDOHEART_CATCHINGBIRDSINSPACE_35=inventing new speedrun tech
+    RANDOHEART_CATCHINGBIRDSINSPACE_36=coming up with a cool gender-neutral nickname
+    RANDOHEART_CATCHINGBIRDSINSPACE_37=installing a hanging fruit basket
+    RANDOHEART_CATCHINGBIRDSINSPACE_38=making your siblings cry
+    RANDOHEART_CATCHINGBIRDSINSPACE_39=getting on a government watchlist
+    RANDOHEART_CATCHINGBIRDSINSPACE_40=picking out the good peaches at the store
+    RANDOHEART_CATCHINGBIRDSINSPACE_41=getting hired by Buzzfeed
+    RANDOHEART_CATCHINGBIRDSINSPACE_42=reverse engineering random number generators
+    RANDOHEART_CATCHINGBIRDSINSPACE_43=saying the word "homoeroticism" live on stream
+    RANDOHEART_CATCHINGBIRDSINSPACE_44=reading Marx and learning about the commodity feitish
+    RANDOHEART_CATCHINGBIRDSINSPACE_45=helping Celeste climb Mt. Madeline
+    RANDOHEART_CATCHINGBIRDSINSPACE_COUNT=46
+
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_0=He's
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_1=She's
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_2=They're
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_3=Xe's
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_4=Per's
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_5=They're all
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_6=Ne's
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_7=Ze's
+    RANDOHEART_PRONOUNSUBJECTCONTRACTION_COUNT=8
+
+    RANDOHEART_WORST_0=the worst
+    RANDOHEART_WORST_1=the best
+    RANDOHEART_WORST_2=alright
+    RANDOHEART_WORST_3=questionable at best
+    RANDOHEART_WORST_4=a problem
+    RANDOHEART_WORST_5=always right
+    RANDOHEART_WORST_6=inexplicable
+    RANDOHEART_WORST_7=dynamite!
+    RANDOHEART_WORST_8=awesome as heck
+    RANDOHEART_WORST_9=bothersome
+    RANDOHEART_WORST_10=kinda hittin tho o_o"
+    RANDOHEART_WORST_11=yeah <3
+    RANDOHEART_WORST_12=such a useless lesbian!
+    RANDOHEART_WORST_13=the same age as you
+    RANDOHEART_WORST_14=one of a kind
+    RANDOHEART_WORST_15=sure something, huh
+    RANDOHEART_WORST_16=really going at that salad
+    RANDOHEART_WORST_17=a lot.
+    RANDOHEART_WORST_18=uh, yikes
+    RANDOHEART_WORST_19=going through a lot
+    RANDOHEART_WORST_20=confusing
+    RANDOHEART_WORST_21=got a controversial burrito order
+    RANDOHEART_WORST_22=kind of problematic :/
+    RANDOHEART_WORST_23=got that look in her eyes again
+    RANDOHEART_WORST_24=looking at me kind of funny
+    RANDOHEART_WORST_COUNT=25
+
+    RANDOHEART_IMPOSSIBLE_0=IMPOSSIBLE
+    RANDOHEART_IMPOSSIBLE_1=WHAT THE HECK
+    RANDOHEART_IMPOSSIBLE_2=OH NO
+    RANDOHEART_IMPOSSIBLE_3=QUESTIONABLE
+    RANDOHEART_IMPOSSIBLE_4=NOT THE BEST
+    RANDOHEART_IMPOSSIBLE_5=HUMAN ERROR
+    RANDOHEART_IMPOSSIBLE_6=SERIOUSLY
+    RANDOHEART_IMPOSSIBLE_7=??????????
+    RANDOHEART_IMPOSSIBLE_8=BUT WHY THO
+    RANDOHEART_IMPOSSIBLE_9=THAT'S A BUMMER
+    RANDOHEART_IMPOSSIBLE_10=AAAARRRGHHHH
+    RANDOHEART_IMPOSSIBLE_COUNT=11
+
+    RANDOHEART_TROUBLEINPARADISE_0=Trouble in Paradise?
+    RANDOHEART_TROUBLEINPARADISE_1=What's Wrong With You?
+    RANDOHEART_TROUBLEINPARADISE_2=How Can A Loving God Cause Such Suffering?
+    RANDOHEART_TROUBLEINPARADISE_3=What's Your Beef With Me?
+    RANDOHEART_TROUBLEINPARADISE_4=I Love You And All, But...
+    RANDOHEART_TROUBLEINPARADISE_5=Oh Jeez I Left The Oven On
+    RANDOHEART_TROUBLEINPARADISE_6=This Is Actually Kind Of Hard
+    RANDOHEART_TROUBLEINPARADISE_7=Have You Tried Turning It Off And On Again
+    RANDOHEART_TROUBLEINPARADISE_8=You Fool!!
+    RANDOHEART_TROUBLEINPARADISE_9=oh noooooooooooooooo
+    RANDOHEART_TROUBLEINPARADISE_10=What The Heck?
+    RANDOHEART_TROUBLEINPARADISE_COUNT=11
+
+    RANDOHEART_GOYOU_0=(go you!)
+    RANDOHEART_GOYOU_1=(hooray!)
+    RANDOHEART_GOYOU_2=(yippee!)
+    RANDOHEART_GOYOU_3=*applause*
+    RANDOHEART_GOYOU_4=(congratulations!)
+    RANDOHEART_GOYOU_COUNT=5
+
+    RANDOHEART_BIN_0=Recycle Bin
+    RANDOHEART_BIN_1=Garbage
+    RANDOHEART_BIN_2=Trash
+    RANDOHEART_BIN_3=Ur Wavedashing Skills
+    RANDOHEART_BIN_4=Unfinished Maps
+    RANDOHEART_BIN_5=My Sanity
+    RANDOHEART_BIN_6=Dropzle
+    RANDOHEART_BIN_7=The Comb Room
+    RANDOHEART_BIN_COUNT=8
+
+    RANDOHEART_BADELINE1_0=Have you ever stopped to think about tiny dogs?
+    RANDOHEART_BADELINE2_0=Like, they are SO angry
+    RANDOHEART_BADELINE3_0=How do you even fit that much angry in that little dog?
+    RANDOHEART_BADELINE1_1=I find a lot of frustration in the concept of shoes.
+    RANDOHEART_BADELINE2_1=You put them on. You take them off. Repeat forever.
+    RANDOHEART_BADELINE3_1=Can I just leave my feet to rest for once?
+    RANDOHEART_BADELINE1_2=lol, I was explaining to my roommate what being trans was like
+    RANDOHEART_BADELINE2_2=and I just flippantly said "yeah I've just thought my whole life that girls were better than boys"
+    RANDOHEART_BADELINE3_2=and this just hit me like a train??? like how did I not realize I was a girl sooner omfg
+    RANDOHEART_BADELINE1_3=Summer is my favorite season but not for any of the normal reasons
+    RANDOHEART_BADELINE2_3=I will kill a bitch for a good juicy peach
+    RANDOHEART_BADELINE3_3=I LOVE FRUIT SO MUCH OKAY
+    RANDOHEART_BADELINE1_4=obtuse rubber goose green moose guava juice
+    RANDOHEART_BADELINE2_4=giant snake birthday cake
+    RANDOHEART_BADELINE3_4=large fries chocolate shake
+    RANDOHEART_BADELINE1_5=Are there any psychoactive ingredients in tea leaves??
+    RANDOHEART_BADELINE2_5=Any drugs besides caffeine
+    RANDOHEART_BADELINE3_5=I got bored and ate 3 bags of tea and now I'm convulsing randomly??
+    RANDOHEART_BADELINE1_6=I think that halloween candy counts as a fruit.
+    RANDOHEART_BADELINE2_6=Like think about it. It's seasonal. Different pieces are different quality.
+    RANDOHEART_BADELINE3_6=I will die on this hill!
+    RANDOHEART_BADELINE1_7=Being in your 20s is like
+    RANDOHEART_BADELINE2_7=The recognition that a plate of loaded nachos can be dinner
+    RANDOHEART_BADELINE3_7=But only if you make it yourself!
+    RANDOHEART_BADELINE1_8=Cinnamon toothpaste is good!!!
+    RANDOHEART_BADELINE2_8=If you disagree you're either an alcoholic or have terrible taste
+    RANDOHEART_BADELINE3_8=Or both!
+    RANDOHEART_BADELINE1_9=I am such a sucker for old games with prerendered sprites
+    RANDOHEART_BADELINE2_9=like donkey kong country, sonic 3d blast, etc
+    RANDOHEART_BADELINE3_9=so pretty
+    RANDOHEART_BADELINE1_10=To the airline lady who "ma'am"ed me
+    RANDOHEART_BADELINE2_10=And then said "sorry, sir" after I said a single word:
+    RANDOHEART_BADELINE3_10=die.
+    RANDOHEART_BADELINE1_11=What does it mean when you crack your neck
+    RANDOHEART_BADELINE2_11=and you recognize the pattern of pops
+    RANDOHEART_BADELINE3_11=as the opening percussion to a Front Bottoms song
+    RANDOHEART_BADELINE1_12=What if we kissed... on the gdq intermission screen?
+    RANDOHEART_BADELINE2_12=haha just kidding.
+    RANDOHEART_BADELINE3_12=unless...?
+    RANDOHEART_BADELINE1_13=I got an amazingly good batch of mangos this week!
+    RANDOHEART_BADELINE2_13=I would go so far as to say they were life-changingly good,
+    RANDOHEART_BADELINE3_13=but everything is life-changing. life is a constant state of change
+    RANDOHEART_BADELINE1_14=Kissing someone is basically just the prisoners dilemma!
+    RANDOHEART_BADELINE2_14=You and your partner both have the choice of whether to kiss or bite!
+    RANDOHEART_BADELINE3_14=The incentive structures here are simply not a stable game!
+    RANDOHEART_BADELINE1_15=Never let two autistic enbies have at a thousand piece puzzle
+    RANDOHEART_BADELINE2_15=they WILL hyperfocus and complete it in 4 hours
+    RANDOHEART_BADELINE3_15=Or do, I'm not a cop!
+    RANDOHEART_BADELINE1_16=The most significant difference between California and Arizona DMVs
+    RANDOHEART_BADELINE2_16=is that the Arizona one doesn’t have signs everywhere
+    RANDOHEART_BADELINE3_16=explaining that it’s illegal to assault DMV employees
+    RANDOHEART_BADELINE1_17=I wonder if cats could choose to get their ears pierced if they would.
+    RANDOHEART_BADELINE2_17=They definitely wouldn't get dangly earrings. Maybe an industiral.
+    RANDOHEART_BADELINE3_17=Oh some furries have definitely come up with that idea
+    RANDOHEART_BADELINE1_18=The two genders are:
+    RANDOHEART_BADELINE2_18=whether your third person object pronoun ends with an r or an m
+    RANDOHEART_BADELINE3_18=shout out to "thon" for being the only true nonbinary pronoun
+    RANDOHEART_BADELINE1_19=I feel like a plot of land farmed in ways that deplete the soul
+    RANDOHEART_BADELINE2_19=*soil
+    RANDOHEART_BADELINE3_19=Autocorrect performs the rare feat of literary analysis
+    RANDOHEART_BADELINE1_COUNT=20
+    RANDOHEART_BADELINE2_COUNT=20
+    RANDOHEART_BADELINE3_COUNT=20
+
+    RANDOHEART_THEO_0=kool-aid lemonade tastes like what getting murdered by a clown live on stage at a circus would feel like
+    RANDOHEART_THEO_1=I’m basically just a traumatized regression algorithm that loves women and fruit
+    RANDOHEART_THEO_2=I rlly love that I can share anecdotes that start “my girlfriend’s girlfriend’s girlfriend”. love 2 b part of a polycule
+    RANDOHEART_THEO_3=I would describe my political leanings as anarcho-librarianism
+    RANDOHEART_THEO_4=I will not be accepting constructive criticism
+    RANDOHEART_THEO_5=“Hey, it’s your gay stepsibling” is a great way to start a text to me
+    RANDOHEART_THEO_6=What is the protocol on convincing yourself that you don’t actually have a crush on a twitch streamer
+    RANDOHEART_THEO_7=when someone sends you a thumbs up emoji and you give it a thumbs up react. digital echolalia
+    RANDOHEART_THEO_8=we r all one race. the cumin race.
+    RANDOHEART_THEO_9=all emotions have been replaced with the knife emoji.
+    RANDOHEART_THEO_10=The secret to my success is that before I say a word out loud I pronounce it with all of silent letters loud in my head so I don’t feel Unbalanced by the strange word
+    RANDOHEART_THEO_11=You are what you yeet
+    RANDOHEART_THEO_12=I need to hug someone for 30 seconds straight or I’m gonna die of touch starved gay bitch
+    RANDOHEART_THEO_13=buy a basil plant, name him Basil, make basil chicken pasta
+    RANDOHEART_THEO_14=sound of spraying a can of whipped cream onto a bowl of cereal
+    RANDOHEART_THEO_15=People really don’t like it when you call their animal onesie a “normie fursuit” huh
+    RANDOHEART_THEO_16=oh my GOD. I may have hooked up with a girl who buys cheese wheels
+    RANDOHEART_THEO_17=I’m listening through kesha’s discography for the first time and I’m growing more bisexual by the moment
+    RANDOHEART_THEO_18=is it at all hot to describe myself as “kind of an ontological disaster” in my tinder bio y/n?
+    RANDOHEART_THEO_19=Most one direction songs, despite being absolute bangers, are kind of weird when you try putting them on playlists intended for platonic friends
+    RANDOHEART_THEO_20=Self care is impulse buying a half gallon of blueberry lemonade and then chugging it in the parking lot
+    RANDOHEART_THEO_21=Food is a social construction and "cooking" is performative
+    RANDOHEART_THEO_22=Tetris Attack (1995) is marxist propaganda because Yoshi and the ordinary enemies from Yoshi’s Island (1995) are the “good guys” while the "bad guys" are the bosses from said game.
+    RANDOHEART_THEO_23=If you eat so much bread that it becomes your gender do you become naan-binary?
+    RANDOHEART_THEO_24=the major seventh chord is trans. sorry cis people, that’s just the way it is.
+    RANDOHEART_THEO_25=welcome to late-stage capitalism, where everything’s unethical and the points don’t matter
+    RANDOHEART_THEO_26=meows at you and lays on top of your computer
+    RANDOHEART_THEO_27=I know this is the pot calling the kettle black but you feitishize suffering and perfectionism too much
+    RANDOHEART_THEO_28=Can philosophy explain why I feel perpetually fear the pain of living or do I need to turn to religion for that? maybe psychiatry actually?
+    RANDOHEART_THEO_29=Okay. Like I'm gonna take life advice from a scorpio, lmao
+    RANDOHEART_THEO_30=Meow. Meow meow. Meow. Meow? Meow meow. BIG meow. Meow meow meow meow meow!
+    RANDOHEART_THEO_31=...hold up. you just implied that the lyrics to alt j songs are real words in real sentences which makes me think it is YOU who is the fake fan
+    RANDOHEART_THEO_32=I'm drinking rosé out of a bottle of hennessy
+    RANDOHEART_THEO_33=I'm drinking la croix out of a can of la croix
+    RANDOHEART_THEO_34=There are websites about Seattle horses but nothing about the oppression of Seattle horses so my only conclusion is that horses roam wild and free in the Seattle streets.
+    RANDOHEART_THEO_35=What's your favorite gender? Mine is cats and alcohol.
+    RANDOHEART_THEO_36=Dog emoji is like a heart emoji but for the feeling when you see a dog!
+    RANDOHEART_THEO_37="don't stick the entire spatula in your mouth we have guests over" EXCUSE YOU I will do whatever I want to partake in the joy of life, which happens to be meringue crumbs.
+    RANDOHEART_THEO_38=Dril is too passé. I'll keep being funny on my own.
+    RANDOHEART_THEO_39=Now I know we're all friends here, but I think everyone should fight to the death every once in a while.
+    RANDOHEART_THEO_40=If I'm not able to get the seeds out of cherries then that's on me for having a repetitive stress injury :(
+    RANDOHEART_THEO_41=Have you ever considered lurking out in an alley in a trenchcoat selling genders to kids as a career path?
+    RANDOHEART_THEO_42=I can't stand cheap fast food that all tastes the same and is all the same color. I prefer my food to span multiple palettes.
+    RANDOHEART_THEO_43=listening to American Idiot while grading computer science homework seems a little heavy-handed
+    RANDOHEART_THEO_44=You must have forgotten to buffer your climbjump when I fell for you
+    RANDOHEART_THEO_45=I feel like I'm in some sort of weird romcom except there's no rom and no com. Help me
+    RANDOHEART_THEO_46=ugh drinking the recommended daily amount of water makes me feel like a potted plant
+    RANDOHEART_THEO_47=I heard they're gonna rerelease Farewell in Japan as Celeste 2
+    RANDOHEART_THEO_48=What do you mean, “internal bleeding”. That’s where the blood is supposed to be, on the inside. What’s the big deal.
+    RANDOHEART_THEO_49=I’m gonna make a religion out of the experience of looking down slightly when you walk through a room so you don’t trip on anything.
+    RANDOHEART_THEO_50=if nobody got me I know Celeste (2018) got me, can I get an AMEN?
+    RANDOHEART_THEO_51=I wanna be a jar of flour :(
+    RANDOHEART_THEO_52=gender IS a game and i’m uploading the files to emulation sites and the nintendo is going to send me a cease and desist over it
+    RANDOHEART_THEO_53=have you tried turning your hamster off and on again
+    RANDOHEART_THEO_54=experienced rando players dont say "what is a perfect" they say "why is a perfect"
+    RANDOHEART_THEO_55=that spike is being put on the fbi watchlist for violation of madeline rights
+    RANDOHEART_THEO_COUNT=56
+
+    RANDOHEART_MADDYPIC_0=distracted
+    RANDOHEART_MADDYPIC_1=sad
+    RANDOHEART_MADDYPIC_2=normal
+    RANDOHEART_MADDYPIC_3=shocked
+    RANDOHEART_MADDYPIC_4=upset
+    RANDOHEART_MADDYPIC_5=angry
+    RANDOHEART_MADDYPIC_COUNT=6
+
+    RANDOHEART_THEOPHONE_0=clean belly button lint out of phone charger
+    RANDOHEART_THEOPHONE_1=search engines near me
+    RANDOHEART_THEOPHONE_2=making a bandage out of your undergraduate thesis
+    RANDOHEART_THEOPHONE_3=guitar songs pacify sleep paralysis demons filetype:pdf
+    RANDOHEART_THEOPHONE_4=how to un-cut jalapenos without hands
+    RANDOHEART_THEOPHONE_5=are horses in seattle oppressed
+    RANDOHEART_THEOPHONE_6=bee swarm broke toenail
+    RANDOHEART_THEOPHONE_7=how to reinstall windows over remote desktop
+    RANDOHEART_THEOPHONE_8=watch homestuck free online season 1 episode 2
+    RANDOHEART_THEOPHONE_9=how to learn russian if I only know Java
+    RANDOHEART_THEOPHONE_10=site:youtube.com religious services for squirrels
+    RANDOHEART_THEOPHONE_11=is root beer a soda during lent
+    RANDOHEART_THEOPHONE_12=which kinds of european football are kosher
+    RANDOHEART_THEOPHONE_13=can't delete youtube comment 'TwinkHarasser1890'
+    RANDOHEART_THEOPHONE_14=how do I let my trans friends know I love and support them
+    RANDOHEART_THEOPHONE_15=hi maddy! i left my phone for you to find intentionally this time <3
+    RANDOHEART_THEOPHONE_16=how to start a girlunion
+    RANDOHEART_THEOPHONE_17=am I funny enough to be on the theo quotes list
+    RANDOHEART_THEOPHONE_COUNT=18
+
+# Madlibs sets
+
+    RANDO_RANDO_FOUNDTHEOPHONE=
+        [MADELINE left sad]
+        Oh, looks like {+ THEO} lost his phone again.
+
+        {trigger 0 Maddy walks to phone, ducks to pick it up}
+
+        [MADELINE left normal]
+        Let's see what he was up to...
+
+        {trigger 1 Maddy stands back up}
+
+        [MADELINE left (RANDO:MADDYPIC)]
+        "(RANDO:THEOPHONE)"? That doesn't make any sense.
+
+    RANDO_CH6_BOSS_TIRED_A=
+        [BADELINE right angry]
+        (RANDO:BADELINE1:4)
+
+    RANDO_CH6_BOSS_TIRED_B=
+        [BADELINE right yell]
+        (RANDO:BADELINE2:4)
+
+    RANDO_CH6_BOSS_TIRED_C=
+        [BADELINE right yell]
+        {*}(RANDO:BADELINE3:4){/*}
+
+	RANDO_MEMORIAL=
+		-- CELESTE MOUNTAIN --
+		This (RANDO:noun) dedicated to those
+		Who (RANDO:verbed) (RANDO:preposition) the (RANDO:noun)
+
+    RANDO_CH5_THEO_SAVING_LIFT=
+        [THEO left thinking]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_A=
+        [THEO left excited]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_NICE=
+        [THEO left thinking]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_B=
+        [THEO left worried]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_C=
+        [THEO left worried]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_SWITCH=
+        [THEO left thinking]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_DUNK=
+        [THEO left nailedit]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_REALLY=
+        [THEO left thinking]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_D=
+        [THEO left excited]
+        (RANDO:THEO)
+
+    RANDO_CH5_THEO_SAVING_E=
+        [THEO left worried]
+        (RANDO:THEO)
+
+    RANDO_CH5_BSIDE_THEO_A=
+        [THEO left excited]
+        (RANDO:THEO)
+
+    RANDO_CH5_BSIDE_THEO_B=
+        [THEO left wtf]
+        (RANDO:THEO)
+
+    RANDO_CH5_BSIDE_THEO_C=
+        [THEO left wtf]
+        (RANDO:THEO)
+
+    RANDO_CH10_GRANNY_EASTEREGG=
+        [GRANNY right mock]
+        I see you have discovered (RANDO:WAVEDASHING).
+
+	RANDO_WAVEDASH_DESKTOP_MYPC=			My (RANDO:NOUN)
+	RANDO_WAVEDASH_DESKTOP_POWERPOINT=	(RANDO:FILENAME).(RANDO:FILEEXTENSION)
+	RANDO_WAVEDASH_DESKTOP_RECYCLEBIN=	(RANDO:BIN)
+	RANDO_WAVEDASH_DESKTOP_STARTBUTTON=	(RANDO:FRUIT)OS
+
+	RANDO_WAVEDASH_PAGE1_TITLE=			(RANDO:WAVEDASHING:1) and You
+	RANDO_WAVEDASH_PAGE1_SUBTITLE=		A (RANDO:ADJ) solution for (RANDO:CATCHINGBIRDSINSPACE)
+
+	RANDO_WAVEDASH_PAGE2_TITLE=			Can't|(RANDO:VERB)|That|(RANDO:NOUN)?
+	RANDO_WAVEDASH_PAGE2_LIST=
+		-(RANDO:INTERJECTION): (RANDO:pluralnoun) are hard to (RANDO:verb){n}
+		-(RANDO:INTERJECTION). It's (RANDO:adj)!{n}
+		-(RANDO:INTERJECTION), it can (RANDO:verb){n}
+		-And {+PART_OF_YOU} won't (RANDO:verb){n}
+		-(she's (RANDO:WORST))
+
+	RANDO_WAVEDASH_PAGE2_IMPOSSIBLE=		(RANDO:IMPOSSIBLE)???
+
+	RANDO_WAVEDASH_PAGE3_TITLE=			Introducing... (RANDO:WAVEDASHING:1)!!
+	RANDO_WAVEDASH_PAGE3_INFO=			With (RANDO:WAVEDASHING:1), you can (RANDO:verb) very (RANDO:adverb){n}and (RANDO:verb) your (RANDO:noun) {~}at the same time!{/~}
+	RANDO_WAVEDASH_PAGE3_EASY=			It's "(RANDO:ADJ)!"
+
+	RANDO_WAVEDASH_PAGE4_TITLE=			How It's Done
+	RANDO_WAVEDASH_PAGE4_LIST=
+		-(RANDO:VERB:2){n}
+		-(RANDO:VERB) (RANDO:adverb) down (RANDO:preposition) the (RANDO:noun){n}
+		-Immediately (RANDO:verb:2) again and (RANDO:verb) forward{n}
+		-{~}You did it!{/~}{n}
+		-(RANDO:GOYOU)
+
+	RANDO_WAVEDASH_PAGE5_TITLE=			(RANDO:TROUBLEINPARADISE)
+	RANDO_WAVEDASH_PAGE5_INFO1=			{#ff0000}If you don't (RANDO:verb) your (RANDO:noun){#}{n}you're starting {~}too low{/~} (RANDO:preposition) the (RANDO:noun:3).
+	RANDO_WAVEDASH_PAGE5_INFO2=			{#ff0000}If you don't (RANDO:verb) much (RANDO:noun){#}{n}you're starting {~}too far{/~} (RANDO:preposition) the (RANDO:noun:3).
+
+	RANDO_WAVEDASH_PAGE6_TITLE=			Happy (RANDO:WAVEDASHING:1)!
+
+# Aide F6 (reprise du mod d'aide V1)
+    CMH_SETTING_TOGGLE=Show help (room / techniques / off)
+    CMH_SETTING_NEXT=Help: next / scroll down
+    CMH_SETTING_PREV=Help: previous / scroll up
+    CMH_SETTING_TEXTSCALE=Help text size
+    CMH_WALLJUMP=Wall Jump
+    CMH_LOCKED=locked (item not received)
+    CMH_UNLOCKED=unlocked
+    CMH_ROOM=room
+    CMH_LOGIC=Logic
+    CMH_LOGIC_DI=Developer Intended
+    CMH_LOGIC_VM=Vanilla Movement
+    CMH_LOGIC_AS=Assist Mode
+    CMH_NOT_VANILLA=No randomizer logic for this map (vanilla chapters only).
+    CMH_ROOM_UNKNOWN=This room is not described by the logic.
+    CMH_LEGEND=Green = you can, Red = missing item, Gold = cannot check
+    CMH_PASSAGES=Paths inside the room (region -> region):
+    CMH_LOCATIONS=Checks in this room:
+    CMH_FROM_REGION=from
+    CMH_DOORS=Logic doors
+    CMH_FREE=no requirement
+    CMH_OR=or
+    CMH_MISSING=missing
+    CMH_ROOM_FOOTER=O/U: scroll - Insert: technique glossary
+    CMH_DIR_DOOR_UP=up
+    CMH_DIR_DOOR_DOWN=down
+    CMH_DIR_DOOR_LEFT=left
+    CMH_DIR_DOOR_RIGHT=right
+    CMH_DIR_DOOR_SPECIAL=special
+    CMH_NO_TECH=No technique data.
+    CMH_AKA=Also called
+    CMH_CATEGORY=Level
+    CMH_CAT_BASIC=basic
+    CMH_CAT_INTERMEDIATE=intermediate
+    CMH_CAT_ADVANCED=advanced
+    CMH_CAT_EXPERT=expert
+    CMH_REQUIRES=Needs
+    CMH_INPUTS=Inputs:
+    CMH_TIMING=Timing
+    CMH_WHERE=Taught / first needed
+    CMH_SOURCES=Sources:
+    CMH_UNVERIFIED=Not verified: no reliable source found.
+    CMH_TECH_FOOTER=O/U: next/previous technique - Insert: close
+    CMH_ABIL_JUMP=jump
+    CMH_ABIL_GRAB=grab
+    CMH_ABIL_CLIMB_LEFT=climb left
+    CMH_ABIL_CLIMB_RIGHT=climb right
+    CMH_ABIL_CROUCH=crouch
+    CMH_ABIL_DASH_U=dash up
+    CMH_ABIL_DASH_UR=dash up-right
+    CMH_ABIL_DASH_R=dash right
+    CMH_ABIL_DASH_DR=dash down-right
+    CMH_ABIL_DASH_D=dash down
+    CMH_ABIL_DASH_DL=dash down-left
+    CMH_ABIL_DASH_L=dash left
+    CMH_ABIL_DASH_UL=dash up-left
+    CMH_ABIL_TWO_DASHES=two dashes
+    CMH_ABIL_HOLDABLE=holdable (Theo, jellyfish)
+    CMH_ABIL_FEATHER=feather
+    CMH_ABIL_BUBBLE=bubble (booster)
+    CMH_ABIL_DREAM_BLOCK=dream block
+    CMH_ABIL_MOVING_BLOCK=moving block
+    CMH_ANY_DASH=Any dash
+    CMH_DIR_U=up
+    CMH_DIR_UR=up-right
+    CMH_DIR_R=right
+    CMH_DIR_DR=down-right
+    CMH_DIR_D=down
+    CMH_DIR_DL=down-left
+    CMH_DIR_L=left
+    CMH_DIR_UL=up-left
+    CMH_TOK_U_DASH=Up Dash
+    CMH_TOK_UR_DASH=Up-Right Dash
+    CMH_TOK_R_DASH=Right Dash
+    CMH_TOK_DR_DASH=Down-Right Dash
+    CMH_TOK_D_DASH=Down Dash
+    CMH_TOK_DL_DASH=Down-Left Dash
+    CMH_TOK_L_DASH=Left Dash
+    CMH_TOK_UL_DASH=Up-Left Dash
+    CMH_TOK_R_CLIMB=Right Climb
+    CMH_TOK_L_CLIMB=Left Climb
+    CMH_TOK_CROUCH=Crouch
+    CMH_TOK_CANNOT_ACCESS=Impossible in this logic
+    CMH_TOK_BADELINE_BOOSTERS=Badeline Boosters
+    CMH_TOK_BIRD=Bird
+    CMH_TOK_BLUE_BOOSTERS=Blue Boosters
+    CMH_TOK_RED_BOOSTERS=Red Boosters
+    CMH_TOK_BLUE_CASSETTE_BLOCKS=Blue Cassette Blocks
+    CMH_TOK_PINK_CASSETTE_BLOCKS=Pink Cassette Blocks
+    CMH_TOK_YELLOW_CASSETTE_BLOCKS=Yellow Cassette Blocks
+    CMH_TOK_GREEN_CASSETTE_BLOCKS=Green Cassette Blocks
+    CMH_TOK_BLUE_CLOUDS=Blue Clouds
+    CMH_TOK_PINK_CLOUDS=Pink Clouds
+    CMH_TOK_BREAKER_BOXES=Breaker Boxes
+    CMH_TOK_BUMPERS=Bumpers
+    CMH_TOK_COINS=Coins
+    CMH_TOK_CORE_BLOCKS=Core Blocks
+    CMH_TOK_CORE_TOGGLES=Core Toggles
+    CMH_TOK_DASH_REFILLS=Dash Refills
+    CMH_TOK_DOUBLE_DASH_REFILLS=Double Dash Refills
+    CMH_TOK_DASH_SWITCHES=Dash Switches
+    CMH_TOK_DREAM_BLOCKS=Dream Blocks
+    CMH_TOK_FEATHERS=Feathers
+    CMH_TOK_FIRE_ICE_BALLS=Fire and Ice Balls
+    CMH_TOK_JELLYFISH=Jellyfish
+    CMH_TOK_KEVIN_BLOCKS=Kevins
+    CMH_TOK_MOVE_BLOCKS=Move Blocks
+    CMH_TOK_MOVING_PLATFORMS=Moving Platforms
+    CMH_TOK_SINKING_PLATFORMS=Sinking Platforms
+    CMH_TOK_PUFFERFISH=Pufferfish
+    CMH_TOK_SEEKERS=Seekers
+    CMH_TOK_SPRINGS=Springs
+    CMH_TOK_STRAWBERRY_SEEDS=Strawberry Seeds
+    CMH_TOK_SWAP_BLOCKS=Swap Blocks
+    CMH_TOK_THEO_CRYSTAL=Theo Crystal
+    CMH_TOK_TRAFFIC_BLOCKS=Traffic Blocks
+    CMH_TOK_WHITE_BLOCK=White Block
+    CMH_TOK_BROWN_CLUTTER=Brown clutter cleared (event)
+    CMH_TOK_GREEN_CLUTTER=Green clutter cleared (event)
+    CMH_TOK_PINK_CLUTTER=Pink clutter cleared (event)
+    CMH_TOK_POWER_SOURCE_BREAKER=Power Source breaker (event)
+    CMH_NOT_AP=No Archipelago game running: owned items are unknown (gold).
+    CMH_NOT_CONNECTED=Not connected to the server: owned items may be slightly out of date.
+    CMH_LOGIC_FROM_SEED=from the seed
+    CMH_AREA_INACTIVE=This chapter is not part of the seed: nothing is locked here.
+    CMH_SEED_EXITS=Where the openings lead in this seed:
+    CMH_EXIT_BOTH=both ways
+    CMH_EXIT_LEAVE=logic: way out
+    CMH_EXIT_ARRIVE=logic: way in
+    CMH_EXIT_UNUSED=not used by the logic
+    CMH_EXIT_ONLY_BLOCKED=exit only (closed behind you)
+    CMH_TOK_DEMO_DASH=Demo Dash (crouched dash)
+    CMR_YAML_OPEN=Create a YAML
+    CMR_YAML_OPEN_DESC=Configure a game and write the YAML file for the Archipelago server.
+    CMR_YAML_TITLE=YAML generator
+    CMR_YAML_NAME=Slot name
+    CMR_YAML_PRESETS=Presets
+    CMR_YAML_WRITE=Write the YAML
+    CMR_YAML_WRITTEN=Written:
+    CMR_YAML_ERR_NAME=Enter a slot name (1 to 16 characters).
+    CMR_YAML_ERR_CHARS=The name cannot contain { } : or a line break.
+    CMR_YAML_NO_SCHEMA=Options schema not found (CMRConfig/options_schema.json).

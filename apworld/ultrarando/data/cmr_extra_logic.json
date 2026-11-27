@@ -1,0 +1,54 @@
+{
+ "_doc": "Additions to the Open World logic, applied by core/static_data.py and tools/export_help_data.py. 'connections': each entry replaces the rule(s) of one OW connection. 'locations': each entry adds alternatives to the rule(s) of one OW location. Sources are in 'source'.",
+ "connections": [
+  {
+   "level": "3a",
+   "room": "04-d",
+   "from": "south",
+   "to": "south-west",
+   "rule": [
+    [
+     "cannot_access"
+    ]
+   ],
+   "vm_rule": [
+    [
+     "demo_dash",
+     "l_dash",
+     "l_climb"
+    ]
+   ],
+   "assist_rule": [
+    [
+     "demo_dash",
+     "l_dash",
+     "l_climb"
+    ]
+   ],
+   "source": "3A Elevator Shaft 'shaftskip': after Oshiro spews dust bunnies, a (pixel-perfect) demodash goes through the dust wall and skips the detour below (~12 s). https://celeste.ink/wiki/Celestial_Resort (Speedrun strategies, Elevator Shaft) and https://archive.speedrunwiki.com/w/index.php?title=Celestial_Resort",
+   "how": "Verified in game (SelfTest.Mech 'shaftreal', 26/11): from the floor right of the step under the dust (x 172, y 152), grab the step face on the left, climb 10-13 frames, climb jump, then a left demodash 12-14 frames later (Madeline at y 124): crosses with no deadly touch. Fails with Demo Dash locked, with Climb locked, and from a floor jump (apex y 125). Hence demo_dash + l_dash + l_climb."
+  }
+ ],
+ "locations": [
+  {
+   "level": "2a",
+   "room": "d4",
+   "region": "west",
+   "location": "strawberry",
+   "add_vm_rule": [
+    [
+     "dr_dash",
+     "any_dash_u_ur_r"
+    ]
+   ],
+   "add_assist_rule": [
+    [
+     "dr_dash",
+     "any_dash_u_ur_r"
+    ]
+   ],
+   "source": "Done in game by Nelem (27/11): a delayed wavedash gives the second dash back, then neutral jumps climb back up. Open World's alternative is dr_dash + crouch + (u, ur or r dash); in this mod the crouch forced by a down-diagonal dash is not locked (only the Crouch input is), so the wavedash works without the Crouch item.",
+   "how": "Wavedash: dash down-right into the floor and jump during the dash: the dash comes back on landing. Then dash up / up-right / right towards the strawberry."
+  }
+ ]
+}

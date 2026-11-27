@@ -1,0 +1,509 @@
+{
+ "game": "UltraRando",
+ "groups": [
+  {
+   "name": "Goal",
+   "fr": "Objectif"
+  },
+  {
+   "name": "Chapters",
+   "fr": "Chapitres et salles"
+  },
+  {
+   "name": "Logic",
+   "fr": "Difficulté"
+  },
+  {
+   "name": "Movement",
+   "fr": "Mouvements et objets"
+  },
+  {
+   "name": "Locations",
+   "fr": "Checks"
+  },
+  {
+   "name": "Other",
+   "fr": "Divers"
+  }
+ ],
+ "options": [
+  {
+   "key": "logic_difficulty",
+   "group": "Logic",
+   "name": "Logic Difficulty",
+   "doc": "Movement the logic expects (Open World rules). Developer Intended: what the developers expect a first-time player to know in each room. Vanilla Movement: any movement or trick taught anywhere in the base game. Assist Mode: invincibility, infinite dashes and infinite stamina.",
+   "fr": [
+    "Logique (mouvements attendus)",
+    "Ce que la logique suppose que tu sais faire. Intention des développeurs : ce que le jeu apprend au premier passage. Mouvements du jeu de base : toute technique enseignée quelque part dans le jeu. Mode assistance : invincibilité, dashs et endurance infinis."
+   ],
+   "type": "choice",
+   "default": "vanilla_movement",
+   "choices": [
+    {
+     "value": "developer_intended",
+     "name": "Developer Intended",
+     "fr": "Intention des développeurs"
+    },
+    {
+     "value": "vanilla_movement",
+     "name": "Vanilla Movement",
+     "fr": "Mouvements du jeu de base"
+    },
+    {
+     "value": "assist_mode",
+     "name": "Assist Mode",
+     "fr": "Mode assistance"
+    }
+   ]
+  },
+  {
+   "key": "room_shuffle",
+   "group": "Chapters",
+   "name": "Room Shuffle",
+   "doc": "Shuffle the rooms inside each chapter (never across chapters). The start and end rooms stay those of the game. Off: every chapter keeps its vanilla layout.",
+   "fr": [
+    "Salles mélangées",
+    "Les salles de chaque chapitre sont placées dans un ordre aléatoire (toujours finissable)."
+   ],
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "key": "room_difficulty",
+   "group": "Logic",
+   "name": "Room Difficulty",
+   "doc": "Skill level used for the few rooms that Open World does not describe (rhelmot's requirements).",
+   "fr": [
+    "Difficulté des salles",
+    "Niveaux de rhelmot : quelles salles et quels passages les cartes mélangées peuvent utiliser. Plus haut = plus de salles possibles, des passages plus exigeants."
+   ],
+   "type": "choice",
+   "default": "hard",
+   "choices": [
+    {
+     "value": "easy",
+     "name": "Easy",
+     "fr": "Facile"
+    },
+    {
+     "value": "normal",
+     "name": "Normal",
+     "fr": "Normal"
+    },
+    {
+     "value": "hard",
+     "name": "Hard",
+     "fr": "Difficile"
+    },
+    {
+     "value": "expert",
+     "name": "Expert",
+     "fr": "Expert"
+    },
+    {
+     "value": "master",
+     "name": "Master",
+     "fr": "Maître"
+    },
+    {
+     "value": "perfect",
+     "name": "Perfect",
+     "fr": "Parfait"
+    }
+   ]
+  },
+  {
+   "key": "room_coverage",
+   "group": "Chapters",
+   "name": "Room Coverage %",
+   "doc": "Room shuffle: share of a chapter's rooms the generator tries to place before it keeps a layout. Higher = more rooms in each map (more variety, a little longer generation). Rooms that only have one usable opening (dead ends) can stay out whatever the value.",
+   "fr": [
+    "Couverture des salles (%)",
+    "Part des salles d'un chapitre que le générateur essaie de placer. Plus haut = plus de variété (génération un peu plus longue). Les culs-de-sac à une seule ouverture peuvent rester hors de la carte."
+   ],
+   "type": "range",
+   "default": 90,
+   "min": 50,
+   "max": 100
+  },
+  {
+   "key": "dash_shuffle",
+   "group": "Movement",
+   "name": "Dash Shuffle",
+   "doc": "How dashing is shuffled. None: not shuffled. Unified: one `Dash` item gives the 8 directions. Cardinal Loose: 4 items; a direction also gives its two neighbouring diagonals. Cardinal Restrictive: 4 items; a diagonal needs both of its cardinal directions. Octal: one item per direction.",
+   "fr": [
+    "Dash mélangé",
+    "Aucun : dash normal. Unifié : un objet Dash donne les 8 directions. Cardinal souple : 4 objets, chaque direction donne aussi ses diagonales voisines. Cardinal strict : 4 objets, une diagonale demande ses deux directions. Octal : un objet par direction."
+   ],
+   "type": "choice",
+   "default": "none",
+   "choices": [
+    {
+     "value": "none",
+     "name": "None",
+     "fr": "Aucun"
+    },
+    {
+     "value": "unified",
+     "name": "Unified",
+     "fr": "Unifié"
+    },
+    {
+     "value": "cardinal_loose",
+     "name": "Cardinal Loose",
+     "fr": "Cardinal souple"
+    },
+    {
+     "value": "cardinal_restrictive",
+     "name": "Cardinal Restrictive",
+     "fr": "Cardinal strict"
+    },
+    {
+     "value": "octal",
+     "name": "Octal",
+     "fr": "Octal (8 objets)"
+    }
+   ]
+  },
+  {
+   "key": "climb_shuffle",
+   "group": "Movement",
+   "name": "Climb Shuffle",
+   "doc": "How climbing is shuffled (forced to None with Developer Intended logic). Unified: one `Climb` item. Split: `Left Climb` and `Right Climb`.",
+   "fr": [
+    "Grimper mélangé",
+    "Aucun : normal. Unifié : un objet Climb. Séparé : grimper à gauche et à droite sont deux objets."
+   ],
+   "type": "choice",
+   "default": "none",
+   "choices": [
+    {
+     "value": "none",
+     "name": "None",
+     "fr": "Aucun"
+    },
+    {
+     "value": "unified",
+     "name": "Unified",
+     "fr": "Unifié"
+    },
+    {
+     "value": "split",
+     "name": "Split",
+     "fr": "Séparé (gauche / droite)"
+    }
+   ]
+  },
+  {
+   "key": "crouch_shuffle",
+   "group": "Movement",
+   "name": "Crouch Shuffle",
+   "doc": "Shuffle the ability to crouch.",
+   "fr": [
+    "S'accroupir mélangé",
+    "S'accroupir est un objet."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "wall_jump_shuffle",
+   "group": "Movement",
+   "name": "Wall Jump Shuffle",
+   "doc": "Shuffle the ability to wall jump (and wallbounce). Logic: every chapter except the Prologue requires Wall Jump. Forces Roomsanity on.",
+   "fr": [
+    "Saut mural mélangé",
+    "Le saut contre un mur est un objet."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "demo_dash_shuffle",
+   "group": "Movement",
+   "name": "Demo Dash Shuffle",
+   "doc": "Shuffle the Demo Dash (Celeste's \"crouch dash\": a dash that keeps Madeline's crouched 4 px hitbox, with the crouch-dash button or by holding down when dashing then aiming elsewhere). Until it is received, a dash that does not go downwards stands Madeline up. Logic (Vanilla Movement and Assist only): with Demo Dash + Left Dash + Left Climb (grab the step face, climb jump, demodash), the 3A Elevator Shaft dust wall (room 04-d) can be crossed (\"shaftskip\", frame-perfect), skipping the detour and the Presidential Suite Key. Off: demo dashes are free and the logic never expects the skip.",
+   "fr": [
+    "Demo Dash mélangé",
+    "Le dash accroupi (demodash) est un objet."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "interactable_shuffle",
+   "group": "Movement",
+   "name": "Interactable Shuffle",
+   "doc": "Shuffle the interactable objects (Springs, Traffic Blocks, Feathers...): an object only exists once received. Off: every object is given at the start.",
+   "fr": [
+    "Objets du décor mélangés",
+    "Les 36 objets interactifs (ressorts, plumes, bulles, blocs...) sont absents tant que leur objet n'est pas reçu."
+   ],
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "key": "include_b_sides",
+   "group": "Chapters",
+   "name": "B-Sides",
+   "doc": "Include the B-Sides.",
+   "fr": [
+    "Faces B",
+    "Ajoute les faces B."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "include_c_sides",
+   "group": "Chapters",
+   "name": "C-Sides",
+   "doc": "Include the C-Sides.",
+   "fr": [
+    "Faces C",
+    "Ajoute les faces C."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "include_core",
+   "group": "Chapters",
+   "name": "Core",
+   "doc": "Include Chapter 8 - Core (and its B/C-Sides if those are included).",
+   "fr": [
+    "Cœur (chapitre 8)",
+    "Ajoute le chapitre Cœur."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "include_farewell",
+   "group": "Chapters",
+   "name": "Farewell",
+   "doc": "Include Chapter 9 - Farewell (one chapter, both halves).",
+   "fr": [
+    "Adieu (chapitre 9)",
+    "Ajoute Adieu (Farewell)."
+   ],
+   "type": "toggle",
+   "default": false
+  },
+  {
+   "key": "goal_area",
+   "group": "Goal",
+   "name": "Goal Area",
+   "doc": "Chapter to clear (with the required Strawberries) to win. It is always included.",
+   "fr": [
+    "Chapitre objectif",
+    "Le chapitre à finir pour gagner. Il s'ouvre quand tu as reçu assez de fraises."
+   ],
+   "type": "choice",
+   "default": "the_summit_a",
+   "choices": [
+    {
+     "value": "the_summit_a",
+     "name": "The Summit A",
+     "fr": "Le Sommet A"
+    },
+    {
+     "value": "the_summit_b",
+     "name": "The Summit B",
+     "fr": "Le Sommet B"
+    },
+    {
+     "value": "the_summit_c",
+     "name": "The Summit C",
+     "fr": "Le Sommet C"
+    },
+    {
+     "value": "core_a",
+     "name": "Core A",
+     "fr": "Cœur A"
+    },
+    {
+     "value": "core_b",
+     "name": "Core B",
+     "fr": "Cœur B"
+    },
+    {
+     "value": "core_c",
+     "name": "Core C",
+     "fr": "Cœur C"
+    },
+    {
+     "value": "farewell",
+     "name": "Farewell",
+     "fr": "Adieu"
+    }
+   ]
+  },
+  {
+   "key": "total_strawberries",
+   "group": "Goal",
+   "name": "Total Strawberries",
+   "doc": "Maximum number of Strawberries in the item pool.",
+   "fr": [
+    "Fraises au total",
+    "Nombre d'objets Fraise dans la partie."
+   ],
+   "type": "range",
+   "default": 50,
+   "min": 0,
+   "max": 202
+  },
+  {
+   "key": "strawberries_required_percentage",
+   "group": "Goal",
+   "name": "Strawberries Required %",
+   "doc": "Percentage of the existing Strawberries needed to win.",
+   "fr": [
+    "Fraises requises (%)",
+    "Part des fraises qui ouvre le chapitre objectif."
+   ],
+   "type": "range",
+   "default": 50,
+   "min": 0,
+   "max": 100
+  },
+  {
+   "key": "roomsanity",
+   "group": "Locations",
+   "name": "Roomsanity",
+   "doc": "Entering each room sends a check.",
+   "fr": [
+    "Checks des salles",
+    "Entrer dans une salle pour la première fois est un check."
+   ],
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "key": "checkpointsanity",
+   "group": "Locations",
+   "name": "Checkpointsanity",
+   "doc": "Each checkpoint is an item (\"Forsaken City A - Crossing\"): it appears in the chapter select only once received (reaching it does not unlock it), and the logic knows that with it the chapter can be started from that room. Checkpoints are not checks: entering a room still sends that room's own checks. Off: checkpoints unlock by reaching them, as in the base game, and the logic always starts at the beginning.",
+   "fr": [
+    "Checkpoints en objets",
+    "Chaque checkpoint est un objet : il débloque le départ depuis ce checkpoint."
+   ],
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "key": "keysanity",
+   "group": "Locations",
+   "name": "Keysanity",
+   "doc": "Keys are items (\"Celestial Resort A - Front Door Key\"), found anywhere in the multiworld. Owning one opens its door for good (every session, every start); picking a key up in a level sends that spot's check. Off: keys work as in the base game (picked up in the level, lost when a new session starts).",
+   "fr": [
+    "Clés en objets",
+    "Chaque clé de porte est un objet, trouvable dans n'importe quel monde ; l'endroit de la clé reste un check."
+   ],
+   "type": "toggle",
+   "default": true
+  },
+  {
+   "key": "death_link",
+   "group": "Other",
+   "name": "Death Link",
+   "doc": "When you die, everyone who enabled death link dies. Of course, the reverse is true too.",
+   "fr": [
+    "Death Link",
+    "Quand un joueur meurt, les autres aussi."
+   ],
+   "type": "toggle",
+   "default": false
+  }
+ ],
+ "presets": [
+  {
+   "name": "Beginner",
+   "fr": "Débutant",
+   "values": {
+    "logic_difficulty": "developer_intended",
+    "room_difficulty": "easy",
+    "room_coverage": 70,
+    "dash_shuffle": "unified",
+    "climb_shuffle": "unified",
+    "crouch_shuffle": false,
+    "wall_jump_shuffle": false,
+    "demo_dash_shuffle": false,
+    "total_strawberries": 30,
+    "strawberries_required_percentage": 50
+   }
+  },
+  {
+   "name": "Normal",
+   "fr": "Normal",
+   "values": {
+    "logic_difficulty": "vanilla_movement",
+    "room_difficulty": "normal",
+    "room_coverage": 90,
+    "dash_shuffle": "unified",
+    "climb_shuffle": "unified",
+    "crouch_shuffle": true,
+    "wall_jump_shuffle": false,
+    "demo_dash_shuffle": false,
+    "total_strawberries": 50,
+    "strawberries_required_percentage": 50
+   }
+  },
+  {
+   "name": "Advanced",
+   "fr": "Avancé",
+   "values": {
+    "logic_difficulty": "vanilla_movement",
+    "room_difficulty": "hard",
+    "room_coverage": 90,
+    "dash_shuffle": "cardinal_loose",
+    "climb_shuffle": "split",
+    "crouch_shuffle": true,
+    "wall_jump_shuffle": true,
+    "demo_dash_shuffle": false,
+    "total_strawberries": 50,
+    "strawberries_required_percentage": 60
+   }
+  },
+  {
+   "name": "Expert",
+   "fr": "Expert",
+   "values": {
+    "logic_difficulty": "vanilla_movement",
+    "room_difficulty": "expert",
+    "room_coverage": 100,
+    "dash_shuffle": "octal",
+    "climb_shuffle": "split",
+    "crouch_shuffle": true,
+    "wall_jump_shuffle": true,
+    "demo_dash_shuffle": true,
+    "total_strawberries": 60,
+    "strawberries_required_percentage": 70
+   }
+  },
+  {
+   "name": "Maximum Variety",
+   "fr": "Variété maximale",
+   "values": {
+    "logic_difficulty": "vanilla_movement",
+    "room_difficulty": "master",
+    "room_coverage": 100,
+    "dash_shuffle": "octal",
+    "climb_shuffle": "split",
+    "crouch_shuffle": true,
+    "wall_jump_shuffle": true,
+    "demo_dash_shuffle": true,
+    "interactable_shuffle": true,
+    "keysanity": true,
+    "roomsanity": true,
+    "checkpointsanity": true,
+    "include_b_sides": true,
+    "include_c_sides": true,
+    "include_core": true,
+    "include_farewell": true,
+    "total_strawberries": 100,
+    "strawberries_required_percentage": 60
+   }
+  }
+ ]
+}

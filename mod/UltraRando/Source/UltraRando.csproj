@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Fork of rhelmot's Celeste Randomizer (MIT), ported from net4.8 to SDK-style net8.0 (Everest core). -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>UltraRando</AssemblyName>
+    <RootNamespace>Celeste.Mod.UltraRando</RootNamespace>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <CelestePrefix Condition="'$(CelestePrefix)' == ''">D:\Games\Celeste</CelestePrefix>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS0618;CS0612;CS0414;CS0649;CS0169;CS0219;CS0168;CS8981;CS0108;CS0114</NoWarn>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <Reference Private="false" />
+  </ItemDefinitionGroup>
+
+  <ItemGroup>
+    <Reference Include="$(CelestePrefix)\Celeste.dll" />
+    <Reference Include="$(CelestePrefix)\MMHOOK_Celeste.dll" />
+    <Reference Include="$(CelestePrefix)\FNA.dll" />
+    <Reference Include="$(CelestePrefix)\MonoMod.RuntimeDetour.dll" />
+    <Reference Include="$(CelestePrefix)\MonoMod.Utils.dll" />
+    <Reference Include="$(CelestePrefix)\Mono.Cecil.dll" />
+    <Reference Include="$(CelestePrefix)\YamlDotNet.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Archipelago.MultiClient.Net" Version="6.7.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- CMR: data of the F6 help panel (see AP/HelpData.cs) -->
+    <EmbeddedResource Include="..\HelpData\logic.json" LogicalName="CMR.help_logic.json" />
+    <EmbeddedResource Include="..\HelpData\techniques.json" LogicalName="CMR.techniques.json" />
+  </ItemGroup>
+
+  <Target Name="CopyToBin" AfterTargets="Build">
+    <Copy SourceFiles="$(OutputPath)$(AssemblyName).dll;$(OutputPath)$(AssemblyName).pdb" DestinationFolder="..\bin" />
+    <!-- CMR: Archipelago.MultiClient.Net (MIT) ships next to our DLL; Newtonsoft.Json is provided by Everest (13.0.x) -->
+    <Copy SourceFiles="$(NuGetPackageRoot)archipelago.multiclient.net\6.7.1\lib\net6.0\Archipelago.MultiClient.Net.dll" DestinationFolder="..\bin" />
+  </Target>
+</Project>

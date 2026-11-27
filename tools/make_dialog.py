@@ -1,0 +1,161 @@
+"""Écrit Dialog/English.txt et Dialog/French.txt du mod d'aide (UTF-8).
+
+usage : python tools/make_dialog.py
+Une ligne par entrée : (clé, anglais, français).
+"""
+import os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+OUT = os.path.join(ROOT, "mod", "CelesteMovementHelper", "Dialog")
+
+E = [
+    # Mod options
+    ("modoptions_celestemovementhelpermodule_title", "Celeste Movement Helper", "Celeste Movement Helper"),
+    ("CMH_SETTING_TOGGLE", "Show help (room / techniques / off)", "Afficher l'aide (salle / techniques / rien)"),
+    ("CMH_SETTING_NEXT", "Help: next / scroll down", "Aide : suivant / défiler vers le bas"),
+    ("CMH_SETTING_PREV", "Help: previous / scroll up", "Aide : précédent / défiler vers le haut"),
+    ("CMH_SETTING_LOGIC", "Logic difficulty (same as YAML)", "Difficulté de logique (comme le YAML)"),
+    ("CMH_SETTING_TEXTSCALE", "Help text size", "Taille du texte de l'aide"),
+    ("CMH_SETTING_WALLJUMP", "Wall Jump Shuffle (fork apworld, same as YAML)", "Wall Jump Shuffle (apworld fork, comme le YAML)"),
+    ("CMH_WALLJUMP", "Wall Jump", "Wall Jump"),
+    ("CMH_LOCKED", "locked (item not received)", "bloqué (item pas encore reçu)"),
+    ("CMH_UNLOCKED", "unlocked", "débloqué"),
+    # Room page
+    ("CMH_ROOM", "room", "salle"),
+    ("CMH_LOGIC", "Logic", "Logique"),
+    ("CMH_LOGIC_DI", "Developer Intended", "Developer Intended (prévu par les devs)"),
+    ("CMH_LOGIC_VM", "Vanilla Movement", "Vanilla Movement (tout le jeu de base)"),
+    ("CMH_LOGIC_AS", "Assist Mode", "Assist Mode (mode assisté)"),
+    ("CMH_LOGIC_HINT", "change it in Mod Options to match your YAML", "à régler dans Options des mods comme ton YAML"),
+    ("CMH_NO_OPENWORLD", "Archipelago Open World mod not found: owned items are unknown (gold).",
+     "Mod Archipelago Open World introuvable : objets possédés inconnus (en jaune)."),
+    ("CMH_NOT_CONNECTED", "Not connected to Archipelago: owned items may be out of date.",
+     "Pas connecté à Archipelago : les objets possédés peuvent être faux."),
+    ("CMH_NOT_VANILLA", "No randomizer logic for this map (vanilla chapters only).",
+     "Pas de logique de randomizer pour cette carte (chapitres du jeu de base seulement)."),
+    ("CMH_ROOM_UNKNOWN", "This room is not described by the logic.", "Cette salle n'est pas décrite par la logique."),
+    ("CMH_LEGEND", "Green = you can, Red = missing item, Gold = cannot check",
+     "Vert = tu peux, Rouge = il manque un objet, Jaune = impossible à vérifier"),
+    ("CMH_PASSAGES", "Paths inside the room (region -> region):", "Passages dans la salle (région -> région) :"),
+    ("CMH_LOCATIONS", "Checks in this room:", "Checks dans cette salle :"),
+    ("CMH_FROM_REGION", "from", "depuis"),
+    ("CMH_DOORS", "Exits", "Sorties"),
+    ("CMH_FREE", "no requirement", "aucune condition"),
+    ("CMH_OR", "or", "ou"),
+    ("CMH_MISSING", "missing", "manque"),
+    ("CMH_ROOM_FOOTER", "F7/F8: scroll - F6: technique glossary", "F7/F8 : défiler - F6 : glossaire des techniques"),
+    ("CMH_DIR_DOOR_UP", "up", "haut"),
+    ("CMH_DIR_DOOR_DOWN", "down", "bas"),
+    ("CMH_DIR_DOOR_LEFT", "left", "gauche"),
+    ("CMH_DIR_DOOR_RIGHT", "right", "droite"),
+    ("CMH_DIR_DOOR_SPECIAL", "special", "spéciale"),
+    # Technique page
+    ("CMH_NO_TECH", "No technique data.", "Pas de données de techniques."),
+    ("CMH_AKA", "Also called", "Autres noms"),
+    ("CMH_CATEGORY", "Level", "Niveau"),
+    ("CMH_CAT_BASIC", "basic", "base"),
+    ("CMH_CAT_INTERMEDIATE", "intermediate", "intermédiaire"),
+    ("CMH_CAT_ADVANCED", "advanced", "avancé"),
+    ("CMH_CAT_EXPERT", "expert", "expert"),
+    ("CMH_REQUIRES", "Needs", "Nécessite"),
+    ("CMH_INPUTS", "Inputs:", "Inputs :"),
+    ("CMH_TIMING", "Timing", "Timing"),
+    ("CMH_WHERE", "Taught / first needed", "Appris / demandé pour la première fois"),
+    ("CMH_SOURCES", "Sources:", "Sources :"),
+    ("CMH_UNVERIFIED", "Not verified: no reliable source found.", "Non vérifiée : aucune source fiable trouvée."),
+    ("CMH_TECH_FOOTER", "F7/F8: next/previous technique - F6: close", "F7/F8 : technique suivante/précédente - F6 : fermer"),
+    # Abilities used by techniques.json
+    ("CMH_ABIL_JUMP", "jump", "saut"),
+    ("CMH_ABIL_GRAB", "grab", "agripper"),
+    ("CMH_ABIL_CLIMB_LEFT", "climb left", "grimper à gauche"),
+    ("CMH_ABIL_CLIMB_RIGHT", "climb right", "grimper à droite"),
+    ("CMH_ABIL_CROUCH", "crouch", "s'accroupir"),
+    ("CMH_ABIL_DASH_U", "dash up", "dash haut"),
+    ("CMH_ABIL_DASH_UR", "dash up-right", "dash haut-droite"),
+    ("CMH_ABIL_DASH_R", "dash right", "dash droite"),
+    ("CMH_ABIL_DASH_DR", "dash down-right", "dash bas-droite"),
+    ("CMH_ABIL_DASH_D", "dash down", "dash bas"),
+    ("CMH_ABIL_DASH_DL", "dash down-left", "dash bas-gauche"),
+    ("CMH_ABIL_DASH_L", "dash left", "dash gauche"),
+    ("CMH_ABIL_DASH_UL", "dash up-left", "dash haut-gauche"),
+    ("CMH_ABIL_TWO_DASHES", "two dashes", "deux dashs"),
+    ("CMH_ABIL_HOLDABLE", "holdable (Theo, jellyfish)", "objet portable (Theo, méduse)"),
+    ("CMH_ABIL_FEATHER", "feather", "plume"),
+    ("CMH_ABIL_BUBBLE", "bubble (booster)", "bulle (booster)"),
+    ("CMH_ABIL_DREAM_BLOCK", "dream block", "bloc de rêve"),
+    ("CMH_ABIL_MOVING_BLOCK", "moving block", "bloc mobile"),
+    # Dash directions inside "any_dash_*"
+    ("CMH_ANY_DASH", "Any dash", "Un dash"),
+    ("CMH_DIR_U", "up", "haut"),
+    ("CMH_DIR_UR", "up-right", "haut-droite"),
+    ("CMH_DIR_R", "right", "droite"),
+    ("CMH_DIR_DR", "down-right", "bas-droite"),
+    ("CMH_DIR_D", "down", "bas"),
+    ("CMH_DIR_DL", "down-left", "bas-gauche"),
+    ("CMH_DIR_L", "left", "gauche"),
+    ("CMH_DIR_UL", "up-left", "haut-gauche"),
+    # Logic tokens (item names stay English in Archipelago; only the in-game label is translated)
+    ("CMH_TOK_U_DASH", "Up Dash", "Dash haut"),
+    ("CMH_TOK_UR_DASH", "Up-Right Dash", "Dash haut-droite"),
+    ("CMH_TOK_R_DASH", "Right Dash", "Dash droite"),
+    ("CMH_TOK_DR_DASH", "Down-Right Dash", "Dash bas-droite"),
+    ("CMH_TOK_D_DASH", "Down Dash", "Dash bas"),
+    ("CMH_TOK_DL_DASH", "Down-Left Dash", "Dash bas-gauche"),
+    ("CMH_TOK_L_DASH", "Left Dash", "Dash gauche"),
+    ("CMH_TOK_UL_DASH", "Up-Left Dash", "Dash haut-gauche"),
+    ("CMH_TOK_R_CLIMB", "Right Climb", "Grimper à droite"),
+    ("CMH_TOK_L_CLIMB", "Left Climb", "Grimper à gauche"),
+    ("CMH_TOK_CROUCH", "Crouch", "S'accroupir"),
+    ("CMH_TOK_CANNOT_ACCESS", "Impossible in this logic", "Impossible dans cette logique"),
+    ("CMH_TOK_BADELINE_BOOSTERS", "Badeline Boosters", "Badeline (propulseurs)"),
+    ("CMH_TOK_BIRD", "Bird", "Oiseau"),
+    ("CMH_TOK_BLUE_BOOSTERS", "Blue Boosters", "Bulles vertes (boosters bleus)"),
+    ("CMH_TOK_RED_BOOSTERS", "Red Boosters", "Bulles rouges"),
+    ("CMH_TOK_BLUE_CASSETTE_BLOCKS", "Blue Cassette Blocks", "Blocs cassette bleus"),
+    ("CMH_TOK_PINK_CASSETTE_BLOCKS", "Pink Cassette Blocks", "Blocs cassette roses"),
+    ("CMH_TOK_YELLOW_CASSETTE_BLOCKS", "Yellow Cassette Blocks", "Blocs cassette jaunes"),
+    ("CMH_TOK_GREEN_CASSETTE_BLOCKS", "Green Cassette Blocks", "Blocs cassette verts"),
+    ("CMH_TOK_BLUE_CLOUDS", "Blue Clouds", "Nuages bleus"),
+    ("CMH_TOK_PINK_CLOUDS", "Pink Clouds", "Nuages roses (fragiles)"),
+    ("CMH_TOK_BREAKER_BOXES", "Breaker Boxes", "Boîtiers électriques"),
+    ("CMH_TOK_BUMPERS", "Bumpers", "Bumpers"),
+    ("CMH_TOK_COINS", "Coins", "Pièces (touches)"),
+    ("CMH_TOK_CORE_BLOCKS", "Core Blocks", "Blocs du Cœur"),
+    ("CMH_TOK_CORE_TOGGLES", "Core Toggles", "Interrupteurs chaud/froid"),
+    ("CMH_TOK_DASH_REFILLS", "Dash Refills", "Cristaux de recharge"),
+    ("CMH_TOK_DOUBLE_DASH_REFILLS", "Double Dash Refills", "Cristaux de double recharge"),
+    ("CMH_TOK_DASH_SWITCHES", "Dash Switches", "Interrupteurs à dash"),
+    ("CMH_TOK_DREAM_BLOCKS", "Dream Blocks", "Blocs de rêve"),
+    ("CMH_TOK_FEATHERS", "Feathers", "Plumes"),
+    ("CMH_TOK_FIRE_ICE_BALLS", "Fire and Ice Balls", "Boules de feu et de glace"),
+    ("CMH_TOK_JELLYFISH", "Jellyfish", "Méduses"),
+    ("CMH_TOK_KEVIN_BLOCKS", "Kevins", "Kevins"),
+    ("CMH_TOK_MOVE_BLOCKS", "Move Blocks", "Blocs à flèche"),
+    ("CMH_TOK_MOVING_PLATFORMS", "Moving Platforms", "Plateformes mobiles"),
+    ("CMH_TOK_SINKING_PLATFORMS", "Sinking Platforms", "Plateformes qui s'enfoncent"),
+    ("CMH_TOK_PUFFERFISH", "Pufferfish", "Poissons-globes"),
+    ("CMH_TOK_SEEKERS", "Seekers", "Seekers"),
+    ("CMH_TOK_SPRINGS", "Springs", "Ressorts"),
+    ("CMH_TOK_STRAWBERRY_SEEDS", "Strawberry Seeds", "Graines de fraise"),
+    ("CMH_TOK_SWAP_BLOCKS", "Swap Blocks", "Blocs d'échange"),
+    ("CMH_TOK_THEO_CRYSTAL", "Theo Crystal", "Cristal de Theo"),
+    ("CMH_TOK_TRAFFIC_BLOCKS", "Traffic Blocks", "Blocs zip (feux)"),
+    ("CMH_TOK_WHITE_BLOCK", "White Block", "Bloc blanc"),
+    ("CMH_TOK_BROWN_CLUTTER", "Brown clutter cleared (event)", "Désordre marron rangé (événement)"),
+    ("CMH_TOK_GREEN_CLUTTER", "Green clutter cleared (event)", "Désordre vert rangé (événement)"),
+    ("CMH_TOK_PINK_CLUTTER", "Pink clutter cleared (event)", "Désordre rose rangé (événement)"),
+    ("CMH_TOK_POWER_SOURCE_BREAKER", "Power Source breaker (event)", "Disjoncteur de Power Source (événement)"),
+]
+
+
+def write(name: str, col: int) -> None:
+    lines = ["# Celeste Movement Helper - generated by tools/make_dialog.py"]
+    lines += [f"{key}= {entry[col]}" for key, *rest in E for entry in [(key, *rest)]]
+    with open(os.path.join(OUT, name), "w", encoding="utf-8", newline="\n") as f:
+        f.write("\n".join(lines) + "\n")
+
+
+os.makedirs(OUT, exist_ok=True)
+write("English.txt", 1)
+write("French.txt", 2)
+print(f"{len(E)} entrées écrites dans {OUT}")

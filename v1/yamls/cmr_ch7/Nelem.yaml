@@ -1,0 +1,80 @@
+# Seed de test « chapitre 7 » (déterministe : --seed 7301). Salles dans l'ordre d'origine (pas de mélange).
+# Les 8 dashs sont des objets séparés, placés par Archipelago parmi les premiers lieux (Prologue, salles 1 et 2 du 1A), dans un ordre jouable pour les tester un par un.
+# Les 3 fraises qui ouvrent le Sommet (objectif) sont dans des salles du 1A (5 fraises au total, 60 %).
+# Tout le reste est donné au départ : Climb, Crouch, Wall Jump, Demo Dash, les 36 objets, la clé et les checkpoints du Sommet.
+name: Nelem
+game: UltraRando
+UltraRando:
+  logic_difficulty: vanilla_movement
+  room_shuffle: false
+  room_difficulty: hard
+  dash_shuffle: octal
+  climb_shuffle: unified
+  crouch_shuffle: true
+  wall_jump_shuffle: true
+  demo_dash_shuffle: true
+  interactable_shuffle: true
+  keysanity: true
+  include_b_sides: false
+  include_c_sides: false
+  include_core: false
+  include_farewell: false
+  goal_area: the_summit_a
+  total_strawberries: 5
+  strawberries_required_percentage: 60
+  roomsanity: true
+  checkpointsanity: true
+  death_link: false
+  start_inventory:
+    Climb: 1
+    Crouch: 1
+    Wall Jump: 1
+    Demo Dash: 1
+    The Summit A - 2500 M Key: 1
+    The Summit A - 500 M: 1
+    The Summit A - 1000 M: 1
+    The Summit A - 1500 M: 1
+    The Summit A - 2000 M: 1
+    The Summit A - 2500 M: 1
+    The Summit A - 3000 M: 1
+    Springs: 1
+    Traffic Blocks: 1
+    Pink Cassette Blocks: 1
+    Blue Cassette Blocks: 1
+    Dream Blocks: 1
+    Coins: 1
+    Strawberry Seeds: 1
+    Sinking Platforms: 1
+    Moving Platforms: 1
+    Blue Boosters: 1
+    Blue Clouds: 1
+    Move Blocks: 1
+    White Block: 1
+    Swap Blocks: 1
+    Red Boosters: 1
+    Blue Torches: 1
+    Yellow Torches: 1
+    Theo Crystal: 1
+    Feathers: 1
+    Bumpers: 1
+    Kevins: 1
+    Pink Clouds: 1
+    Badeline Boosters: 1
+    Fire and Ice Balls: 1
+    Core Toggles: 1
+    Core Blocks: 1
+    Pufferfish: 1
+    Jellyfish: 1
+    Breaker Boxes: 1
+    Dash Refills: 1
+    Double Dash Refills: 1
+    Yellow Cassette Blocks: 1
+    Green Cassette Blocks: 1
+    Bird: 1
+    Dash Switches: 1
+    Seekers: 1
+  plando_items:
+    - items: {Up Dash: 1, Up-Right Dash: 1, Right Dash: 1, Down-Right Dash: 1, Down Dash: 1, Down-Left Dash: 1, Left Dash: 1, Up-Left Dash: 1}
+      locations: [Prologue - Room -1, Prologue - Room 0, Prologue - Room 0b, Prologue - Room 1, Prologue - Room 2, Prologue - Room 3, Prologue - Level Clear, Forsaken City A - Room 1, Forsaken City A - Room 2, Forsaken City A - Room 2 Strawberry]
+    - items: {Strawberry: 3}
+      locations: [Forsaken City A - Room 3b, Forsaken City A - Room 3b Strawberry, Forsaken City A - Room 4, Forsaken City A - Room 5, Forsaken City A - Room 5 Strawberry, Forsaken City A - Room 5a, Forsaken City A - Room 5z, Forsaken City A - Room 6, Forsaken City A - Room 6a, Forsaken City A - Room 6b, Forsaken City A - Room 11, Forsaken City A - Room 12]

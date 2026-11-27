@@ -1,0 +1,22 @@
+# Brique 1 : le Dash est bloqué au départ et donné en entrant dans une salle du tout début.
+# Rien de nouveau dans le code : c'est le Dash Shuffle d'Open World 1.1.3 + un placement "plando".
+name: Nelem
+game: Celeste (Open World)
+requires:
+  plando: items
+Celeste (Open World):
+  logic_difficulty: vanilla_movement
+  dash_shuffle: unified        # un seul item "Dash" = les 8 directions
+  climb_shuffle: none
+  crouch_shuffle: false
+  roomsanity: true             # entrer dans une salle = un check
+  goal_area: the_summit_a
+  include_core: false
+  include_farewell: none
+  include_b_sides: false
+  include_c_sides: false
+  trap_fill_percentage: 0
+  plando_items:
+    - item: Dash
+      location: Forsaken City A - Room 2   # en passant de la salle 1 à la salle 2
+      force: true                          # erreur si le placement est impossible

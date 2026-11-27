@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Générateur de YAML</title>
+<style>
+:root {
+  --bg: #f6f4fb; --panel: #ffffff; --ink: #1f1b2e; --muted: #6b6580; --line: #e3dff0;
+  --accent: #7b4fd6; --accent-ink: #ffffff; --chip: #efe9fb; --err: #b3261e; --ok: #2e7d32;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #14121c; --panel: #1d1a28; --ink: #ece8f7; --muted: #a39cb8; --line: #2f2a40;
+    --accent: #a88bff; --accent-ink: #14121c; --chip: #2a2540; --err: #ff8a80; --ok: #81c784; }
+}
+:root[data-theme="dark"] { --bg: #14121c; --panel: #1d1a28; --ink: #ece8f7; --muted: #a39cb8; --line: #2f2a40;
+  --accent: #a88bff; --accent-ink: #14121c; --chip: #2a2540; --err: #ff8a80; --ok: #81c784; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+header { padding: 20px 16px 8px; max-width: 1100px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px; align-items: baseline; justify-content: space-between; }
+h1 { margin: 0; font-size: 22px; }
+.sub { color: var(--muted); font-size: 13px; }
+main { max-width: 1100px; margin: 0 auto; padding: 8px 16px 40px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 380px); gap: 16px; }
+@media (max-width: 820px) { main { grid-template-columns: minmax(0, 1fr); } }
+section, aside { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+h2 { font-size: 15px; margin: 0 0 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 220px); gap: 6px 14px; padding: 10px 0; border-top: 1px solid var(--line); }
+.row:first-of-type { border-top: 0; }
+@media (max-width: 520px) { .row { grid-template-columns: minmax(0, 1fr); } }
+.row label { font-weight: 600; }
+.row .doc { grid-column: 1 / -1; color: var(--muted); font-size: 13px; }
+select, input[type=text], input[type=number] { width: 100%; padding: 7px 9px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); font: inherit; }
+input[type=range] { width: 100%; accent-color: var(--accent); }
+.range { display: flex; gap: 8px; align-items: center; }
+.range input[type=number] { width: 76px; }
+.switch { justify-self: start; width: 22px; height: 22px; accent-color: var(--accent); }
+.presets { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }
+button { font: inherit; border-radius: 999px; border: 1px solid var(--line); background: var(--chip); color: var(--ink); padding: 6px 12px; cursor: pointer; }
+button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
+button[aria-pressed=true] { outline: 2px solid var(--accent); }
+pre { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 10px; overflow: auto; max-height: 420px; font-size: 12.5px; white-space: pre; }
+.errors { color: var(--err); font-size: 13px; margin: 8px 0; }
+.okmsg { color: var(--ok); font-size: 13px; margin: 8px 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.top { display: flex; gap: 8px; align-items: center; }
+aside { align-self: start; position: sticky; top: 12px; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1 id="title">Générateur de YAML</h1>
+    <div class="sub" id="subtitle"></div>
+  </div>
+  <div class="top">
+    <button id="lang" type="button">English</button>
+  </div>
+</header>
+<main>
+  <div>
+    <section>
+      <h2 id="h-player">Joueur</h2>
+      <div class="row">
+        <label for="name" id="l-name">Nom du slot</label>
+        <input id="name" type="text" maxlength="16" autocomplete="off" spellcheck="false">
+        <div class="doc" id="d-name">16 caractères au plus. C'est le nom que tu donneras au client pour te connecter.</div>
+      </div>
+      <h2 id="h-presets" style="margin-top:12px">Presets</h2>
+      <div class="presets" id="presets"></div>
+      <div class="sub" id="d-presets">Un preset règle plusieurs options d'un coup ; tu peux ensuite tout modifier.</div>
+    </section>
+    <div id="groups"></div>
+  </div>
+  <aside>
+    <h2 id="h-yaml">YAML</h2>
+    <div id="msg"></div>
+    <pre id="yaml"></pre>
+    <div class="actions">
+      <button class="primary" id="download" type="button">Télécharger</button>
+      <button id="copy" type="button">Copier</button>
+      <button id="reset" type="button">Valeurs par défaut</button>
+    </div>
+  </aside>
+</main>
+<script>
+const SCHEMA = {"game": "UltraRando", "groups": [{"name": "Goal", "fr": "Objectif"}, {"name": "Chapters", "fr": "Chapitres et salles"}, {"name": "Logic", "fr": "Difficulté"}, {"name": "Movement", "fr": "Mouvements et objets"}, {"name": "Locations", "fr": "Checks"}, {"name": "Other", "fr": "Divers"}], "options": [{"key": "logic_difficulty", "group": "Logic", "name": "Logic Difficulty", "doc": "Movement the logic expects (Open World rules). Developer Intended: what the developers expect a first-time player to know in each room. Vanilla Movement: any movement or trick taught anywhere in the base game. Assist Mode: invincibility, infinite dashes and infinite stamina.", "fr": ["Logique (mouvements attendus)", "Ce que la logique suppose que tu sais faire. Intention des développeurs : ce que le jeu apprend au premier passage. Mouvements du jeu de base : toute technique enseignée quelque part dans le jeu. Mode assistance : invincibilité, dashs et endurance infinis."], "type": "choice", "default": "vanilla_movement", "choices": [{"value": "developer_intended", "name": "Developer Intended", "fr": "Intention des développeurs"}, {"value": "vanilla_movement", "name": "Vanilla Movement", "fr": "Mouvements du jeu de base"}, {"value": "assist_mode", "name": "Assist Mode", "fr": "Mode assistance"}]}, {"key": "room_shuffle", "group": "Chapters", "name": "Room Shuffle", "doc": "Shuffle the rooms inside each chapter (never across chapters). The start and end rooms stay those of the game. Off: every chapter keeps its vanilla layout.", "fr": ["Salles mélangées", "Les salles de chaque chapitre sont placées dans un ordre aléatoire (toujours finissable)."], "type": "toggle", "default": true}, {"key": "room_difficulty", "group": "Logic", "name": "Room Difficulty", "doc": "Skill level used for the few rooms that Open World does not describe (rhelmot's requirements).", "fr": ["Difficulté des salles", "Niveaux de rhelmot : quelles salles et quels passages les cartes mélangées peuvent utiliser. Plus haut = plus de salles possibles, des passages plus exigeants."], "type": "choice", "default": "hard", "choices": [{"value": "easy", "name": "Easy", "fr": "Facile"}, {"value": "normal", "name": "Normal", "fr": "Normal"}, {"value": "hard", "name": "Hard", "fr": "Difficile"}, {"value": "expert", "name": "Expert", "fr": "Expert"}, {"value": "master", "name": "Master", "fr": "Maître"}, {"value": "perfect", "name": "Perfect", "fr": "Parfait"}]}, {"key": "room_coverage", "group": "Chapters", "name": "Room Coverage %", "doc": "Room shuffle: share of a chapter's rooms the generator tries to place before it keeps a layout. Higher = more rooms in each map (more variety, a little longer generation). Rooms that only have one usable opening (dead ends) can stay out whatever the value.", "fr": ["Couverture des salles (%)", "Part des salles d'un chapitre que le générateur essaie de placer. Plus haut = plus de variété (génération un peu plus longue). Les culs-de-sac à une seule ouverture peuvent rester hors de la carte."], "type": "range", "default": 90, "min": 50, "max": 100}, {"key": "dash_shuffle", "group": "Movement", "name": "Dash Shuffle", "doc": "How dashing is shuffled. None: not shuffled. Unified: one `Dash` item gives the 8 directions. Cardinal Loose: 4 items; a direction also gives its two neighbouring diagonals. Cardinal Restrictive: 4 items; a diagonal needs both of its cardinal directions. Octal: one item per direction.", "fr": ["Dash mélangé", "Aucun : dash normal. Unifié : un objet Dash donne les 8 directions. Cardinal souple : 4 objets, chaque direction donne aussi ses diagonales voisines. Cardinal strict : 4 objets, une diagonale demande ses deux directions. Octal : un objet par direction."], "type": "choice", "default": "none", "choices": [{"value": "none", "name": "None", "fr": "Aucun"}, {"value": "unified", "name": "Unified", "fr": "Unifié"}, {"value": "cardinal_loose", "name": "Cardinal Loose", "fr": "Cardinal souple"}, {"value": "cardinal_restrictive", "name": "Cardinal Restrictive", "fr": "Cardinal strict"}, {"value": "octal", "name": "Octal", "fr": "Octal (8 objets)"}]}, {"key": "climb_shuffle", "group": "Movement", "name": "Climb Shuffle", "doc": "How climbing is shuffled (forced to None with Developer Intended logic). Unified: one `Climb` item. Split: `Left Climb` and `Right Climb`.", "fr": ["Grimper mélangé", "Aucun : normal. Unifié : un objet Climb. Séparé : grimper à gauche et à droite sont deux objets."], "type": "choice", "default": "none", "choices": [{"value": "none", "name": "None", "fr": "Aucun"}, {"value": "unified", "name": "Unified", "fr": "Unifié"}, {"value": "split", "name": "Split", "fr": "Séparé (gauche / droite)"}]}, {"key": "crouch_shuffle", "group": "Movement", "name": "Crouch Shuffle", "doc": "Shuffle the ability to crouch.", "fr": ["S'accroupir mélangé", "S'accroupir est un objet."], "type": "toggle", "default": false}, {"key": "wall_jump_shuffle", "group": "Movement", "name": "Wall Jump Shuffle", "doc": "Shuffle the ability to wall jump (and wallbounce). Logic: every chapter except the Prologue requires Wall Jump. Forces Roomsanity on.", "fr": ["Saut mural mélangé", "Le saut contre un mur est un objet."], "type": "toggle", "default": false}, {"key": "demo_dash_shuffle", "group": "Movement", "name": "Demo Dash Shuffle", "doc": "Shuffle the Demo Dash (Celeste's \"crouch dash\": a dash that keeps Madeline's crouched 4 px hitbox, with the crouch-dash button or by holding down when dashing then aiming elsewhere). Until it is received, a dash that does not go downwards stands Madeline up. Logic (Vanilla Movement and Assist only): with Demo Dash + Left Dash + Left Climb (grab the step face, climb jump, demodash), the 3A Elevator Shaft dust wall (room 04-d) can be crossed (\"shaftskip\", frame-perfect), skipping the detour and the Presidential Suite Key. Off: demo dashes are free and the logic never expects the skip.", "fr": ["Demo Dash mélangé", "Le dash accroupi (demodash) est un objet."], "type": "toggle", "default": false}, {"key": "interactable_shuffle", "group": "Movement", "name": "Interactable Shuffle", "doc": "Shuffle the interactable objects (Springs, Traffic Blocks, Feathers...): an object only exists once received. Off: every object is given at the start.", "fr": ["Objets du décor mélangés", "Les 36 objets interactifs (ressorts, plumes, bulles, blocs...) sont absents tant que leur objet n'est pas reçu."], "type": "toggle", "default": true}, {"key": "include_b_sides", "group": "Chapters", "name": "B-Sides", "doc": "Include the B-Sides.", "fr": ["Faces B", "Ajoute les faces B."], "type": "toggle", "default": false}, {"key": "include_c_sides", "group": "Chapters", "name": "C-Sides", "doc": "Include the C-Sides.", "fr": ["Faces C", "Ajoute les faces C."], "type": "toggle", "default": false}, {"key": "include_core", "group": "Chapters", "name": "Core", "doc": "Include Chapter 8 - Core (and its B/C-Sides if those are included).", "fr": ["Cœur (chapitre 8)", "Ajoute le chapitre Cœur."], "type": "toggle", "default": false}, {"key": "include_farewell", "group": "Chapters", "name": "Farewell", "doc": "Include Chapter 9 - Farewell (one chapter, both halves).", "fr": ["Adieu (chapitre 9)", "Ajoute Adieu (Farewell)."], "type": "toggle", "default": false}, {"key": "goal_area", "group": "Goal", "name": "Goal Area", "doc": "Chapter to clear (with the required Strawberries) to win. It is always included.", "fr": ["Chapitre objectif", "Le chapitre à finir pour gagner. Il s'ouvre quand tu as reçu assez de fraises."], "type": "choice", "default": "the_summit_a", "choices": [{"value": "the_summit_a", "name": "The Summit A", "fr": "Le Sommet A"}, {"value": "the_summit_b", "name": "The Summit B", "fr": "Le Sommet B"}, {"value": "the_summit_c", "name": "The Summit C", "fr": "Le Sommet C"}, {"value": "core_a", "name": "Core A", "fr": "Cœur A"}, {"value": "core_b", "name": "Core B", "fr": "Cœur B"}, {"value": "core_c", "name": "Core C", "fr": "Cœur C"}, {"value": "farewell", "name": "Farewell", "fr": "Adieu"}]}, {"key": "total_strawberries", "group": "Goal", "name": "Total Strawberries", "doc": "Maximum number of Strawberries in the item pool.", "fr": ["Fraises au total", "Nombre d'objets Fraise dans la partie."], "type": "range", "default": 50, "min": 0, "max": 202}, {"key": "strawberries_required_percentage", "group": "Goal", "name": "Strawberries Required %", "doc": "Percentage of the existing Strawberries needed to win.", "fr": ["Fraises requises (%)", "Part des fraises qui ouvre le chapitre objectif."], "type": "range", "default": 50, "min": 0, "max": 100}, {"key": "roomsanity", "group": "Locations", "name": "Roomsanity", "doc": "Entering each room sends a check.", "fr": ["Checks des salles", "Entrer dans une salle pour la première fois est un check."], "type": "toggle", "default": true}, {"key": "checkpointsanity", "group": "Locations", "name": "Checkpointsanity", "doc": "Each checkpoint is an item (\"Forsaken City A - Crossing\"): it appears in the chapter select only once received (reaching it does not unlock it), and the logic knows that with it the chapter can be started from that room. Checkpoints are not checks: entering a room still sends that room's own checks. Off: checkpoints unlock by reaching them, as in the base game, and the logic always starts at the beginning.", "fr": ["Checkpoints en objets", "Chaque checkpoint est un objet : il débloque le départ depuis ce checkpoint."], "type": "toggle", "default": true}, {"key": "keysanity", "group": "Locations", "name": "Keysanity", "doc": "Keys are items (\"Celestial Resort A - Front Door Key\"), found anywhere in the multiworld. Owning one opens its door for good (every session, every start); picking a key up in a level sends that spot's check. Off: keys work as in the base game (picked up in the level, lost when a new session starts).", "fr": ["Clés en objets", "Chaque clé de porte est un objet, trouvable dans n'importe quel monde ; l'endroit de la clé reste un check."], "type": "toggle", "default": true}, {"key": "death_link", "group": "Other", "name": "Death Link", "doc": "When you die, everyone who enabled death link dies. Of course, the reverse is true too.", "fr": ["Death Link", "Quand un joueur meurt, les autres aussi."], "type": "toggle", "default": false}], "presets": [{"name": "Beginner", "fr": "Débutant", "values": {"logic_difficulty": "developer_intended", "room_difficulty": "easy", "room_coverage": 70, "dash_shuffle": "unified", "climb_shuffle": "unified", "crouch_shuffle": false, "wall_jump_shuffle": false, "demo_dash_shuffle": false, "total_strawberries": 30, "strawberries_required_percentage": 50}}, {"name": "Normal", "fr": "Normal", "values": {"logic_difficulty": "vanilla_movement", "room_difficulty": "normal", "room_coverage": 90, "dash_shuffle": "unified", "climb_shuffle": "unified", "crouch_shuffle": true, "wall_jump_shuffle": false, "demo_dash_shuffle": false, "total_strawberries": 50, "strawberries_required_percentage": 50}}, {"name": "Advanced", "fr": "Avancé", "values": {"logic_difficulty": "vanilla_movement", "room_difficulty": "hard", "room_coverage": 90, "dash_shuffle": "cardinal_loose", "climb_shuffle": "split", "crouch_shuffle": true, "wall_jump_shuffle": true, "demo_dash_shuffle": false, "total_strawberries": 50, "strawberries_required_percentage": 60}}, {"name": "Expert", "fr": "Expert", "values": {"logic_difficulty": "vanilla_movement", "room_difficulty": "expert", "room_coverage": 100, "dash_shuffle": "octal", "climb_shuffle": "split", "crouch_shuffle": true, "wall_jump_shuffle": true, "demo_dash_shuffle": true, "total_strawberries": 60, "strawberries_required_percentage": 70}}, {"name": "Maximum Variety", "fr": "Variété maximale", "values": {"logic_difficulty": "vanilla_movement", "room_difficulty": "master", "room_coverage": 100, "dash_shuffle": "octal", "climb_shuffle": "split", "crouch_shuffle": true, "wall_jump_shuffle": true, "demo_dash_shuffle": true, "interactable_shuffle": true, "keysanity": true, "roomsanity": true, "checkpointsanity": true, "include_b_sides": true, "include_c_sides": true, "include_core": true, "include_farewell": true, "total_strawberries": 100, "strawberries_required_percentage": 60}}]};
+const T = {
+  fr: { title: "Générateur de YAML", sub: "UltraRando — même schéma que le menu du jeu", player: "Joueur", name: "Nom du slot",
+        dname: "16 caractères au plus. C'est le nom que tu donneras au client pour te connecter.", presets: "Presets",
+        dpresets: "Un preset règle plusieurs options d'un coup ; tu peux ensuite tout modifier.", yaml: "YAML",
+        download: "Télécharger", copy: "Copier", copied: "Copié.", reset: "Valeurs par défaut", other: "English",
+        errName: "Donne un nom de slot (1 à 16 caractères).", errChars: "Le nom ne peut pas contenir { } : ou de retour à la ligne.",
+        errRange: (n, a, b) => `${n} doit être entre ${a} et ${b}.`, ok: "Configuration valide." },
+  en: { title: "YAML generator", sub: "UltraRando — same schema as the in-game menu", player: "Player", name: "Slot name",
+        dname: "16 characters at most. The name you give the client to connect.", presets: "Presets",
+        dpresets: "A preset sets several options at once; you can still change everything afterwards.", yaml: "YAML",
+        download: "Download", copy: "Copy", copied: "Copied.", reset: "Defaults", other: "Français",
+        errName: "Enter a slot name (1 to 16 characters).", errChars: "The name cannot contain { } : or a line break.",
+        errRange: (n, a, b) => `${n} must be between ${a} and ${b}.`, ok: "Valid configuration." },
+};
+let lang = "fr";
+try { lang = localStorage.getItem("cmr-lang") || "fr"; } catch (e) {}
+const values = {};
+let currentPreset = null;
+const $ = id => document.getElementById(id);
+const optName = o => lang === "fr" && o.fr && o.fr[0] ? o.fr[0] : o.name;
+const optDoc = o => lang === "fr" && o.fr && o.fr[1] ? o.fr[1] : o.doc;
+const choiceName = c => lang === "fr" && c.fr ? c.fr : c.name;
+
+function defaults() { for (const o of SCHEMA.options) values[o.key] = o.default; currentPreset = null; }
+
+function render() {
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  $("title").textContent = t.title; $("subtitle").textContent = t.sub; $("h-player").textContent = t.player;
+  $("l-name").textContent = t.name; $("d-name").textContent = t.dname; $("h-presets").textContent = t.presets;
+  $("d-presets").textContent = t.dpresets; $("h-yaml").textContent = t.yaml; $("download").textContent = t.download;
+  $("copy").textContent = t.copy; $("reset").textContent = t.reset; $("lang").textContent = t.other;
+  const pr = $("presets"); pr.innerHTML = "";
+  for (const p of SCHEMA.presets) {
+    const b = document.createElement("button"); b.type = "button";
+    b.textContent = lang === "fr" ? p.fr : p.name; b.setAttribute("aria-pressed", String(currentPreset === p.name));
+    b.onclick = () => { defaults(); Object.assign(values, p.values); currentPreset = p.name; render(); };
+    pr.appendChild(b);
+  }
+  const root = $("groups"); root.innerHTML = "";
+  for (const g of SCHEMA.groups) {
+    const sec = document.createElement("section"); sec.style.marginTop = "16px";
+    const h = document.createElement("h2"); h.textContent = lang === "fr" ? g.fr : g.name; sec.appendChild(h);
+    for (const o of SCHEMA.options.filter(o => o.group === g.name)) sec.appendChild(row(o));
+    root.appendChild(sec);
+  }
+  update();
+}
+
+function row(o) {
+  const r = document.createElement("div"); r.className = "row";
+  const id = "opt-" + o.key;
+  const l = document.createElement("label"); l.htmlFor = id; l.textContent = optName(o); r.appendChild(l);
+  let input;
+  if (o.type === "toggle") {
+    input = document.createElement("input"); input.type = "checkbox"; input.className = "switch"; input.id = id;
+    input.checked = !!values[o.key];
+    input.onchange = () => { values[o.key] = input.checked; currentPreset = null; update(); };
+    r.appendChild(input);
+  } else if (o.type === "choice") {
+    input = document.createElement("select"); input.id = id;
+    for (const c of o.choices) { const op = document.createElement("option"); op.value = c.value; op.textContent = choiceName(c); input.appendChild(op); }
+    input.value = values[o.key];
+    input.onchange = () => { values[o.key] = input.value; currentPreset = null; update(); };
+    r.appendChild(input);
+  } else {
+    const wrap = document.createElement("div"); wrap.className = "range";
+    const sl = document.createElement("input"); sl.type = "range"; sl.min = o.min; sl.max = o.max; sl.value = values[o.key]; sl.id = id;
+    const num = document.createElement("input"); num.type = "number"; num.min = o.min; num.max = o.max; num.value = values[o.key];
+    num.setAttribute("aria-label", optName(o));
+    sl.oninput = () => { num.value = sl.value; values[o.key] = Number(sl.value); currentPreset = null; update(); };
+    num.oninput = () => { values[o.key] = num.value === "" ? NaN : Number(num.value); if (!isNaN(values[o.key])) sl.value = num.value; currentPreset = null; update(); };
+    wrap.append(sl, num); r.appendChild(wrap);
+  }
+  const d = document.createElement("div"); d.className = "doc"; d.textContent = optDoc(o); r.appendChild(d);
+  return r;
+}
+
+function validate() {
+  const t = T[lang], errs = [];
+  const name = $("name").value.trim();
+  if (!name || name.length > 16) errs.push(t.errName);
+  if (/[{}:\n\r]/.test(name)) errs.push(t.errChars);
+  for (const o of SCHEMA.options) if (o.type === "range") {
+    const v = values[o.key];
+    if (!Number.isInteger(v) || v < o.min || v > o.max) errs.push(t.errRange(optName(o), o.min, o.max));
+  }
+  return errs;
+}
+
+function yamlText() {
+  const name = $("name").value.trim() || "Player";
+  const lines = [`# ${SCHEMA.game} — ${currentPreset ? "preset " + currentPreset : "custom"}`, `name: ${JSON.stringify(name)}`,
+                 `game: ${SCHEMA.game}`, `${SCHEMA.game}:`];
+  for (const o of SCHEMA.options) {
+    const v = values[o.key];
+    lines.push(`  ${o.key}: ${o.type === "toggle" ? (v ? "true" : "false") : v}`);
+  }
+  return lines.join("\n") + "\n";
+}
+
+function update() {
+  const errs = validate(), t = T[lang];
+  $("msg").innerHTML = errs.length ? `<div class="errors">${errs.map(e => "• " + e.replace(/</g, "&lt;")).join("<br>")}</div>` : `<div class="okmsg">${t.ok}</div>`;
+  $("yaml").textContent = yamlText();
+  $("download").disabled = errs.length > 0;
+  document.querySelectorAll("#presets button").forEach((b, i) => b.setAttribute("aria-pressed", String(SCHEMA.presets[i].name === currentPreset)));
+}
+
+$("name").oninput = update;
+$("lang").onclick = () => { lang = lang === "fr" ? "en" : "fr"; try { localStorage.setItem("cmr-lang", lang); } catch (e) {} render(); };
+$("reset").onclick = () => { defaults(); render(); };
+$("copy").onclick = async () => { try { await navigator.clipboard.writeText(yamlText()); $("msg").innerHTML = `<div class="okmsg">${T[lang].copied}</div>`; } catch (e) {} };
+$("download").onclick = () => {
+  if (validate().length) return;
+  const blob = new Blob([yamlText()], { type: "text/yaml" });
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob);
+  a.download = ($("name").value.trim().replace(/[^A-Za-z0-9_-]/g, "_") || "player") + ".yaml"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+};
+defaults(); render();
+</script>
+</body>
+</html>

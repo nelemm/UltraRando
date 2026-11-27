@@ -1,0 +1,16 @@
+# Brique 2 : tous les mouvements séparés (8 directions de dash, climb gauche/droite, accroupi).
+# Test : on les donne un par un depuis la console du serveur (/send) et on vérifie chacun en jeu.
+name: Nelem
+game: Celeste (Open World)
+Celeste (Open World):
+  logic_difficulty: vanilla_movement
+  dash_shuffle: octal
+  climb_shuffle: split
+  crouch_shuffle: true
+  roomsanity: true
+  goal_area: the_summit_a
+  include_core: false
+  include_farewell: none
+  include_b_sides: false
+  include_c_sides: false
+  trap_fill_percentage: 0

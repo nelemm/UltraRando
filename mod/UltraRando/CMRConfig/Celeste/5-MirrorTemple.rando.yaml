@@ -1,0 +1,3553 @@
+ASide:
+  - Room: "a-00x"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "a-00b"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - ID: 1
+      Name: "npc"
+      Update:
+        Remove: true
+  - Room: "a-00d"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+  - Room: "a-00c"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+  - Room: "a-00"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqIn:
+        Dashes: two
+        Difficulty: hard
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 464
+        Y: 72
+        Width: 16
+        Height: 40
+        Values:
+            type: "button"
+            entID: 16
+  - Room: "a-01"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: master  # requires two ceiling pops but there's no penalty for failure
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Down
+      Idx: 1
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    InternalEdges:
+    - Collectable: 0
+      ReqOut:
+        Dashes: zero
+      ReqIn:
+        Dashes: one
+    - Collectable: 1
+      ReqBoth:
+        Dashes: one
+    Tweaks:
+    - Name: "templeGate"
+      ID: 2
+      Update:
+        Remove: true
+    - Name: "cameraTargetTrigger"
+      Update:
+        Add: true
+        X: 120
+        Y: 504
+        Width: 96
+        Height: 48
+        Values:
+          lerpStrength: 0.15
+          positionMode: NoEffect
+          xOnly: false
+          yOnly: false
+        Nodes:
+        - Idx: 0
+          X: 64
+          Y: 624
+    - Name: "cameraTargetTrigger"
+      Update:
+        Add: true
+        X: 280
+        Y: 504
+        Width: 96
+        Height: 48
+        Values:
+          lerpStrength: 0.15
+          positionMode: NoEffect
+          xOnly: false
+          yOnly: false
+        Nodes:
+        - Idx: 0
+          X: 344
+          Y: 624
+  - Room: "a-02"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: zero
+  - Room: "a-03"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: one
+  - Room: "a-04"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqOut:
+        Or:
+          - Dashes: one
+          - Dashes: zero
+            Difficulty: hard
+      ReqIn:
+        Dashes: one
+  - Room: "a-05"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Up
+      Idx: 1
+      Kind: inout
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqBoth:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: inout
+      ReqBoth:
+        Dashes: one
+    - Side: Down
+      Idx: 0
+      Kind: none
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+    Tweaks:
+    - Name: spawn
+      X: 48
+      Y: 80
+      Update:
+        Default: true
+  - Room: "a-06"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: zero
+  - Room: "a-07"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "a-08"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqBoth:
+        Dashes: one
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqBoth:
+        Or:
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: two
+          Difficulty: normal
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - To: "Alcove"
+      ReqIn:            # TODO can go out if you have previously gone in
+        Dashes: one
+    Subrooms:
+    - Room: "Alcove"
+      Holes:
+      - Side: Right
+        Idx: 2
+        Kind: inout
+      - Side: Right
+        Idx: 1
+        Kind: inout
+  - Room: "a-10"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: RightToLeft
+      ReqOut:
+        Dashes: one
+      ReqIn:
+         Or:
+         - Dashes: one
+         - Dashes: zero
+           Difficulty: perfect
+  - Room: "a-09"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: RightToLeft
+      ReqOut:
+        Dashes: zero
+      ReqIn:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: perfect
+  - Room: "a-11"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "a-12"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 1
+      Kind: out
+      ReqOut:
+        Dashes: one
+    Subrooms:
+    - Room: "elbow"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+      - Side: Left
+        Idx: 2
+        Kind: inout
+      InternalEdges:
+      - Split: BottomToTop
+        ReqOut:
+          Or:
+          - Dashes: two
+          - Dashes: one
+            Difficulty: hard
+        ReqIn:
+          Dashes: zero
+    Tweaks:
+    - Name: "templeGate"
+      ID: 289
+      Update:
+        Remove: true
+    - Name: "dashSwitchV"
+      ID: 288
+      Update:
+        Remove: true
+  - Room: "a-14"
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: perfect
+  - Room: "a-15"
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: expert
+  - Room: "a-13"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: LeftToRight
+      ReqBoth:
+        Key: true
+        KeyholeID: 1
+  - Room: "b-00"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 0
+      Kind: out         # TODO: Can be inout if you can go out
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "b-00" # b-00 copy
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 536
+        Y: 88
+        Width: 48
+        Height: 48
+        Values:
+            type: "button"
+            entID: 15
+    - Name: templeGate # this just gets in the way, and there isnt a second button
+      ID: 1
+      Update:
+        Remove: true
+    - Name: npc # theo causes cutscene, you dont really want this from this entry.
+      ID: 12
+      Update:
+        Remove: true
+  - Room: "b-18"
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one # while you can get to the berry dashless you can't get bubbled in time.
+  - Room: "b-01"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+    - Side: Up
+      Idx: 1
+      Kind: in
+    - Side: Up
+      Idx: 2
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Up
+      Idx: 3
+      Kind: inout
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: perfect
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 1
+      Kind: in
+    Tweaks:
+    - Name: "templeGate"
+      ID: 0
+      Update:
+        Remove: true
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 32
+        Y: 24
+    - Name: "respawnTargetTrigger"
+      Update:
+        Add: true
+        X: 104
+        Y: 8
+        Width: 32
+        Height: 8
+        Nodes:
+        - Idx: 0
+          X: 208
+          Y: 112
+  - Room: "b-20"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 1
+      Kind: out
+    Tweaks:
+    - Name: "spawn"
+      X: 32
+      Y: 160
+      Update:
+        Default: true
+    Subrooms:
+    - Room: "Berry"
+      Collectables:
+      - Idx: 0
+      Holes:
+      - Side: Down
+        Idx: 2
+        Kind: inout
+    - Room: "Berry2"
+      Holes:
+      - Side: Down
+        Idx: 3
+        Kind: inout
+      InternalEdges:
+      - Collectable: 1
+        ReqBoth:
+          Dashes: one
+  - Room: "b-21"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqOut:
+        Dashes: zero
+      ReqIn:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+  - Room: "b-01c"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: None
+    InternalEdges:
+    - To: "berry"
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: two
+    Subrooms:
+    - Room: "berry"
+      Holes:
+      - Side: Up
+        Idx: 1
+        Kind: inout
+      Collectables:
+      - Idx: 0
+  - Room: "b-01b"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: LeftToRight
+      ReqBoth:
+        Dashes: one
+  - Room: "b-02"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Right
+      Idx: 1
+      Kind: inout
+    - Side: Right
+      Idx: 2
+      Kind: inout
+    - Side: Right
+      Idx: 3
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 1
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "templeGate"
+      ID: 6
+      Update:
+        Remove: true
+  - Room: "b-03"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "b-04"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - To: "berry"
+      ReqIn:
+        Dashes: zero
+      ReqOut:
+        Or:
+        - Dashes: two
+          Difficulty: expert
+        - Dashes: one
+          Difficulty: perfect
+    - To: "top"
+      ReqOut:
+        Dashes: two
+        Difficulty: master
+      ReqIn:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: master
+    Subrooms:
+    - Room: "top"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+        ReqOut:
+          Dashes: two
+          Difficulty: perfect
+        ReqIn:
+          Or:
+          - Dashes: one 
+          - Dashes: zero
+            Difficulty: master
+    - Room: "berry"
+      Collectables:
+      - Idx: 0
+      InternalEdges:
+      - To: "top" # top to berry to top would be 1x, but how would i add that AND keep bottom to top 1x from occuring?
+        ReqOut:
+          Dashes: two
+          Difficulty: master
+        ReqIn:
+          Or:
+          - Dashes: one
+          - Dashes: zero
+            Difficulty: master
+  - Room: "b-05"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "b-07"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Right
+      Idx: 1
+      Kind: inout
+    InternalEdges:
+    - Split: BottomToTop
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: zero
+    Tweaks:
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 288
+        Y: 8
+        Width: 24
+        Height: 48
+        Values:
+          cameraX: 0.0
+          cameraY: 0.8
+  - Room: "b-08"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: LeftToRight
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Or:
+        - Dashes: two
+        - Dashes: one
+          Difficulty: expert
+  - Room: "b-09"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 1
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Down
+      Idx: 0
+      Kind: None
+  - Room: "b-10"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "b-11"
+    Hub: true
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+        Difficulty: hard
+      ReqIn:
+        Or:
+#        - Dashes: zero # this will softlock you if you get up exit.
+#          Difficulty: hard
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: two
+    - Side: Left
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Or:
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: zero
+          Difficulty: hard
+    - Side: Left
+      Idx: 1
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 1
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 304
+        Y: 288
+        Width: 16
+        Height: 40
+        Values:
+            type: "button"
+            entID: 15
+  - Room: "b-12"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Up
+      Idx: 1
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+  - Room: "b-13"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 1
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 304
+        Y: 200
+        Width: 216
+        Height: 32
+        Values:
+            type: "button"
+            entID: 56
+  - Room: "b-17"  # TODO: seeded berry
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 1
+      Kind: inout
+    Subrooms:
+    - Room: "Berry"
+      Holes:
+      - Side: Left
+        Idx: 0
+        Kind: inout
+      Collectables:
+      - Idx: 0
+  - Room: "b-22"
+    ReqEnd:
+      Or:
+        - Dashes: zero
+          Difficulty: expert
+        - Dashes: one
+          Difficulty: normal
+        - Dashes: two
+          Difficulty: easy
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+      - ID: 69
+        Name: "cassette"
+        Update:
+          Remove: true
+      - Name: "blackGem"
+        Update:
+          Add: true
+          X: 168
+          Y: 40
+  - Room: "b-22" # b-22 copy
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: two
+          Difficulty: hard
+        - Dashes: one
+          Difficulty: expert
+        - Dashes: zero
+          Difficulty: master
+    Tweaks:
+      - ID: 69
+        Name: "cassette"
+        Update:
+          Remove: true
+      - Name: "spawn"
+        Update: 
+          Add: true
+          X: 168
+          Y: 72
+      - Name: "spawn"
+        ID: 68
+        Update:
+          Remove: true
+  - Room: "b-06"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - To: "top"
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Or:
+        - Dashes: zero
+          Difficulty: master
+        - Dashes: two
+    - To: "right"
+      ReqBoth:
+        Key: true
+        KeyholeID: 2
+    Subrooms:
+    - Room: "top"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+    - Room: "right"
+      Holes:
+      - Side: Right
+        Idx: 1
+        Kind: inout
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 18
+      Update:
+        X: 608
+        Width: 8
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 632
+        Y: 24
+    - Name: "changeRespawnTrigger"
+      Update:
+        Add: true
+        X: 624
+        Y: 8
+        Width: 16
+        Height: 16
+  - Room: "b-19"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 1
+      Kind: inout
+    Tweaks:
+    - Name: "templeGate"
+      ID: 99
+      Update:
+        Remove: true
+    - Name: "exitBlock"
+      ID: 30
+      Update:
+        Remove: true
+  - Room: "b-14"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Subrooms:
+    - Room: "right"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+    InternalEdges:
+    - To: "right"
+      ReqBoth:
+        Dashes: one
+        Key: true
+        KeyholeID: 3
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 128
+        Y: 64
+    - Name: "templeGate"
+      ID: 19
+      Update:
+        Remove: true
+  - Room: "b-14" # b-14 copy
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: none # really wanna minimize the possiblity of getting this anywhere BUT dashless perfect
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Subrooms:
+    - Room: "right"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+    InternalEdges:
+    - To: "right"
+      ReqIn:
+        Dashes: zero
+        Difficulty: perfect
+        Key: true
+        KeyholeID: 3
+    Tweaks:
+    - Name: "dashBlock"
+      ID: 20
+      Update:
+        Remove: true
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 128
+        Y: 64
+    - Name: "templeGate"
+      ID: 19
+      Update:
+        Remove: true
+  - Room: "b-15"
+    ReqEnd:
+      Or:
+      - Dashes: one
+      - Dashes: zero
+        Difficulty: perfect
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+  - Room: "b-16"
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: in
+    InternalEdges:
+    - CustomWarp: true
+      ReqOut:
+        Dashes: one
+  - Room: "c-00"
+    Holes:
+    - Side: Right
+      Idx: 1
+      Kind: inout
+  - Room: "c-01"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 520
+        Y: 8
+        Width: 16
+        Height: 48
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+  - Room: "c-01b"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+      - Split: LeftToRight
+        ReqOut:
+          Dashes: one
+        ReqIn:
+          Dashes: one
+          Difficulty: hard
+    Tweaks:
+      - Name: "fakeWall"
+        Update:
+          Add: true
+          X: 184
+          Y: 88
+          Width: 24
+          Height: 32
+          Values:
+            tiletype: e
+      - Name: "templeGate"
+        ID: 32
+        Update:
+          Remove: true
+      - Name: "fgTiles"
+        X: 23
+        Y: 12
+        Update:
+          Tile: 0
+      - Name: "fgTiles"
+        X: 23
+        Y: 13
+        Update:
+          Tile: 0
+      - Name: "fgTiles"
+        X: 24
+        Y: 12
+        Update:
+          Tile: 0
+      - Name: "fgTiles"
+        X: 24
+        Y: 13
+        Update:
+          Tile: 0
+      - Name: "fgTiles"
+        X: 25
+        Y: 12
+        Update:
+          Tile: 0
+      - Name: "fgTiles"
+        X: 25
+        Y: 13
+        Update:
+          Tile: 0
+      - Name: "objTiles"
+        X: 25
+        Y: 12
+        Update:
+          Tile: 25
+      - Name: "objTiles"
+        X: 25
+        Y: 13
+        Update:
+          Tile: 89
+  - Room: "c-01c"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: LeftToRight
+      ReqBoth:
+        Dashes: one
+    Tweaks:
+    - Name: "templeGate"
+      ID: 32
+      Update:
+        Remove: true
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 384
+        Y: 8
+        Width: 16
+        Height: 48
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+  - Room: "c-08b"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "templeGate"
+      ID: 122
+      Update:
+        Remove: true
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 328
+        Y: 16
+        Width: 48
+        Height: 32
+        Values:
+            type: "button"
+            entID: 124
+  - Room: "c-08"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "templeGate"
+      ID: 117
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 116
+      Update:
+        Remove: true
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 344
+        Y: 8
+        Width: 24
+        Height: 48
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+  - Room: "c-10"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 304
+        Y: 16
+        Width: 16
+        Height: 32
+        Values:
+            type: "touchswitch"
+  - Room: "c-12"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 304
+        Y: 16
+        Width: 16
+        Height: 32
+        Values:
+            type: "touchswitch"
+    - Name: "templeGate"
+      ID: 145
+      Update:
+        Remove: true
+  - Room: "c-07"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 456
+        Y: 72
+        Width: 16
+        Height: 40
+        Values:
+            type: "touchswitch"
+    - Name: "templeGate"
+      ID: 98
+      Update:
+        Remove: true
+  - Room: "c-11"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "templeGate"
+      ID: 126
+      Update:
+        Remove: true
+  - Room: "c-09"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 304
+        Y: 16
+        Width: 16
+        Height: 32
+        Values:
+            type: "touchswitch"
+  - Room: "c-13"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 200
+        Y: 16
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 176
+        Y: 0
+        Width: 32
+        Height: 16
+        Values:
+            type: "touchswitch"
+  - Room: "d-00"  # god this room is a mess
+    Hub: true
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: in
+    InternalEdges:
+    - To: "top"
+      ReqBoth:
+        Dashes: one
+    Subrooms:
+    - Room: "top"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+      InternalEdges:
+      - To: "right"
+        ReqOut:
+          Or:
+          - Dashes: two
+          - Dashes: one
+            Difficulty: master
+        ReqIn:
+          Or:
+          - Dashes: two
+          - Dashes: one
+            Difficulty: hard
+    - Room: "left"
+      Holes:
+      - Side: Left
+        Idx: 0
+        Kind: inout
+    - Room: "right"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+      InternalEdges:
+      - To: "left"
+        ReqOut:
+          Dashes: zero
+        ReqIn:
+          Or:
+          - Dashes: two
+          - Dashes: one
+            Difficulty: master
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 168
+        Y: 16
+  - Room: "d-01"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Right
+      Idx: 1
+      Kind: inout
+    - Side: Right
+      Idx: 2
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 1
+      Kind: inout
+    - Side: Down
+      Idx: 1
+      Kind: in
+    - Side: Down
+      Idx: 2
+      Kind: inout
+    InternalEdges:
+    - To: "bottomleft"  # TODO: can traverse reverse if switch pressed
+      ReqIn:
+        Dashes: zero
+    Subrooms:
+    - Room: "bottomleft"
+      Holes:
+      - Side: Down
+        Idx: 0
+        Kind: inout
+      - Side: Left
+        Idx: 2
+        Kind: inout
+  - Room: "d-02"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 310
+      Update:
+        Width: 16
+  - Room: "d-03"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+      ReqIn:
+        Dashes: zero
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 40
+        Y: 0
+        Width: 32
+        Height: 88
+        Values:
+            type: "touchswitch"
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 48
+        Y: 24
+  - Room: "d-04"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Collectable: 0
+      ReqBoth:
+          Dashes: one
+    - To: "keyleft_top"
+      ReqBoth:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: expert
+    - To: "bottomroom"
+      ReqBoth:
+        Dashes: zero
+    - To: "keyright"
+      ReqIn:
+        Dashes: zero
+    Subrooms:
+    - Room: "keyleft"
+      Holes:
+      - Side: Down
+        Idx: 0
+        Kind: in
+      Collectables:
+      - Idx: 1
+      InternalEdges:
+      - To: "keyleft_top"
+        ReqOut:
+          Dashes: zero
+    - Room: "keyright"
+      Holes:
+      - Side: Down
+        Idx: 1
+        Kind: in
+      Collectables:
+      - Idx: 2
+    - Room: "keyleft_top"
+      Holes:
+      - Side: Left
+        Idx: 0
+        Kind: inout
+        ReqBoth:
+          Or:
+          - Dashes: one
+            Difficulty: hard
+          - Dashes: two
+            Difficulty: easy
+    - Room: "bottomroom"
+      Holes:
+      - Side: Right
+        Idx: 1
+        Kind: inout
+      InternalEdges:
+      - Collectable: 3
+        ReqBoth:
+           Or:
+           - Dashes: one
+           - Dashes: zero
+             Difficulty: perfect
+    Tweaks:
+    - ID: 4
+      Name: "changeRespawnTrigger"
+      Update:
+        Remove: true
+    - ID: 2
+      Name: "changeRespawnTrigger"
+      Update:
+        Remove: true
+    - ID: 17
+      Name: "crumbleBlock"
+      Update:
+        Remove: true
+    - ID: 77
+      Name: "crumbleBlock"
+      Update:
+        Remove: true
+  - Room: "d-05"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: TopToBottom
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Or:
+        - Dashes: two
+        - Dashes: one
+          Difficulty: expert
+    Subrooms:
+    - Room: "side"
+      Holes:
+      - Side: Down
+        Idx: 0
+        Kind: inout
+      - Side: Right
+        Idx: 0
+        Kind: inout
+    Tweaks:
+    - Name: "spawn"
+      X: 296
+      Y: 48
+      Update:
+        Default: true
+    - Name: "cameraOffsetTrigger"
+      ID: 3
+      Update:
+        X: 272
+        Y: 0
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 8
+        Y: 272
+        Width: 24
+        Height: 48
+        Values:
+          cameraX: -1.0
+          cameraY: -1.0
+  - Room: "d-06"
+    Holes:
+    - Side: Up
+      Idx: 1
+      Kind: inout
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: BottomToTop
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: zero
+    Subrooms:
+    - Room: "side"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+      - Side: Down
+        Idx: 0
+        Kind: inout
+      InternalEdges:
+      - Split: BottomToTop
+        ReqOut:
+          Or:
+          - Dashes: one
+          - Dashes: zero
+            Difficulty: hard
+        ReqIn:
+          Or:
+          - Dashes: one
+          - Dashes: zero
+            Difficulty: expert
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 291
+      Update:
+        Width: 24
+    - Name: "spawn"
+      X: 80
+      Y: 320
+      Update:
+        X: 72
+    - Name: "jumpThru"
+      ID: 305
+      Update:
+        Width: 24
+    - Name: "exitBlock"
+      ID: 379
+      Update:
+        Remove: true
+    - Name: "cameraOffsetTrigger"
+      ID: 0
+      Update:
+        Y: 296
+        Height: 40
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 8
+        Y: 8
+        Width: 104
+        Height: 32
+        Values:
+          cameraX: -2
+          cameraY: 1
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 144
+        Y: 8
+        Width: 48
+        Height: 40
+        Values:
+          cameraX: 0
+          cameraY: 1.5
+  - Room: "d-07"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 0
+        Y: 64
+        Width: 24
+        Height: 32
+        Values:
+            type: "touchswitch"
+  - Room: "d-09"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: RightToLeft
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Or:
+        - Dashes: two
+        - Dashes: one
+          Difficulty: hard
+  - Room: "d-10"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 312
+        Y: 24
+    - Name: "cameraOffsetTrigger"
+      ID: 2
+      Update:
+        Width: 40
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 280
+        Y: 8
+        Width: 48
+        Height: 24
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+  - Room: "d-13"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Up
+      Idx: 1
+      Kind: in
+  - Room: "d-15"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 2
+      Kind: inout
+      ReqBoth:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+    - Side: Down
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 1
+      Kind: inout
+      ReqBoth:
+        Dashes: one
+    InternalEdges:
+    - Collectable: 1
+      ReqBoth:
+        Dashes: one
+    - Collectable: 0
+      ReqBoth:
+        Dashes: one
+    Subrooms:
+    - Room: "bubble_and_berry"
+      Holes:
+      - Side: Left
+        Idx: 1
+        Kind: inout
+      Collectables:
+      - Idx: 2
+  - Room: "d-19"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+    - Side: Up
+      Idx: 1
+      Kind: inout
+    InternalEdges:
+    - Split: RightToLeft
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+    - Collectable: 0
+      ReqBoth:
+        Key: true
+        KeyholeID: 531
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 72
+        Y: 24
+  - Room: "d-19b"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    Subrooms:
+    - Room: "passage"
+      Holes:
+      - Side: Right
+        Idx: 1
+        Kind: inout
+      - Side: Down
+        Idx: 1
+        Kind: inout
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 301
+      Update:
+        Width: 48
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 88
+        Y: 16
+        Width: 16
+        Height: 48
+        Values:
+          cameraX: 0
+          cameraY: 1
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 104
+        Y: 16
+        Width: 16
+        Height: 48
+        Values:
+          cameraX: 0
+          cameraY: 0
+  - Room: "d-20"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Difficulty: normal
+      ReqIn: 
+        Dashes: zero
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 344
+        Y: 72
+        Width: 24
+        Height: 40
+        Values:
+            type: "touchswitch"
+    - Name: "jumpThru"
+      ID: 293
+      Update:
+        Width: 16
+  - Room: "e-00"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 0
+      Kind: none # TODO: mark this as having the cutscene or something?
+  - Room: "e-01"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-01" # e-01 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 14
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 13
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 296
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 272
+        Y: 168
+  - Room: "e-02"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-02" # e-02 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 20
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 352
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 328
+        Y: 168
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 312
+        Y: 120
+        Width: 64
+        Height: 48
+        Values:
+            type: "button"
+            entID: 19
+  - Room: "e-03"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-03" # e-03 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 25
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 488
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 464
+        Y: 168
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 432
+        Y: 120
+        Width: 80
+        Height: 48
+        Values:
+            type: "button"
+            entID: 26
+  - Room: "e-04"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-04" # e-04 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 47
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 472
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 448
+        Y: 168
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 432
+        Y: 120
+        Width: 64
+        Height: 48
+        Values:
+            type: "touchswitch"
+  - Room: "e-06"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-06" # e-06 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 57
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 640
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 616
+        Y: 168
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 384
+        Y: 120
+        Width: 80
+        Height: 48
+        Values:
+            type: "button"
+            entID: 49
+  - Room: "e-05"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: Perfect
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-07"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-07" # e-07 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 57
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 66
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 664
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 640
+        Y: 168
+  - Room: "e-08"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-08" # e-08 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 80
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 520
+        Y: 176
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 496
+        Y: 176
+  - Room: "e-09"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-09" # e-09 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Difficulty: hard
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 103
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 416
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 392
+        Y: 168
+  - Room: "e-10"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "e-10"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 21
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 10
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 45
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 41
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 0
+      Update:
+        X: 688
+        Y: 80
+    - Name: "theoCrystal"
+      ID: 3
+      Update:
+        X: 616
+        Y: 112
+  - Room: "e-11"
+    ReqEnd:
+      Difficulty: easy
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Right
+      Idx: 0
+      Kind: None
+
+BSide:
+  - Room: "start"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: unknown
+      ReqIn: 
+        Or:
+        - Dashes: two
+        - Dashes: one
+  - Room: "a-00"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+      ReqOut:
+         Or:
+         - Dashes: one
+         - Dashes: zero
+           Difficulty: master
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: none
+    - Side: Down
+      Idx: 1
+      Kind: none
+    - Side: Down
+      Idx: 2
+      Kind: none
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 304
+        Y: 32
+        Width: 16
+        Height: 32
+        Values:
+            type: "button"
+            entID: 29
+  - Room: "a-01"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: None
+    - Side: Down
+      Idx: 1
+      Kind: None
+    - Side: Down
+      Idx: 2
+      Kind: None
+    - Side: Down
+      Idx: 3
+      Kind: None
+    - Side: Down
+      Idx: 4
+      Kind: None
+    - Side: Down
+      Idx: 5
+      Kind: None
+    - Side: Down
+      Idx: 6
+      Kind: None
+    - Side: Down
+      Idx: 7
+      Kind: None
+    - Side: Down
+      Idx: 8
+      Kind: None
+    InternalEdges:
+    - Split: LeftToRight
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: two
+        Difficulty: master
+  - Room: "a-02"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: unknown
+      LowBound: 5
+      HighBound: 8
+    Subrooms:
+    - Room: "right"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+      - Side: Down
+        Idx: 1
+        Kind: unknown
+        LowBound: 20
+        HighBound: 47
+        ReqIn:
+          Or:
+          - Dashes: two
+          - Dashes: one
+    InternalEdges: 
+    - To: "right"
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Or:
+        - Dashes: two
+          Difficulty: hard
+        - Dashes: one
+          Difficulty: master
+    Tweaks:
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 424
+        Y: 8
+        Width: 32
+        Height: 80
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+  - Room: "b-00"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+         Or:
+         - Dashes: one
+         - Dashes: zero
+           Difficulty: perfect
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Key: true
+        KeyholeID: 145
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 143
+      Update:
+        X: 160
+        Width: 16
+    - Name: "spawn"
+      Y: 160
+      Update:
+        X: 168
+    - Name: "spawn"
+      X: 812   # Oh god this room is just 320 width does anyone know what X: 812 means
+      Y: 112
+      Update:
+        X: 24
+        Y: 160
+  - Room: "b-01"
+    Hub: true
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - To: "up"
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Dashes: two
+        Difficulty: master
+    - To: "right"
+      ReqOut:
+        Or:
+        - Dashes: one
+          Difficulty: perfect
+        - Dashes: two
+          Difficulty: expert
+      ReqIn:
+        Dashes: two
+        Difficulty: master
+    Subrooms:
+    - Room: "up"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+      InternalEdges:
+      - To: "right"
+        ReqOut:
+          Dashes: two
+          Difficulty: perfect
+        ReqIn:
+          Or:
+          - Dashes: two
+            Difficulty: hard
+          - Dashes: one
+            Difficulty: perfect
+    - Room: "right"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+    Tweaks:
+    - Name: "spawn"  # noooooo don't patch bubsdrop you're so sexy hahahahaha
+      Update:
+        Add: true
+        X: 592
+        Y: 24
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 576
+        Y: 8
+        Width: 48
+        Height: 16
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 784
+        Y: 80
+        Width: 16
+        Height: 32
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 618
+        Y: 40
+        Width: 16
+        Height: 20
+        Values:
+          cameraX: -0.0
+          cameraY: 0.0
+  - Room: "b-02"
+    Hub: true
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout    # TODO bubble, key
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - To: "leftkey"
+      ReqIn:
+        Dashes: zero
+    - To: "rightkey"
+      ReqIn:
+        Dashes: zero
+    Subrooms:
+    - Room: "leftkey"
+      Holes:
+      - Side: Left
+        Idx: 1
+        Kind: inout
+      Collectables:
+      - Idx: 0
+    - Room: "rightkey"
+      Holes:
+      - Side: Right
+        Idx: 1
+        Kind: inout
+      Collectables:
+      - Idx: 1
+  - Room: "b-03"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      LowBound: 27
+      HighBound: 28
+      ReqOut:
+        Or:
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: two
+    - Side: Left
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+      ReqIn:
+        Or:
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: two
+    InternalEdges:
+    - To: "right"
+      ReqIn:
+        Dashes: one
+      ReqOut:
+        Or:
+        - Dashes: one
+          Difficulty: master
+        - Dashes: two
+    Subrooms:
+    - Room: "right"
+      Holes:
+      - Side: Down
+        Idx: 0
+        Kind: inout
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 224
+        Y: 24
+    - Name: "jumpThru"
+      ID: 228
+      Update:
+        Width: 16
+    - Name: "jumpThru"
+      ID: 227
+      Update:
+        X: 920
+        Width: 24
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 88
+        Y: 72
+        Width: 16
+        Height: 96
+        Values:
+          cameraX: 1.0
+          cameraY: 0.0
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 0
+        Y: 96
+        Width: 24
+        Height: 32
+        Values:
+            type: "button"
+            entID: 290
+  - Room: "b-04"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: inout
+    InternalEdges:
+    - Split: LeftToRight
+      ReqIn:
+        Dashes: one
+      ReqOut:
+        Or:
+        - Dashes: two
+          Difficulty: hard
+        - Dashes: one
+          Difficulty: perfect
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 218
+      Update:
+        Width: 24
+    - Name: "jumpThru"
+      ID: 216
+      Update:
+        X: 592
+        Width: 24
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 8
+        Y: 72
+        Width: 16
+        Height: 48
+        Values:
+          cameraX: 1.2
+          cameraY: 0.0
+  - Room: "b-05"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+    - Side: Right
+      Idx: 1
+      Kind: out
+      ReqOut:
+        Dashes: one
+  - Room: "b-05" # b-05 copy
+    Holes: 
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Right
+      Idx: 1
+      Kind: inout
+    Tweaks:
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 296
+        Y: 216
+        Width: 24
+        Height: 32
+        Values:
+            type: "touchswitch"
+    - Name: "spawn"
+      X: 312
+      Y: 248
+      Update:
+        Default: true
+    - Name: exitBlock
+      ID: 250
+      Update:
+        Remove: true
+  - Room: "b-06"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: inout
+  - Room: "b-07"
+    Holes:
+    - Side: Up
+      Idx: 0
+      Kind: inout
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 128
+        Y: 24
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 96
+        Y: 8
+        Width: 48
+        Height: 16
+        Values:
+          cameraX: 0
+          cameraY: 1
+  - Room: "b-08"
+    Holes:
+    - Side: Down
+      Idx: 1
+      Kind: in
+    Subrooms:
+    - Room: "left"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+        ReqOut:
+          Or:
+          - Dashes: two
+          - Dashes: one
+            Difficulty: hard
+      - Side: Down
+        Idx: 0
+        Kind: out
+    InternalEdges:
+    - To: "left"
+      ReqOut:
+        Dashes: One
+    Tweaks:
+    - Name: "spawn"
+      X: 544
+      Y: 136
+      Update:
+        Default: true
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 32
+        Y: 0
+        Width: 32
+        Height: 48
+        Values:
+            type: "button"
+            entID: 231
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 40
+        Y: 48
+  - Room: "b-08" # b-08 copy
+    Holes:
+    - Side: Down
+      Idx: 1
+      Kind: out
+    Subrooms:
+    - Room: "left"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: in
+      - Side: Down
+        Idx: 0
+        Kind: in
+    InternalEdges:
+    - To: "left"
+      ReqIn:
+        Or:
+        - Dashes: two
+          Difficulty: hard
+        - Dashes: one
+          Difficulty: expert
+    Tweaks:
+    - Name: "jumpThru"
+      ID: 234
+      Update:
+        Width: 16
+    - Name: "crumbleBlock"
+      ID: 276
+      Update:
+        Remove: true
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 32
+        Y: 0
+        Width: 32
+        Height: 48
+        Values:
+            type: "button"
+            entID: 231
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 40
+        Y: 48
+  - Room: "b-09"
+    Holes:
+    - Side: Down
+      Idx: 0
+      Kind: in
+    InternalEdges:
+    - CustomWarp: true
+      ReqOut:
+        Dashes: one
+  - Room: "c-00"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+#  - Room: "c-00" # c-00 copy # readd this if the cutscene can be done better
+#    Holes:
+#    - Side: Right
+#      Idx: 0
+#      Kind: in
+#    InternalEdges:
+#    - CustomWarp: true
+#      ReqOut:
+#        Dashes: one
+#        Difficulty: expert
+#    Tweaks:
+#    - Name: "eventTrigger" # this is a hack. please fix
+#      Update:
+#        Add: true
+#        X: 152
+#        Y: 96
+#        Width: 16
+#        Height: 8
+#        Values:
+#          event: end_oldsite_dream
+#    - Name: payphone
+#      Update:
+#        Add: true
+#        X: 163
+#        Y: 104
+#    - Name: "cameraOffsetTrigger"
+#      Update:
+#        Add: true
+#        X: 0
+#        Y: 928
+#        Width: 320
+#        Height: 8
+#        Values:
+#          cameraX: 0
+#          cameraY: -1.4
+#    - Name: "cameraOffsetTrigger"
+#      ID: 5
+#      Update: 
+#        Remove: true
+#    - Name: "cameraOffsetTrigger"
+#      ID: 4
+#      Update:
+#        Remove: true
+  - Room: "c-01"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: hard
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "c-02"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one     # seekers don't seem to be able to press ceiling buttons so this can't be done dashless :(
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 0
+      Kind: unknown
+      Launch: 11
+  - Room: "c-03"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: unknown
+      HighBound: 15
+      Launch: 13
+    Subrooms:
+    - Room: "right"
+      Holes:
+      - Side: Right
+        Idx: 0
+        Kind: inout
+      - Side: Down
+        Kind: unknown
+        New: true
+        LowBound: 67
+        HighBound: 76
+    InternalEdges:
+    - To: "right"
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: expert
+      ReqIn:
+        Or:
+        - Dashes: two
+          Difficulty: expert
+        - Dashes: one
+          Difficulty: perfect
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 640
+        Y: 144
+    - Name: "templeGate"
+      ID: 168
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 155
+      Update:
+        Remove: true
+  - Room: "c-04"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: unknown
+      HighBound: 14
+    Subrooms:
+    - Room: "right"
+      Holes:
+      - Side: Up
+        Idx: 0
+        Kind: inout
+      - Side: Down
+        Kind: unknown
+        New: true
+        LowBound: 62
+        HighBound: 80
+        Launch: 68
+    InternalEdges:
+    - To: "right"
+      ReqOut:
+        Or:
+          - Dashes: one
+          - Dashes: zero
+            Difficulty: perfect  # fuck seeker manip
+      ReqIn:
+        Dashes: one
+    Tweaks:
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 512
+        Y: 64
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 496
+        Y: 8
+        Width: 56
+        Height: 56
+        Values:
+          cameraX: -1
+          cameraY: 0
+    - Name: "templeGate"
+      ID: 168
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 155
+      Update:
+        Remove: true
+  - Room: "d-00"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+    - Side: Down
+      Idx: 0
+      Kind: in
+  - Room: "d-00" # d-00 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "templeGate"
+      ID: 400
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 397
+      Update:
+        X: 344
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 399
+      Update:
+        X: 320
+        Y: 168
+    - Name: "jumpThru"
+      ID: 396
+      Update: 
+        Width: 16
+  - Room: "d-01"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Difficulty: normal
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 2
+      Kind: none # remove if the barrier is ever removed (ie to do the room backwards)
+  - Room: "d-01" # d-01 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+      ReqOut:
+        Difficulty: normal
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 455
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 400
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 406
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 432
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 407
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 397
+      Update:
+        X: 672
+        Y: 168
+    - Name: "theoCrystal"
+      ID: 399
+      Update:
+        X: 648
+        Y: 168
+  - Room: "d-02"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+          - Dashes: one
+          - Dashes: zero
+            Difficulty: hard  # hit the ceiling switch with theo, lol
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "d-02" # d-02 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 487
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 400
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 407
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 438
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 397
+      Update:
+        X: 776
+        Y: 152
+    - Name: "theoCrystal"
+      ID: 399
+      Update:
+        X: 744
+        Y: 136
+  - Room: "d-03"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Dashes: one
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Down
+      Idx: 1
+      Kind: unknown
+      LowBound: 13
+      HighBound: 15
+  - Room: "d-03" # d-03 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+        - Dashes: zero
+          Difficulty: perfect
+    - Side: Down
+      Idx: 1
+      Kind: unknown
+      LowBound: 13
+      HighBound: 15
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 498
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 400
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 407
+      Update:
+        Remove: true
+    - Name: "cmrando/ActivateSwitches"
+      Update:
+        Add: true
+        X: 560
+        Y: 80
+        Width: 88
+        Height: 88
+        Values:
+            type: "touchswitch"
+    - Name: "spawn"
+      ID: 397
+      Update:
+        X: 544
+        Y: 128
+    - Name: "theoCrystal"
+      ID: 399
+      Update:
+        X: 528
+        Y: 128
+  - Room: "d-04"
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: two
+    - Side: Left
+      Idx: 0
+      Kind: in
+    - Side: Up
+      Idx: 0
+      Kind: Unknown
+      HighOpen: true
+    - Side: Up
+      New: true
+      Kind: Unknown
+      LowBound: 45
+      HighBound: 48
+      ReqIn:
+        Or:
+          - Dashes: one
+            Difficulty: hard
+          - Dashes: two
+  - Room: "d-04" # d-04 copy
+    Holes:
+    - Side: Right
+      Idx: 0
+      Kind: in
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: one
+          Difficulty: hard
+        - Dashes: two
+    - Side: Up
+      Idx: 0
+      Kind: Unknown
+      HighOpen: true
+    - Side: Up
+      New: true
+      Kind: Unknown
+      LowBound: 45
+      HighBound: 48
+      ReqIn:
+        Or:
+          - Dashes: one
+            Difficulty: hard
+          - Dashes: two
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 585
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 400
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "templeGate"
+      ID: 565
+      Update:
+        Remove: true
+    - Name: "spawn"
+      ID: 397
+      Update:
+        X: 408
+        Y: 112
+    - Name: "theoCrystal"
+      ID: 399
+      Update:
+        X: 384
+        Y: 112
+  - Room: "d-05"
+    ReqEnd:
+      Or:
+      - Dashes: one
+      - Dashes: zero
+        Difficulty: perfect
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: in
+  - Room: "d-05" # d-05 copy
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: out
+      ReqOut:
+        Or:
+        - Dashes: two
+          Difficulty: hard
+        - Dashes: one
+          Difficulty: expert
+    Tweaks:
+    - Name: "invisibleBarrier"
+      ID: 18
+      Update:
+        Remove: true
+    - Name: "templeGate"
+      ID: 0
+      Update:
+        Values:
+          sprite: theo
+          type: HoldingTheo
+    - Name: "blackGem"
+      ID: 17
+      Update:
+        Values:
+          fake: true
+    - Name: "spawn"
+      Update:
+        Add: true
+        X: 728
+        Y: 152
+    - Name: "theoCrystal"
+      ID: 19
+      Update:
+        X: 648
+        Y: 168
+    - Name: "spawn"
+      ID: 3
+      Update:
+        Remove: true
+      
+CSide:
+  - Room: "00"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: unknown
+      HighOpen: true
+    InternalEdges:
+    - To: "right"
+      ReqOut:
+        Dashes: one
+        Difficulty: hard
+      ReqIn:
+        Or:
+        - Dashes: two
+        - Dashes: one
+          Difficulty: hard
+    Subrooms:
+      - Room: "right"
+        Holes:
+        - Side: Right
+          Idx: 0
+          Kind: inout
+        - Side: Down
+          New: true
+          Kind: unknown
+          LowBound: 0
+          HighBound: 54
+          HighOpen: false
+    Tweaks:
+    - Name: "cameraOffsetTrigger"
+      Update:
+        Add: true
+        X: 464
+        Y: 72
+        Width: 16
+        Height: 48
+        Values:
+          cameraX: -1.0
+          cameraY: 0.0
+    - Name: "fgTiles"
+      X: 57
+      Y: 21
+      Update:
+        Tile: d
+    - Name: "fgTiles"
+      X: 57
+      Y: 22
+      Update:
+        Tile: d
+  - Room: "01"
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: unknown
+      LowBound: 5
+      HighOpen: true
+    InternalEdges:
+    - Split: LeftToRight
+      ReqOut:
+        Dashes: one
+        Difficulty: hard
+      ReqIn:
+        Or:
+        - Dashes: two
+        - Dashes: one
+          Difficulty: Perfect
+    Subrooms:
+      - Room: "right"
+        Holes:
+        - Side: Right
+          Idx: 0
+          Kind: inout
+    Tweaks:
+      - Name: "fgTiles"
+        X: 4
+        Y: 22
+        Update:
+          Tile: d
+  - Room: "02"
+    ReqEnd:
+      Or:
+        - Dashes: two
+        - Dashes: one
+          Difficulty: hard
+    Holes:
+    - Side: Left
+      Idx: 0
+      Kind: inout
+    - Side: Down
+      Idx: 0
+      Kind: Unknown
+      HighOpen: true
+    - Side: Down
+      Idx: 1
+      Kind: Unknown
+      LowBound: 0

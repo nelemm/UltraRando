@@ -1,0 +1,6 @@
+﻿- Name: UltraRando
+  Version: 0.2.0
+  DLL: bin/UltraRando.dll
+  Dependencies:
+    - Name: EverestCore
+      Version: 1.5752.0

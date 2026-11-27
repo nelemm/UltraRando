@@ -1,0 +1,38 @@
+# Seed de test « chapitre final » (SelfTest.Chain, chain=final) : salles d'origine, objets placés à la main (plando).
+# Le Sommet (objectif) s'ouvre avec 3 fraises (5 au total, 60 %), placées dans les salles 3, 4 et 5 du 1A.
+# Le Sommet contient les Springs (utiles dans la salle 2 du 1A), les Feathers et le Climb.
+# Seed fixe : générer avec --seed 7101.
+name: Nelem
+game: UltraRando
+UltraRando:
+  logic_difficulty: vanilla_movement
+  room_shuffle: false
+  room_difficulty: hard
+  dash_shuffle: unified
+  climb_shuffle: unified
+  crouch_shuffle: false
+  wall_jump_shuffle: false
+  demo_dash_shuffle: false
+  interactable_shuffle: true
+  include_b_sides: false
+  include_c_sides: false
+  include_core: false
+  include_farewell: false
+  goal_area: the_summit_a
+  total_strawberries: 5
+  strawberries_required_percentage: 60
+  roomsanity: true
+  checkpointsanity: true
+  keysanity: true
+  death_link: false
+  plando_items:
+    - item: Dash
+      location: Forsaken City A - Room 2
+    - items: {Strawberry: 3}
+      locations: [Forsaken City A - Room 3, Forsaken City A - Room 4, Forsaken City A - Room 5]
+    - item: Springs
+      location: The Summit A - Room a-00
+    - item: Feathers
+      location: The Summit A - Room a-00-intro
+    - item: Climb
+      location: The Summit A - Room a-01

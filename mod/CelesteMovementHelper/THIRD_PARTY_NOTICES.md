@@ -1,0 +1,45 @@
+# Third-party notices
+
+## Data/logic.json (embedded in the DLL)
+
+Derived from `worlds/celeste_open_world/data/CelesteLevelData.json` of the
+**Celeste (Open World)** apworld 1.1.3 by PoryGone, converted by `tools/export_help_data.py`.
+
+    Modified MIT License
+    Copyright (c) 2025 PoryGone
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, and/or distribute copies of the Software,
+    and to permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
+
+    No copy or substantial portion of the Software shall be sublicensed or relicensed
+    without the express written permission of the copyright holder(s)
+
+    No copy or substantial portion of the Software shall be sold without the express
+    written permission of the copyright holder(s)
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+
+The logic data therefore stays under PoryGone's Modified MIT licence (not relicensed).
+
+## Archipelago Open World (Everest mod)
+
+This mod does **not** contain any code from PoryGone's "Archipelago Open World" Everest mod
+(that mod is "All rights reserved"). It only reads that mod's public state at runtime, through reflection.
+
+## Data/techniques.json (embedded in the DLL)
+
+Original explanations written for this project. Each technique lists the community pages it is based on
+(mainly the Celeste Wiki, celeste.ink, and "The Celeste Dictionary").

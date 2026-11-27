@@ -1,0 +1,18 @@
+# Brique 3 (V1, brouillon de la brique 6 de la V2) : l'item « Wall Jump » (fork de l'apworld).
+# Nécessite le fork v1/apworld/celeste_open_world.apworld côté générateur
+# et le réglage « Wall Jump Shuffle » activé dans Options des mods > Celeste Movement Helper.
+name: Nelem
+game: Celeste (Open World)
+Celeste (Open World):
+  logic_difficulty: vanilla_movement
+  dash_shuffle: none
+  climb_shuffle: none
+  crouch_shuffle: false
+  wall_jump_shuffle: true      # sans Wall Jump : seuls le Prologue et l'Épilogue sont en logique
+  roomsanity: true
+  goal_area: the_summit_a
+  include_core: false
+  include_farewell: none
+  include_b_sides: false
+  include_c_sides: false
+  trap_fill_percentage: 0
